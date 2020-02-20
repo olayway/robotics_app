@@ -1,0 +1,565 @@
+[
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/ft-sensor-on-motoman-mh5f-forcetorque-measurement/",
+    "Challenge": [
+      "Recording of force/distance characteristics of switching elements",
+      "Quality control of switching elements",
+      "Calibration of material characteristics",
+      "An FT (force/torque) sensor and a PZN-plus centric gripper are mounted on the robot. Furthermore, there is also an ERD rotary module and an ELB linear module on the inspection platform.",
+      "The gripper grips a plastic pin and presses the buttons of the vehicle entertainment system. The resultant forces are displayed on the screen. The pin is set down.",
+      "The gripper now grips the rotary control knob of the entertainment system directly. The resultant torques are displayed on the screen.",
+      "The FT sensor then measures the torques generated on the rotary module and the forces generated on the linear module and displays them.",
+      "Using the FT sensor, forces and torques can be measured precisely in all six degrees of freedom, recorded and evaluated."
+    ],
+    "Solution": [
+      "An FT (force/torque) sensor and a PZN-plus centric gripper are mounted on the robot. Furthermore, there is also an ERD rotary module and an ELB linear module on the inspection platform.",
+      "The gripper grips a plastic pin and presses the buttons of the vehicle entertainment system. The resultant forces are displayed on the screen. The pin is set down.",
+      "The gripper now grips the rotary control knob of the entertainment system directly. The resultant torques are displayed on the screen.",
+      "The FT sensor then measures the torques generated on the rotary module and the forces generated on the linear module and displays them.",
+      "Using the FT sensor, forces and torques can be measured precisely in all six degrees of freedom, recorded and evaluated."
+    ],
+    "Results": ["Precise force/torque measure­ment in six degrees of freedom"],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": ["Automobile", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": [
+      "MOTOMAN MH5F",
+      "FT-Sensor",
+      "PZN-Plus",
+      "ERD",
+      "ELB"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/clip-assembly/",
+    "Clip assembly": [],
+    "Process": [],
+    "Pictures": [],
+    "Customer": [
+      "MPA Technology GmbH, Burbach, Germany",
+      "Giebeler GmbH, Eschenburg-Wissenbach, Germany"
+    ],
+    "Product": [],
+    "System components": ["MOTOMAN MH6"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/new-fully-automated-removal-system-for-folding-cardboard-boxes/",
+    "Challenge": [
+      "Unloading of folding cartons for tending of packaging machines"
+    ],
+    "Solution": [],
+    "Results": [
+      "Fully automated removal system",
+      "Can be integrated into existing or new packaging systems",
+      "Higher number of units, eases workload for ",
+      "humans and logistics systems"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": [
+      "1x SDA20D",
+      "2x grippers",
+      "DX100 controller",
+      "Pivot unit"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/end-of-line-handling/",
+    "Challenge": [
+      "Complete the production automation cycle in Avícola El Ángel nd optimise the final handling process",
+      "Change a repetitive and heavy manual process to a digitized and automated process to protect the health of employees.",
+      "Regulate fluctuations in production."
+    ],
+    "Solution": [],
+    "Benefits": [],
+    "Results": [
+      "Manages an average of 120,000 eggs per hour       ",
+      "Drastic reduction in failures"
+    ],
+    "Pictures": [],
+    "Customer": ["Innovantia", "Avícola El Ángel"],
+    "Industry": ["Food", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["MPL80", "MPL160"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/hot-forming/",
+    "Process": [],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": ["Metal", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["MOTOMAN ES280N-230"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/fully-automatic-and-electrical-assembly-machine-for-tinkerbotsc/",
+    "Challenge": [
+      "Assembly and disassembly of three different Tinkerbot© models",
+      "Handling of bricks with MOTOMAN HC10 robot and presentation of Mikron Cube",
+      "Four automatic handling systems (Two for assembly, two for disassembly)",
+      "Beckhoff XTS linear system for fast transportation and independent forward and backward carrier movements ",
+      "MOTOMAN HC10 collaborative robot for human interaction during machine processing",
+      "Integration of IO Link",
+      "Fully automatic assembly and disassembly",
+      "No pneumatics, only electrical components",
+      "Collaborative assembly with two laser scanners that detect objects and humans in front of the cell and adapt speed of robot",
+      "Optical lights, which show current robot status",
+      "Integrated camera for digital service",
+      "Energy- and consumption-tracking in HMI"
+    ],
+    "Solution": [
+      "Four automatic handling systems (Two for assembly, two for disassembly)",
+      "Beckhoff XTS linear system for fast transportation and independent forward and backward carrier movements ",
+      "MOTOMAN HC10 collaborative robot for human interaction during machine processing",
+      "Integration of IO Link",
+      "Fully automatic assembly and disassembly",
+      "No pneumatics, only electrical components",
+      "Collaborative assembly with two laser scanners that detect objects and humans in front of the cell and adapt speed of robot",
+      "Optical lights, which show current robot status",
+      "Integrated camera for digital service",
+      "Energy- and consumption-tracking in HMI"
+    ],
+    "Results": [
+      "Fully automatic assembly and disassembly machine with IO Link and collaborative robot"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": ["Chemicals / Plastics", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["MOTOMAN HC10"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/the-traditional-brewery-goes-robotics/",
+    "Challenge": [
+      "Roma Mineralvannfabrikk AS is an award winning family owned company with an almost hundred year long history of making soft drinks from their own recipes. In addition to this the factory also has license production of other brands, as well as special production of beverages with their own labels for companies, teams and associations. Good design, good quality and good traditions is producing world class soft drinks at “Den Lille Brusfabrikk” in Lillestrøm today.",
+      "In 2014 Roma was faced with an increased number of orders that also required more flexibility than the traditional production methods of a small brewery. It was more or less a question of continuing with all these types of soft drinks and various PET bottle sizes, or not. ",
+      "Roma took the plunge and settled for a flexible, and yet financially obtainable, robotic solution with two MOTOMAN robots and gripper tools from ABTrygg. Equally important was the clever design of a sorting table able to handle both single bottles and bottles in multi packs. This would ensure Roma the necessary flexibility in production in the years to come. ",
+      "With a new and modern packaging system, Roma have been able to offer new customers attractive solutions that have made results for the factory. . Due to the new flexibility the company has been able to increase its sales by about 30 %."
+    ],
+    "Solution": [
+      "Roma took the plunge and settled for a flexible, and yet financially obtainable, robotic solution with two MOTOMAN robots and gripper tools from ABTrygg. Equally important was the clever design of a sorting table able to handle both single bottles and bottles in multi packs. This would ensure Roma the necessary flexibility in production in the years to come. ",
+      "With a new and modern packaging system, Roma have been able to offer new customers attractive solutions that have made results for the factory. . Due to the new flexibility the company has been able to increase its sales by about 30 %."
+    ],
+    "Results": ["30% increase in sales volume"],
+    "Picture": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Food",
+      "Packaging / Palletising",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": [
+      "Packaging / Palletising",
+      "Handling / Mounting / Collaborative"
+    ],
+    "System components": [
+      "MOTOMAN SP800",
+      "MOTOMAN MPL500",
+      " robot",
+      "Air Grip tool",
+      "Sorting table"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/robot-based-handling-of-sheets-of-paper/",
+    "Challenge": [
+      "Handling of individual sheets of paper",
+      "IRA P-162 robot unit: A stack of paper is picked up from the cutting machine and set down on the shaker of the cutting system. Subsequent setdown of the sheets for packaging",
+      "Paper sizes from 46x64 cm to 120x162 cm with a thickness of 0.08 to 0.6 mm",
+      "Automatic sorting and elimination of defective sheets",
+      "Up to six 115 cm pallets per hour for size 70x100 cm or min. two 120x162 cm pallets",
+      "Productivity increase of 200 to 300%",
+      "Result",
+      "Automatisiertes Handling einzelner Papierbögen --> Produktivitätssteigerung von 200-300",
+      "Automated handling of individual sheets of paper",
+      "Productivity increase of 200-300%"
+    ],
+    "Solution": [
+      "IRA P-162 robot unit: A stack of paper is picked up from the cutting machine and set down on the shaker of the cutting system. Subsequent setdown of the sheets for packaging",
+      "Paper sizes from 46x64 cm to 120x162 cm with a thickness of 0.08 to 0.6 mm",
+      "Automatic sorting and elimination of defective sheets",
+      "Up to six 115 cm pallets per hour for size 70x100 cm or min. two 120x162 cm pallets",
+      "Productivity increase of 200 to 300%",
+      "Result",
+      "Automatisiertes Handling einzelner Papierbögen --> Produktivitätssteigerung von 200-300",
+      "Automated handling of individual sheets of paper",
+      "Productivity increase of 200-300%"
+    ],
+    "Result": [
+      "Automated handling of individual sheets of paper",
+      "Productivity increase of 200-300%"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["1x SDA20D"],
+    "Results": [
+      "Automated handling of sheets of paper       ",
+      "Increases productivity by 200% to 300%"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/ixapack-global/",
+    "Compact precision": [],
+    "40 years of History": [],
+    "The Sigma-7 servo system series": [],
+    "Compact MP3300 and MP3300iec controllers": [],
+    "Customer": [],
+    "Products": [],
+    "Industry": [],
+    "System components": [],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/innovative-and-complex-automation-solutions-for-insert-molding-and-back-injection-of-ud-tapes/",
+    "Challenge": [
+      "Lighter, more stable and more decorative",
+      "Weight saving of 35%",
+      "Complex installation of a manufacturing cell directly at the injection molding machine"
+    ],
+    "Solution": [],
+    "Result": [],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Metal",
+      "Chemicals / Plastics",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["MOTOMAN MH12 robot", "MOTOMAN DX200 controller"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/strom-aus-schotter-das-steinbruch-kraftwerk/",
+    "Technologien von VIPA und YASKAWA ermöglichen Energierückspeisung in der Rohstoffgewinnung": [],
+    "Hans Zöchling GmbH": [],
+    "Großes Potential": [],
+    "Energie sauber ins Netz rückspeisen": [],
+    "Elektrische Leistung wird im Betrieb genutzt": [],
+    "Customer": [],
+    "Products": [],
+    "Industry": [],
+    "Application": [],
+    "System components": [],
+    "Results": [],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/autech-at-trade-show-with-robot-cell-for-handling-applications/",
+    "Challenge": ["Handling of pipes in processing cell"],
+    "Solution": [],
+    "Results": [
+      "High intake",
+      "Establishment of interesting and highly promising contacts "
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": ["Metal", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["2x MH5 robot"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/innovative-robot-welding-system-for-a-wide-variety-of-parts/",
+    "Challenge": [
+      "Wide production range: from workpieces the size of an A4 sheet of paper and weighing just a few kg to components with a length of 2 m and a mass of 150 kg",
+      "Material thicknesses from 1.0 to 15 mm",
+      "Highest requirements on product quality due to the position of many visible weld seams "
+    ],
+    "Solution": [],
+    "Results": [
+      "Able to meet the highest demands for quality ",
+      "Highest level of flexibility and productivity"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Metal",
+      "Automobile",
+      "Welding / Cutting",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": [
+      "Welding / Cutting",
+      "Handling / Mounting / Collaborative"
+    ],
+    "System components": [
+      "1x MA1900",
+      "1x 1,000 kg RWV2 positioner",
+      "1x DX100 high performance controller"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/manufacture-of-an-rtm-component-at-trade-fair/",
+    "Challenge": [
+      "Production process for the manufacture of an RTM fiber composite series component",
+      " "
+    ],
+    "Solution": [],
+    "Results": [
+      "Manufacture of RTM series components in very short cycles",
+      "High system availability as a result of the robot-guided coupling to the check valve",
+      "Thanks to the fast coupling/uncoupling of the mixer tube at the check valve by the robot, the installation of a process line with multiple molds can be implemented as an automated overall process chain for large batch sizes"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Electrics / Electronics",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": [
+      "RTM Injection system",
+      "TFP-Preforming",
+      "Resin System",
+      "MOTOMAN HP20F"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/khu-sondermaschinen-uses-yaskawa-motoman-for-cable-industry/",
+    "Challenge": ["Positioning and processing of connector ends"],
+    "Solution": [],
+    "Result": [],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": ["Chemicals / Plastics", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["MOTOMAN SDA20D"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/handling-of-plastics-at-fachpack-2015/",
+    "Challenge": [
+      "Remove finished part from work piece carrier and set it down in fixture",
+      "Remove part from fixture after machining and inspect with sensor",
+      "Following inspection, set part back down in work piece carrier "
+    ],
+    "Solution": [],
+    "Results": [],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": ["Chemicals / Plastics", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": ["MOTOMAN MH12", "FESTO parallel gripper"],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/handling-of-trolli-products-at-fachpack-2015/",
+    "Challenge": [
+      "Handling of Trolli products",
+      "Candy taken from conveyor belt and packaged in trays"
+    ],
+    "Solution": [],
+    "Results": [
+      "Make trade show appearance more attractive",
+      "Attract attention of potential customers"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Food",
+      "Packaging / Palletising",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": [
+      "Packaging / Palletising",
+      "Handling / Mounting / Collaborative"
+    ],
+    "System components": [
+      "1x ",
+      "MOTOMAN MH3F",
+      "10x piCOMPACT",
+      "piGRIP and Duraflex suction cups"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/vipa-and-yaskawa-components-ensure-fully-automatic-operation/",
+    "Full silos": [],
+    "Implementation": [],
+    "In detail": [],
+    "Overall Package": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/pioneering-logistics-processes/",
+    "Fully automatic order picking with Witron and VIPA": [],
+    "Gargantuan logistical requirements": [],
+    "Pioneering OPM logistics system": [],
+    "Fully automatic flow from incoming to outgoing goods": [],
+    "Award-winning Witron logistics solution with SPEED7": [],
+    "Best experiences in day-to-day operation": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/automation-using-the-yaskawa-motoman-dual-arm-robot/",
+    "Challenge": ["Performance of automation tasks  "],
+    "Solution": [],
+    "Result": [],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Metal",
+      "Packaging / Palletising",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": [
+      "Packaging / Palletising",
+      "Handling / Mounting / Collaborative"
+    ],
+    "System components": [
+      "1x SDA20D",
+      "2x 3-finger grippers",
+      "3D image processing software"
+    ],
+    "Results": [
+      "Provides flexible and cost-effective automation of applications"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/fully-automated-welding-of-crane-booms/",
+    "Challenge": [
+      "Production of intermediate sections for crane booms, varying from 3,000 to 12,500 millimeters in length, with a width of 900 to 3,000 millimeters",
+      "Intermediate sections previously joined and welded manually in positions detrimental to health"
+    ],
+    "Solution": [],
+    "Results": [
+      "Fully automated process ",
+      "Perfection with accuracy down to a tenth of a millimetre                        ",
+      "Top quality welded joints"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Product": [],
+    "Industry": [
+      "Metal",
+      "Welding / Cutting",
+      "Handling / Mounting / Collaborative"
+    ],
+    "Applications": [
+      "Welding / Cutting",
+      "Handling / Mounting / Collaborative"
+    ],
+    "System components": ["1x ES165", "1x ES200RN", "2x EA1900 "],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/innovative-automation-linked-robots-produce-input-shafts/",
+    "Challenge": [
+      "Innovative automation solution for production of input shafts",
+      "Use of a system implemented by SYMACON:",
+      "Two linked robotic cells, each with a six-axis MOTOMAN MH5L robot",
+      "Cells linked by a recirculating workpiece carrier system",
+      "First cell: positioning of the workpiece in the measurement fixture and separate setdown of faulty parts by the robot; double gripper enables implementation of a fast cycle change",
+      "Second cell: packaging of the parts in special trays by the robot",
+      "MH5L robots enable versatile and flexible applications",
+      "Compact design for minimal installation space requirements",
+      "Integrated fluid and air supply for maximum system reliability, reduction of sources of interference and simplified programming",
+      "Acceleration of cycle times by dispensing with additional swivel units due to the special robot kinematic system of the MH5L"
+    ],
+    "Solution": [
+      "Use of a system implemented by SYMACON:",
+      "Two linked robotic cells, each with a six-axis MOTOMAN MH5L robot",
+      "Cells linked by a recirculating workpiece carrier system",
+      "First cell: positioning of the workpiece in the measurement fixture and separate setdown of faulty parts by the robot; double gripper enables implementation of a fast cycle change",
+      "Second cell: packaging of the parts in special trays by the robot",
+      "MH5L robots enable versatile and flexible applications",
+      "Compact design for minimal installation space requirements",
+      "Integrated fluid and air supply for maximum system reliability, reduction of sources of interference and simplified programming",
+      "Acceleration of cycle times by dispensing with additional swivel units due to the special robot kinematic system of the MH5L"
+    ],
+    "Results": [
+      "Maximum productivity using SYMACON system with YASKAWA robots"
+    ],
+    "Pictures": [],
+    "Customer": [],
+    "Partner": [],
+    "Product": [],
+    "Industry": ["Automobile", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": [
+      "2x MOTOMAN MH5L",
+      " connected by a circulating workpiece carrier system"
+    ],
+    "Contact": []
+  },
+  {
+    "url": "https://www.yaskawa.eu.com/en/case-studies/robopiv-the-future-of-optical-flow-measurements/",
+    "RoboPIV – The future of optical flow measurements": [
+      "Wind tunnel time is costly and needs to be used efficiently",
+      "Calibration and repositioning of measurement equipment takes too long",
+      "Measurement system needs to be fully automated but keep the flexibility",
+      "No loss of time in the wind tunnel for calibration",
+      "Full flexibility for the measurement position",
+      "High speed robot movement reduces the measurement time significantly",
+      "PIV can be efficiently used at any time in the wind tunnel",
+      "Fully automated measurements reduce the manpower needed to support"
+    ],
+    "Challenge": [
+      "Wind tunnel time is costly and needs to be used efficiently",
+      "Calibration and repositioning of measurement equipment takes too long",
+      "Measurement system needs to be fully automated but keep the flexibility",
+      "No loss of time in the wind tunnel for calibration",
+      "Full flexibility for the measurement position",
+      "High speed robot movement reduces the measurement time significantly",
+      "PIV can be efficiently used at any time in the wind tunnel",
+      "Fully automated measurements reduce the manpower needed to support"
+    ],
+    "Solution": [
+      "No loss of time in the wind tunnel for calibration",
+      "Full flexibility for the measurement position",
+      "High speed robot movement reduces the measurement time significantly",
+      "PIV can be efficiently used at any time in the wind tunnel",
+      "Fully automated measurements reduce the manpower needed to support"
+    ],
+    "Result": [
+      "No loss of time in the wind tunnel for calibration",
+      "Full flexibility for the measurement position",
+      "High speed robot movement reduces the measurement time significantly",
+      "PIV can be efficiently used at any time in the wind tunnel",
+      "Fully automated measurements reduce the manpower needed to support"
+    ],
+    "Pictures": [],
+    "Customer": ["ILA 5150 GmbH, Aachen, Germany", "Several Formula 1 Teams"],
+    "Product": [],
+    "Industry": ["Automobile", "Handling / Mounting / Collaborative"],
+    "Applications": ["Handling / Mounting / Collaborative"],
+    "System components": [
+      "3x MOTOMAN SIA20 robot on external traverses",
+      "Controller MOTOMAN DX100"
+    ],
+    "Results": [
+      "Fully automated measurements       ",
+      "Measure around complete car",
+      "High accuracy measurements",
+      "Full flexibility"
+    ],
+    "Contact": []
+  }
+]
