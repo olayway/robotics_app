@@ -7,10 +7,12 @@ from ..items import ScraperItem
 class YaskawaSpider(CrawlSpider):
     name = 'yaskawa'
     allowed_domains = ['yaskawa.eu.com']
-    start_urls = ['https://www.yaskawa.eu.com/en/solutions/application/handling-assembly/',
-                    'https://www.yaskawa.eu.com/en/solutions/application/painting/',
-                    'https://www.yaskawa.eu.com/en/solutions/application/welding-cutting/',
-                    'https://www.yaskawa.eu.com/en/solutions/application/packaging-palletising/']
+    # start_urls = ['https://www.yaskawa.eu.com/en/solutions/application/handling-assembly/',
+    #                 'https://www.yaskawa.eu.com/en/solutions/application/painting/',
+    #                 'https://www.yaskawa.eu.com/en/solutions/application/welding-cutting/',
+    #                 'https://www.yaskawa.eu.com/en/solutions/application/packaging-palletising/']
+
+    start_urls = ['https://www.yaskawa.eu.com/en/']
 
     custom_settings = {
         'FEED_FORMAT' : 'json',
@@ -20,6 +22,7 @@ class YaskawaSpider(CrawlSpider):
     }
 
     rules = (
+        Rule(LinkExtractor(allow=r'application|industry'), follow=True),
         Rule(LinkExtractor(allow=r'case-studies'), callback='parse_item', follow=True),
     )
 
