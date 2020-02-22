@@ -7,7 +7,10 @@ from ..items import ScraperItem
 class YaskawaSpider(CrawlSpider):
     name = 'yaskawa'
     allowed_domains = ['yaskawa.eu.com']
-    start_urls = ['https://www.yaskawa.eu.com/en/solutions/application/handling-assembly/']
+    start_urls = ['https://www.yaskawa.eu.com/en/solutions/application/handling-assembly/',
+                    'https://www.yaskawa.eu.com/en/solutions/application/painting/',
+                    'https://www.yaskawa.eu.com/en/solutions/application/welding-cutting/',
+                    'https://www.yaskawa.eu.com/en/solutions/application/packaging-palletising/']
 
     custom_settings = {
         'FEED_FORMAT' : 'json',
@@ -27,14 +30,24 @@ class YaskawaSpider(CrawlSpider):
         item = {}
         item['url'] = response.url
 
-        headers = response.xpath('//h2')
+        headers = response.xpath('//h2[text()!="Pictures"]')
 
         for h in headers:
             title = h.xpath('./text()').get()
             content = h.xpath('./following-sibling::*[not(self::h2)]//text()[normalize-space() != ""]').getall()
+
             if not content:
                 content = h.xpath('./parent::div/following-sibling::div[1]/ul/li/text()').getall()
-            content_trim = [i.strip() for i in content]
-            item[title] = content_trim
+
+            item[title] = [i.strip() for i in content]
+
+        # item['images'] = []
+
+        images = response.xpath('//div[@data-csc-images]//a/@href').getall()
+
+        if not images:
+            images = response.xpath('//div[@data-csc-images]//img/@src').getall()
+
+        item['image_urls'] = [response.urljoin(i) for i in images]
 
         return item

@@ -9,12 +9,13 @@ import scrapy
 
 
 class ScraperItem(scrapy.Item):
-    url = scrapy.Field()
-    challenge = scrapy.Field()
-    solution = scrapy.Field()
-    results = scrapy.Field()
-    customer = scrapy.Field()
-    product = scrapy.Field()
-    industry = scrapy.Field()
-    applications = scrapy.Field()
-    components = scrapy.Field()
+    # url = scrapy.Field()
+    # challenge = scrapy.Field()
+    # solution = scrapy.Field()
+    # results = scrapy.Field()
+    # customer = scrapy.Field()
+    # product = scrapy.Field()
+    # industry = scrapy.Field()
+    # applications = scrapy.Field()
+    # components = scrapy.Field()
+    pass
