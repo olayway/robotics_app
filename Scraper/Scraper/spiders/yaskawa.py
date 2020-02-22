@@ -12,8 +12,8 @@ class YaskawaSpider(CrawlSpider):
     custom_settings = {
         'FEED_FORMAT' : 'json',
         'FEED_URI' : 'yaskawa.json',
-        # 'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1},
-        # 'IMAGES_STORE' : '/Users/Ola/Documents/scrapy_learning/amazon/amazon/images'
+        'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1},
+        'IMAGES_STORE' : '../images'
     }
 
     rules = (
@@ -31,8 +31,10 @@ class YaskawaSpider(CrawlSpider):
 
         for h in headers:
             title = h.xpath('./text()').get()
-            content = h.xpath('./following-sibling::ul//*/text()').getall()
-            item[title] = content
-
+            content = h.xpath('./following-sibling::*[not(self::h2)]//text()[normalize-space() != ""]').getall()
+            if not content:
+                content = h.xpath('./parent::div/following-sibling::div[1]/ul/li/text()').getall()
+            content_trim = [i.strip() for i in content]
+            item[title] = content_trim
 
         return item
