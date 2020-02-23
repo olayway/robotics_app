@@ -16,10 +16,24 @@ class UniversalSpider(CrawlSpider):
         'IMAGES_STORE' : '../ur_images'
     }    
 
+    
 
     rules = (
         Rule(LinkExtractor(allow=r'case-stories', restrict_css='.iconteaser'), callback='parse_item', follow=True),
     )
+
+
+    def parse_start_url(self, response):
+
+        link_tags = response.xpath('//a[@class="iconteaser"]')
+        applications = {}
+        for t in link_tags:
+            company = t.xpath('./p[1]/text()').get()
+            task = t.xpath('./p[2]/text()').get()
+            applications[company] = task
+
+        return applications
+    
 
     def parse_item(self, response):
         # self.logger.info(response.url)
