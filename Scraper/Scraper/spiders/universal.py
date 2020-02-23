@@ -13,7 +13,7 @@ class UniversalSpider(CrawlSpider):
         'FEED_FORMAT' : 'json',
         'FEED_URI' : 'universal_robots.json',
         'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1},
-        'IMAGES_STORE' : '../images'
+        'IMAGES_STORE' : '../ur_images'
     }    
 
 
@@ -30,5 +30,23 @@ class UniversalSpider(CrawlSpider):
 
         for tag in main_tags:
             title, text = tag.xpath('./span/text()').getall()
-            item[title] = text.strip()
+            item[title.strip()] = text.strip()
+
+        item['article_title'] = response.xpath('//span[@class="title title--narrow"]/text()').get()
+
+        article_sections = response.xpath('//*[@class="grid-outer-container item item--UR2StepText"]')
+
+        for s in article_sections:
+            title = s.xpath('(.//h3/span[2]/text() | .//h3/text()[normalize-space() != ""])').get().strip()
+            content = s.xpath('.//p/text()').getall()
+            item[title] = content   
+
+        bullet_sections = response.xpath('//section[@class="contentbox"]')
+
+        for b in bullet_sections:
+            title = b.xpath('./span/text()').get()
+            content = b.xpath('.//li/text()').getall()
+            item[title] = content
+
+
         return item
