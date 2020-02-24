@@ -15,9 +15,11 @@ class YaskawaSpider(CrawlSpider):
     start_urls = ['https://www.yaskawa.eu.com/en/']
 
     custom_settings = {
-        'FEED_FORMAT' : 'json',
-        'FEED_URI' : 'yaskawa.json',
-        'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1},
+        # 'FEED_FORMAT' : 'json',
+        # 'FEED_URI' : 'yaskawa.json',
+        'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1,
+                            'Scraper.pipelines.ScraperPipeline': 300,
+                            'Scraper.pipelines.MongoPipeline': 400},
         'IMAGES_STORE' : '../images'
     }
 

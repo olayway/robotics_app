@@ -8,6 +8,12 @@ verify_ssl = true
 [packages]
 scrapy = "*"
 pillow = "*"
+scrapy-splash = "*"
+scrapy-firebase = "*"
+python-pymongo = "*"
+pymongo = "*"
+dnspython = "*"
+logging = "*"
 
 [requires]
 python_version = "3.8"

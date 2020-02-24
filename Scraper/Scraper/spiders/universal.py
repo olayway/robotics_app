@@ -10,13 +10,13 @@ class UniversalSpider(CrawlSpider):
     start_urls = ['https://www.universal-robots.com/case-stories/']
 
     custom_settings = {
-        'FEED_FORMAT' : 'json',
-        'FEED_URI' : 'universal_robots.json',
-        'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1},
+        # 'FEED_FORMAT' : 'json',
+        # 'FEED_URI' : 'universal_robots.json',
+        'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1,
+                            'Scraper.pipelines.ScraperPipeline': 300,
+                            'Scraper.pipelines.MongoPipeline': 400},
         'IMAGES_STORE' : '../ur_images'
     }    
-
-    
 
     rules = (
         Rule(LinkExtractor(allow=r'case-stories', restrict_css='.iconteaser'), callback='parse_item', follow=True),
@@ -26,11 +26,13 @@ class UniversalSpider(CrawlSpider):
     def parse_start_url(self, response):
 
         link_tags = response.xpath('//a[@class="iconteaser"]')
-        applications = {}
+        applications = {'Applications': []}
         for t in link_tags:
+            item = {}
             company = t.xpath('./p[1]/text()').get()
             task = t.xpath('./p[2]/text()').get()
-            applications[company] = task
+            item[company] = task
+            applications['Applications'].append(item)
 
         return applications
     
