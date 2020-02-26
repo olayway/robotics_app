@@ -1,46 +1,48 @@
 <template>
-  <v-navigation-drawer v-model="drawer" absolute dark>
+  <v-navigation-drawer
+    class="pa-2"
+    temporary
+    floating
+    right
+    stateless
+    v-model="drawerState"
+    absolute
+  >
     <v-list dense nav class="py-0">
-      <v-list-item two-line :class="miniVariant && 'px-0'">
-        <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
-        </v-list-item-avatar>
+      <v-container v-for="(item, index) in navTiles" :key="index">
+        <v-list-item v-if="!item.subtitles.length" link>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
-        <v-list-item-content>
-          <v-list-item-title>Application</v-list-item-title>
-          <v-list-item-subtitle>Subtext</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list-item v-for="item in items" :key="item.title" link>
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+        <v-list-group v-else no-action>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item v-for="(s, i) in item.subtitles" :key="i" @click.prevent>
+            <v-list-item-title v-text="s"></v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+      </v-container>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'NavDrawer',
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    subtitles: {
-      type: Array
+  data() {
+    return {
+      drawerState: false
     }
   },
-  data() {
-    return {}
-  }
+  computed: {
+    ...mapGetters(['navTiles'])
+  },
+  methods: {}
 }
 </script>

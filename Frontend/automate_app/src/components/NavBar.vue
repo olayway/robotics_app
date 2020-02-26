@@ -23,9 +23,9 @@
           </v-container>
         </v-col>
 
-        <!-- Sign in and register buttons -->
+        <!-- Sign in/up buttons OR Drawer toggle button -->
         <v-col id="sign-in-up" style="border: 1px solid blue">
-          <component @toggle-drawer="drawer = !drawer" :is="navigation"></component>
+          <component :is="navigation"></component>
         </v-col>
       </v-row>
     </v-container>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import NavTile from './NavTile.vue'
 import SignInUp from './SignInUp.vue'
 import DrawerButton from './DrawerButton.vue'
@@ -41,16 +42,7 @@ export default {
   name: 'NavBar',
   components: { NavTile, SignInUp, DrawerButton },
   data() {
-    return {
-      navTiles: [
-        { title: 'Home', subtitles: [] },
-        { title: 'About', subtitles: [] },
-        { title: 'Learn', subtitles: ['Tutorials', 'Articles', 'Courses'] },
-        { title: 'Subscribe', subtitles: [] },
-        { title: 'Contact', subtitles: [] }
-      ],
-      drawer: false
-    }
+    return {}
   },
   computed: {
     navigation() {
@@ -59,7 +51,8 @@ export default {
       } else {
         return SignInUp
       }
-    }
+    },
+    ...mapGetters(['navTiles'])
   }
 }
 </script>
