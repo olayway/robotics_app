@@ -12,51 +12,20 @@
         </v-col>
 
         <!-- Main Navigation Buttons -->
-        <v-col class="d-none d-md-block" md="6">
-          <v-container
-            style="border: 1px solid green"
-            class="d-flex justify-center pa-0"
-          >
-            <v-menu
+        <v-col class="d-none d-lg-block" md="6">
+          <v-container style="border: 1px solid green" class="d-flex justify-center pa-0">
+            <NavTile
               v-for="(item, index) in navTiles"
-              v-bind:key="index"
-              offset-y
-            >
-              <template v-slot:activator="{ on }">
-                <a class="tile" v-on="on">{{ item.title }}</a>
-              </template>
-
-              <v-list elevation="0" v-if="item.subtitles.length > 0">
-                <v-list-item
-                  v-for="(item, index) in item.subtitles"
-                  :key="index"
-                  @click.prevent
-                >
-                  <v-list-item-title>{{ item }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+              :key="index"
+              :title="item.title"
+              :subtitles="item.subtitles"
+            ></NavTile>
           </v-container>
         </v-col>
 
         <!-- Sign in and register buttons -->
-        <v-col id="sign-in-up" md="3">
-          <v-container
-            style="border: 1px solid green"
-            class="d-flex justify-end pa-0"
-          >
-            <a class="tile">Log In</a>
-            <v-btn
-              @click.prevent
-              depressed
-              small
-              color="success"
-              :ripple="false"
-              class="tile register-button"
-            >
-              <a href="">Sign Up</a>
-            </v-btn>
-          </v-container>
+        <v-col id="sign-in-up" style="border: 1px solid blue">
+          <component @toggle-drawer="drawer = !drawer" :is="navigation"></component>
         </v-col>
       </v-row>
     </v-container>
@@ -64,8 +33,13 @@
 </template>
 
 <script>
+import NavTile from './NavTile.vue'
+import SignInUp from './SignInUp.vue'
+import DrawerButton from './DrawerButton.vue'
+
 export default {
   name: 'NavBar',
+  components: { NavTile, SignInUp, DrawerButton },
   data() {
     return {
       navTiles: [
@@ -74,10 +48,19 @@ export default {
         { title: 'Learn', subtitles: ['Tutorials', 'Articles', 'Courses'] },
         { title: 'Subscribe', subtitles: [] },
         { title: 'Contact', subtitles: [] }
-      ]
+      ],
+      drawer: false
     }
   },
-  props: ['item']
+  computed: {
+    navigation() {
+      if (['xs', 'sm', 'md'].includes(this.$vuetify.breakpoint.name)) {
+        return DrawerButton
+      } else {
+        return SignInUp
+      }
+    }
+  }
 }
 </script>
 
@@ -107,11 +90,6 @@ export default {
   color: white;
   text-decoration: none;
   text-transform: initial;
-}
-
-.v-menu__content {
-  box-shadow: none;
-  border: 1px solid blue;
 }
 
 .tile {
