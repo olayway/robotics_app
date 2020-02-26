@@ -12,8 +12,6 @@ class ScraperPipeline(object):
     def process_item(self, item, spider):
         return item
 
-
-
 class MongoPipeline(object):
 
     # collection_name = 'scrapy_items'
