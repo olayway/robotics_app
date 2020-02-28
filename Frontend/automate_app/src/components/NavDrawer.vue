@@ -7,6 +7,7 @@
     stateless
     v-model="drawerState"
     absolute
+    v-click-outside="toggleDrawer"
   >
     <v-list dense nav class="py-0">
       <v-container v-for="(item, index) in navTiles" :key="index">
@@ -33,16 +34,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'NavDrawer',
   data() {
-    return {
-      drawerState: false
-    }
+    return {}
   },
   computed: {
-    ...mapGetters(['navTiles'])
+    ...mapGetters(['navTiles', 'drawerState'])
   },
-  methods: {}
+  methods: {
+    ...mapActions(['toggleDrawer'])
+  }
 }
 </script>
