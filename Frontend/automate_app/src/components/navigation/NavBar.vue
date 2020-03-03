@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar absolute elevate-on-scroll>
+  <v-app-bar color="white" app elevate-on-scroll>
     <v-container id="nav-bar" class="pa-0" style="border: 1px solid black">
       <v-row no-gutters class="align-center">
         <!-- Logo -->
@@ -77,12 +77,6 @@ export default {
 
 #logo span {
   font-weight: bold;
-}
-
-.register-button a {
-  color: white;
-  text-decoration: none;
-  text-transform: initial;
 }
 
 .tile {

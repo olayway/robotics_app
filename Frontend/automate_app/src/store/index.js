@@ -7,8 +7,11 @@ export default new Vuex.Store({
   state: {
     navTiles: [
       { title: 'Home', subtitles: [] },
-      { title: 'About', subtitles: [] },
-      { title: 'Learn', subtitles: ['Tutorials', 'Articles', 'Courses'] },
+      { title: 'Why Automate', subtitles: [] },
+      {
+        title: 'Learn',
+        subtitles: ['Tutorials', 'Articles', 'Courses']
+      },
       { title: 'Subscribe', subtitles: [] },
       { title: 'Contact', subtitles: [] }
     ],

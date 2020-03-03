@@ -17,7 +17,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-group v-else no-action>
+        <v-list-group v-model="listOpen" v-else no-action>
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -39,13 +39,18 @@ import { mapActions } from 'vuex'
 export default {
   name: 'NavDrawer',
   data() {
-    return {}
+    return {
+      listOpen: false
+    }
   },
   computed: {
     ...mapGetters(['navTiles', 'drawerState'])
   },
   methods: {
     ...mapActions(['toggleDrawer'])
+  },
+  collapseList() {
+    this.listOpen = false
   }
 }
 </script>
