@@ -1,11 +1,11 @@
 <template>
   <v-app-bar color="white" app elevate-on-scroll>
-    <v-container id="nav-bar" class="pa-0" style="border: 1px solid black">
+    <v-container id="nav-bar" class="pa-0">
       <v-row no-gutters class="align-center">
         <!-- Logo -->
         <v-col md="3">
-          <v-container style="border: 1px solid red" class="pa-0">
-            <div id="logo" class="tile" style="border: 1px solid green">
+          <v-container class="pa-0">
+            <div id="logo" class="tile">
               <span>auto</span>mate
             </div>
           </v-container>
@@ -13,7 +13,7 @@
 
         <!-- Main Navigation Buttons -->
         <v-col class="d-none d-lg-block" md="6">
-          <v-container style="border: 1px solid green" class="d-flex justify-center pa-0">
+          <v-container class="d-flex justify-center pa-0">
             <NavTile
               v-for="(item, index) in navTiles"
               :key="index"
@@ -24,7 +24,7 @@
         </v-col>
 
         <!-- Sign in/up buttons OR Drawer toggle button -->
-        <v-col id="sign-in-up" style="border: 1px solid blue">
+        <v-col id="sign-in-up">
           <component :is="navigation"></component>
         </v-col>
       </v-row>
@@ -67,7 +67,7 @@ export default {
   text-align: center;
   font-weight: 500;
   font-size: 16px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 #logo {

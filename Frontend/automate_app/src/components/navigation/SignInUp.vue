@@ -1,5 +1,5 @@
 <template>
-  <v-container style="border: 1px solid green" class="sign-in-up d-flex justify-end pa-0">
+  <v-container class="sign-in-up d-flex justify-end pa-0">
     <a class="tile">Log In</a>
     <v-btn
       @click.prevent

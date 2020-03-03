@@ -33,7 +33,6 @@ export default {
 <style scoped>
 .v-menu__content {
   box-shadow: none;
-  border: 1px solid blue;
 }
 
 .tile {
@@ -45,6 +44,6 @@ export default {
   text-align: center;
   font-weight: 500;
   font-size: 16px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 </style>
