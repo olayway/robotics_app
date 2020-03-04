@@ -1,5 +1,10 @@
 <template>
-  <v-toolbar class="filter-nav flex-row" color="#515E8A">
+  <v-toolbar
+    id="filterNav"
+    :style="fixedFilterNav ? filterNavStyle : ''"
+    class="flex-row"
+    color="#515E8A"
+  >
     <!-- cache-items? -->
     <v-container class="d-flex flex-row">
       <v-select
@@ -32,12 +37,52 @@ export default {
         industry: ['Food & Beverages', 'Automotive', 'Electronics'],
         country: ['Poland', 'USA', 'Germany'],
         application: ['welding', 'packaging', 'painting', 'cutting', 'assembly']
-      }
+      },
+      filterNavStyle: {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100%',
+        'z-index': '1'
+      },
+      fixedFilterNav: false,
+      filterNavPosition: null,
+      mainResultsPosition: null
     }
   },
   filters: {
     capitalize: value => {
       return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
+  created() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      this.filterNavPosition = document
+        .querySelector('#filterNav')
+        .getBoundingClientRect().top
+      this.mainResultsPosition = document
+        .querySelector('#filterResults')
+        .getBoundingClientRect().top
+      console.log('FILTER', this.filterNavPosition)
+      console.log('RESULTS', this.mainResultsPosition)
+    }
+  },
+  watch: {
+    mainResultsPosition: function(value) {
+      let navHeight = document
+        .querySelector('#filterResults')
+        .getBoundingClientRect().height
+      if (value <= 0 && this.mainResultsPosition < navHeight) {
+        this.fixedFilterNav = true
+      } else {
+        this.fixedFilterNav = false
+      }
     }
   }
 }

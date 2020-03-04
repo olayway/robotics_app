@@ -14,6 +14,9 @@ python-pymongo = "*"
 pymongo = "*"
 dnspython = "*"
 logging = "*"
+python-flask = "*"
+flask = "*"
+markupsafe = "*"
 
 [requires]
 python_version = "3.8"
