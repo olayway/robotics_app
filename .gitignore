@@ -1,4 +1,4 @@
 yaskawa.json
 universal_robots.json
-*/*images*
+*/*images
 .scrapy

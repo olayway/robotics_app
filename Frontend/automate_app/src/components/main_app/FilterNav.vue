@@ -1,10 +1,5 @@
 <template>
-  <v-toolbar
-    id="filterNav"
-    :style="fixedFilterNav ? filterNavStyle : ''"
-    class="flex-row"
-    color="#515E8A"
-  >
+  <v-toolbar id="filterNav" class="flex-row" color="#515E8A">
     <!-- cache-items? -->
     <v-container class="d-flex flex-row">
       <v-select
@@ -37,17 +32,17 @@ export default {
         industry: ['Food & Beverages', 'Automotive', 'Electronics'],
         country: ['Poland', 'USA', 'Germany'],
         application: ['welding', 'packaging', 'painting', 'cutting', 'assembly']
-      },
-      filterNavStyle: {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: '100%',
-        'z-index': '1'
-      },
-      fixedFilterNav: false,
-      filterNavPosition: null,
-      mainResultsPosition: null
+      }
+      // filterNavStyle: {
+      //   position: 'fixed',
+      //   top: '0',
+      //   left: '0',
+      //   width: '100%',
+      //   'z-index': '1'
+      // },
+      // fixedFilterNav: false,
+      // filterNavPosition: null,
+      // filterResultsPosition: null
     }
   },
   filters: {
@@ -66,19 +61,23 @@ export default {
       this.filterNavPosition = document
         .querySelector('#filterNav')
         .getBoundingClientRect().top
-      this.mainResultsPosition = document
+      this.filterResultsPosition = document
         .querySelector('#filterResults')
         .getBoundingClientRect().top
-      console.log('FILTER', this.filterNavPosition)
-      console.log('RESULTS', this.mainResultsPosition)
+      // console.log('FILTER', this.filterNavPosition)
+      // console.log('RESULTS', this.filterResultsPosition)
+      // console.log(
+      //   'FILTERHEIGHT',
+      //   document.querySelector('#filterNav').getBoundingClientRect().height
+      // )
     }
   },
   watch: {
-    mainResultsPosition: function(value) {
+    filterResultsPosition: function(value) {
       let navHeight = document
-        .querySelector('#filterResults')
+        .querySelector('#filterNav')
         .getBoundingClientRect().height
-      if (value <= 0 && this.mainResultsPosition < navHeight) {
+      if (value < navHeight) {
         this.fixedFilterNav = true
       } else {
         this.fixedFilterNav = false
@@ -90,3 +89,5 @@ export default {
 
 <style scoped>
 </style>
+
+// :style="fixedFilterNav ? filterNavStyle : ''"

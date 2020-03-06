@@ -17,6 +17,7 @@ logging = "*"
 python-flask = "*"
 flask = "*"
 markupsafe = "*"
+flask-pymongo = "*"
 
 [requires]
 python_version = "3.8"

@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar id="appBar" :value="false" color="white" app elevate-on-scroll>
+  <v-app-bar id="appBar" color="white" app elevate-on-scroll>
     <v-container id="nav-bar" class="pa-0">
       <v-row no-gutters class="align-center">
         <!-- Logo -->
