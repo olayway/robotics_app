@@ -24,11 +24,11 @@ class UniversalSpider(scrapy.Spider):
 
         for c in cases:
 
-            application = c.xpath('./p[2]/text()').get()
+            applications = c.xpath('./p[2]/text()').get()
             url_relative = c.xpath('./@href').get()
             url = urljoin(response.url, url_relative)
 
-            yield scrapy.Request(url, callback=self.parse_case, meta={'Application': application})
+            yield scrapy.Request(url, callback=self.parse_case, meta={'Applications': applications})
     
     def parse_case(self, response):
 
@@ -37,7 +37,7 @@ class UniversalSpider(scrapy.Spider):
         case['url'] = response.url
 
         case['filter_tags'] = {}
-        case['filter_tags'].update({'Application': response.meta['Application']})
+        case['filter_tags'].update({'Applications': response.meta['Applications']})
 
         filter_tags = response.xpath('//div[@class="hero-info"]/div/div')
 

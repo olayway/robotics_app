@@ -15,8 +15,8 @@ class YaskawaSpider(CrawlSpider):
     start_urls = ['https://www.yaskawa.eu.com/en/']
 
     custom_settings = {
-        # 'FEED_FORMAT' : 'json',
-        # 'FEED_URI' : 'yaskawa.json',
+        'FEED_FORMAT' : 'json',
+        'FEED_URI' : 'yaskawa.json',
         'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1,
                             'Scraper.pipelines.ScraperPipeline': 300,
                             'Scraper.pipelines.MongoPipeline': 400},
@@ -30,29 +30,50 @@ class YaskawaSpider(CrawlSpider):
 
     def parse_item(self, response):
         # self.logger.info(response.url)
-        # item = ScraperItem()
+        case = ScraperItem()
 
-        item = {}
-        item['url'] = response.url
+        case['url'] = response.url
+        case['filter_tags'] = {}
 
-        headers = response.xpath('//h2[text()!="Pictures"]')
+        filter_tags = response.xpath("//div[@class='rightCol']/div//h2[contains(text(), 'Customer') or contains(text(), 'Industry') or contains(text(), 'Application')]")
 
-        for h in headers:
-            title = h.xpath('./text()').get()
-            content = h.xpath('./following-sibling::*[not(self::h2)]//text()[normalize-space() != ""]').getall()
+        # headers = response.xpath('//h2[text()!="Pictures"]')
 
-            if not content:
-                content = h.xpath('./parent::div/following-sibling::div[1]/ul/li/text()').getall()
+        if not filter_tags:
+            return
 
-            item[title] = [i.strip() for i in content]
+        for t in filter_tags:
+            title = t.xpath('./text()').get()
+            text = t.xpath('./following-sibling::*[not(self::h2)]//text()[normalize-space() != ""]').getall()
+
+            if not text:
+                text = h.xpath('./parent::div/following-sibling::div[1]/ul/li/text()').getall()
+
+            case['filter_tags'].update({title: text})
 
         # item['images'] = []
+
+        case['content'] = {}
+
+        article_title = response.xpath("//div[@id='sliderSmall']/h1/text()").get()
+
+        article_sections = {}
+        
+        section_titles = response.xpath('//div[@class="floatLeft leftCol"]/div[1]/h2')
+
+        for s in section_titles:
+            title = s.xpath('.//text()').get().strip()
+            # text = s.xpath('./following-sibling::*//text()[normalize-space() != ""]').getall()
+            text = s.xpath('./following-sibling::*[1]').get()
+            article_sections[title] = text
+
+        case['content'].update({'Article_title': article_title, 'Article_sections': article_sections})
 
         images = response.xpath('//div[@data-csc-images]//a/@href').getall()
 
         if not images:
             images = response.xpath('//div[@data-csc-images]//img/@src').getall()
 
-        item['image_urls'] = [response.urljoin(i) for i in images]
+        case['image_urls'] = [response.urljoin(i) for i in images]
 
-        return item
+        return case
