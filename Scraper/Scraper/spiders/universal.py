@@ -1,54 +1,54 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from scrapy.linkextractors import LinkExtractor
-from scrapy.spiders import CrawlSpider, Rule
+from urllib.parse import urljoin
+from ..items import ScraperItem
 
 
-class UniversalSpider(CrawlSpider):
+class UniversalSpider(scrapy.Spider):
     name = 'universal'
     allowed_domains = ['universal-robots.com']
     start_urls = ['https://www.universal-robots.com/case-stories/']
 
     custom_settings = {
-        # 'FEED_FORMAT' : 'json',
-        # 'FEED_URI' : 'universal_robots.json',
+        'FEED_FORMAT' : 'json',
+        'FEED_URI' : 'universal_robots.json',
         'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1,
                             'Scraper.pipelines.ScraperPipeline': 300,
                             'Scraper.pipelines.MongoPipeline': 400},
-        'IMAGES_STORE' : '../ur_images'
+        'IMAGES_STORE' : './ur_images'
     }    
 
-    rules = (
-        Rule(LinkExtractor(allow=r'case-stories', restrict_css='.iconteaser'), callback='parse_item', follow=True),
-    )
+    def parse(self, response):
+        
+        cases = response.xpath("//a[@class='iconteaser']")
 
+        for c in cases:
 
-    def parse_start_url(self, response):
+            application = c.xpath('./p[2]/text()').get()
+            url_relative = c.xpath('./@href').get()
+            url = urljoin(response.url, url_relative)
 
-        link_tags = response.xpath('//a[@class="iconteaser"]')
-        applications = {'Applications': []}
-        for t in link_tags:
-            item = {}
-            company = t.xpath('./p[1]/text()').get()
-            task = t.xpath('./p[2]/text()').get()
-            item[company] = task
-            applications['Applications'].append(item)
-
-        return applications
+            yield scrapy.Request(url, callback=self.parse_case, meta={'Application': application})
     
+    def parse_case(self, response):
 
-    def parse_item(self, response):
-        # self.logger.info(response.url)
-        item = {}
-        item['url'] = response.url
+        case = ScraperItem()
+        
+        case['url'] = response.url
 
-        main_tags = response.xpath('//div[@class="hero-info"]/div/div')
+        case['filter_tags'] = {}
+        case['filter_tags'].update({'Application': response.meta['Application']})
 
-        for tag in main_tags:
+        filter_tags = response.xpath('//div[@class="hero-info"]/div/div')
+
+        for tag in filter_tags:
             title, text = tag.xpath('./span/text()').getall()
-            item[title.strip()] = text.strip()
+            case['filter_tags'].update({title.strip(): text.strip()})
 
-        item['article_title'] = response.xpath('//span[@class="title title--narrow"]/text()').get()
+
+        case['content'] = {}
+
+        article_title = response.xpath('//span[@class="title title--narrow"]/text()').get()
 
         # article_sections = response.xpath('//*[@class="grid-outer-container item item--UR2StepText"]')
 
@@ -57,22 +57,32 @@ class UniversalSpider(CrawlSpider):
         #     content = s.xpath('.//p//text()').getall()
         #     item[title] = content   
 
-        article_sections = response.xpath('//h3[@class="titlelabel grid-gap1-below" and normalize-space()!=""]')
+        article_sections = {}
+        
+        section_titles = response.xpath('//h3[@class="titlelabel grid-gap1-below" and normalize-space()!=""]')
 
-        for s in article_sections:
+        for s in section_titles:
             title = s.xpath('.//text()[2]').get().strip()
-            content = s.xpath('./following-sibling::*//text()[normalize-space() != ""]').getall()
-            item[title] = content   
+            # text = s.xpath('./following-sibling::*//text()[normalize-space() != ""]').getall()
+            text = s.xpath('./following-sibling::*').getall()
+            article_sections[title] = text 
 
-        bullet_sections = response.xpath('//section[@class="contentbox"]')
 
-        for b in bullet_sections:
-            title = b.xpath('./span/text()').get()
-            content = b.xpath('.//li/text()').getall()
-            item[title] = content
+        bullet_points = {}
+
+        bullet_tiles = response.xpath('//section[@class="contentbox"]')
+
+        for t in bullet_tiles:
+            title = t.xpath('./span/text()').get()
+            points = t.xpath('./ul').get()
+            bullet_points[title] = points
+
+
+        case['content'].update({'Article_title': article_title, 'Article_sections': article_sections, 'Bullet_points': bullet_points})
 
         images = response.xpath('//div[@class="grid-span10 grid-shift1"]//img/@src').getall()
 
-        item['image_urls'] = [response.urljoin(i) for i in images]
+        case['image_urls'] = [response.urljoin(i) for i in images]
 
-        return item
+        return case
+

@@ -9,13 +9,8 @@ import scrapy
 
 
 class ScraperItem(scrapy.Item):
-    # url = scrapy.Field()
-    # challenge = scrapy.Field()
-    # solution = scrapy.Field()
-    # results = scrapy.Field()
-    # customer = scrapy.Field()
-    # product = scrapy.Field()
-    # industry = scrapy.Field()
-    # applications = scrapy.Field()
-    # components = scrapy.Field()
-    pass
+    url = scrapy.Field()
+    filter_tags = scrapy.Field()
+    content = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()

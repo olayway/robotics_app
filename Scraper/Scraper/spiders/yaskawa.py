@@ -20,7 +20,7 @@ class YaskawaSpider(CrawlSpider):
         'ITEM_PIPELINES' : {'scrapy.pipelines.images.ImagesPipeline': 1,
                             'Scraper.pipelines.ScraperPipeline': 300,
                             'Scraper.pipelines.MongoPipeline': 400},
-        'IMAGES_STORE' : '../images'
+        'IMAGES_STORE' : './yaskawa_images'
     }
 
     rules = (
