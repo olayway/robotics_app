@@ -19,6 +19,7 @@ flask = "*"
 markupsafe = "*"
 flask-pymongo = "*"
 flask-cors = "*"
+html-sanitizer = "*"
 
 [requires]
 python_version = "3.8"

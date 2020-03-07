@@ -2,6 +2,7 @@
 import scrapy
 from urllib.parse import urljoin
 from ..items import ScraperItem
+from html_sanitizer import Sanitizer
 
 
 class UniversalSpider(scrapy.Spider):
@@ -31,6 +32,8 @@ class UniversalSpider(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse_case, meta={'Applications': applications})
     
     def parse_case(self, response):
+
+        sanitizer = Sanitizer()
 
         case = ScraperItem()
         
@@ -64,8 +67,8 @@ class UniversalSpider(scrapy.Spider):
         for s in section_titles:
             title = s.xpath('.//text()[2]').get().strip()
             # text = s.xpath('./following-sibling::*//text()[normalize-space() != ""]').getall()
-            text = s.xpath('./following-sibling::*').getall()
-            article_sections[title] = text 
+            content = s.xpath('./following-sibling::*').getall()
+            article_sections[title] = list(map(lambda x: sanitizer.sanitize(x), content)) 
 
 
         bullet_points = {}
@@ -75,7 +78,7 @@ class UniversalSpider(scrapy.Spider):
         for t in bullet_tiles:
             title = t.xpath('./span/text()').get()
             points = t.xpath('./ul').get()
-            bullet_points[title] = points
+            bullet_points[title] = sanitizer.sanitize(points)
 
 
         case['content'].update({'Article_title': article_title, 'Article_sections': article_sections, 'Bullet_points': bullet_points})

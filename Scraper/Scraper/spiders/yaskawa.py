@@ -3,6 +3,8 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from ..items import ScraperItem
+from html_sanitizer import Sanitizer
+
 
 class YaskawaSpider(CrawlSpider):
     name = 'yaskawa'
@@ -30,6 +32,9 @@ class YaskawaSpider(CrawlSpider):
 
     def parse_item(self, response):
         # self.logger.info(response.url)
+
+        sanitizer = Sanitizer()
+
         case = ScraperItem()
 
         case['url'] = response.url
@@ -44,7 +49,7 @@ class YaskawaSpider(CrawlSpider):
 
         for t in filter_tags:
             title = t.xpath('./text()').get()
-            text = t.xpath('./following-sibling::*[not(self::h2)]//text()[normalize-space() != ""]').getall()
+            text = (t.xpath('./following-sibling::*[not(self::h2)]//text()[normalize-space() != ""]').getall())
 
             if not text:
                 text = h.xpath('./parent::div/following-sibling::div[1]/ul/li/text()').getall()
@@ -65,7 +70,7 @@ class YaskawaSpider(CrawlSpider):
             title = s.xpath('.//text()').get().strip()
             # text = s.xpath('./following-sibling::*//text()[normalize-space() != ""]').getall()
             text = s.xpath('./following-sibling::*[1]').get()
-            article_sections[title] = text
+            article_sections[title] = sanitizer.sanitize(text)
 
         case['content'].update({'Article_title': article_title, 'Article_sections': article_sections})
 
