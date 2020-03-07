@@ -1,13 +1,14 @@
 <template>
-  <v-parallax src="@/images/subscribe_2_alpha.jpg" style="height: auto">
+  <v-parallax src="@/assets/images/subscribe_2_alpha.jpg" style="height: auto">
     <v-container class="subscribe-form py-10">
       <v-row class="justify-space-around px-10">
         <v-col cols="10" md="5" class="d-flex flex-column">
           <p class="subs-title">Subscribe now for new use cases</p>
           <div class="divider"></div>
-          <p
-            class="subs-text"
-          >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean urna at nibh nisi volutpat tincidunt viverra.</p>
+          <p class="subs-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean urna
+            at nibh nisi volutpat tincidunt viverra.
+          </p>
         </v-col>
         <v-col cols="10" md="5" class="d-flex flex-column align-center">
           <v-text-field
@@ -24,9 +25,11 @@
             single-line
             dark
           ></v-text-field>
-          <p
-            class="subs-terms"
-          >By submitting this form, I confirm that I agree to the collection and processing of personal data by Adjust, as further described in the Privacy Policy.</p>
+          <p class="subs-terms">
+            By submitting this form, I confirm that I agree to the collection
+            and processing of personal data by Adjust, as further described in
+            the Privacy Policy.
+          </p>
           <v-btn class="subs-btn" rounded>Let's Go!</v-btn>
         </v-col>
       </v-row>

@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask import render_template
 from flask_pymongo import PyMongo
+from flask_cors import CORS
 import json
 
 
@@ -15,6 +16,7 @@ def create_app(test_config=None):
         SECRET_KEY = 'secret_key'
     )
 
+    CORS(app, resources={r'/*': {'origins': '*'}})
 
     mongo = PyMongo(app)
     db = mongo.db
@@ -36,7 +38,7 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/')
+    @app.route('/denmark', methods=['GET'])
     def test():
         documents = universal.find({"Country": "Denmark"})
         response = []

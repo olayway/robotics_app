@@ -3,7 +3,7 @@
     <v-container>
       <v-row justify="center">
         <div class="main-icon-title">
-          <img src="@/images/main_icon.svg" alt="automate-icon" />
+          <img src="@/assets/images/main_icon.svg" alt="automate-icon" />
           <p class="main-title">Find your Auto-Mate!</p>
         </div>
       </v-row>
@@ -14,12 +14,18 @@
       </v-row>
       <v-row justify="center">
         <v-col md="8">
-          <p
-            class="main-text top"
-          >Vitae eget placerat lorem aliquam consectetur ut enim cursus. Turpis tortor et, vel nisi faucibus nibh sollicitudin suspendisse. Aliquam sapien vel nisi faucibus nibh sollicitu dinaugue ipsum non.</p>
-          <p
-            class="main-text"
-          >Sit accumsan iaculis commodo dignissim scelerisque purus vitae cras vitae cras ac. Odio integer blandit at turpis ac sem pellentesque habitasse adipiscing. Vitae, varius vestibulum viverra tellus aliquam vestibulum ultrices hendrerit. Suspendisse vitae pulvinar pharetra, eleifend.</p>
+          <p class="main-text top">
+            Vitae eget placerat lorem aliquam consectetur ut enim cursus. Turpis
+            tortor et, vel nisi faucibus nibh sollicitudin suspendisse. Aliquam
+            sapien vel nisi faucibus nibh sollicitu dinaugue ipsum non.
+          </p>
+          <p class="main-text">
+            Sit accumsan iaculis commodo dignissim scelerisque purus vitae cras
+            vitae cras ac. Odio integer blandit at turpis ac sem pellentesque
+            habitasse adipiscing. Vitae, varius vestibulum viverra tellus
+            aliquam vestibulum ultrices hendrerit. Suspendisse vitae pulvinar
+            pharetra, eleifend.
+          </p>
         </v-col>
       </v-row>
       <v-row justify="center">
@@ -31,8 +37,6 @@
     <MainApp></MainApp>
   </div>
 </template>
-
-
 
 <script>
 import SearchField from '@/components/main_app/SearchField.vue'

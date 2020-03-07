@@ -3,7 +3,7 @@
     <v-container pa-0>
       <v-row no-gutters class="mb-3">
         <v-col cols="6" class="d-flex">
-          <img src="@/images/card_img.jpg" alt="yaskawa_img" />
+          <img src="@/assets/images/card_img.jpg" alt="yaskawa_img" />
         </v-col>
         <v-col cols="6" class="pl-3 d-flex flex-column justify-space-between">
           <div class="card-titles">
@@ -13,19 +13,26 @@
           </div>
           <div class="divider"></div>
           <div>
-            <p class="company">IRA – Industrial Robot Automation Aps, Dänemark</p>
-            <p class="applications">Assembly | Machine Tending | Part Transfer | Press/Forming</p>
+            <p class="company">
+              IRA – Industrial Robot Automation Aps, Dänemark
+            </p>
+            <p class="applications">
+              Assembly | Machine Tending | Part Transfer | Press/Forming
+            </p>
           </div>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col class="d-flex justify-start">
-          <p
-            class="short-descr"
-          >Complete the production automation cycle in Avícola El Ángel and optimise the final handling process</p>
+          <p class="short-descr">
+            Complete the production automation cycle in Avícola El Ángel and
+            optimise the final handling process
+          </p>
         </v-col>
         <v-col class="d-flex shrink ml-3 justify-end">
-          <v-btn class="more-button" outlined rounded color="#F1D302">More Info</v-btn>
+          <v-btn class="more-button" outlined rounded color="#F1D302"
+            >More Info</v-btn
+          >
         </v-col>
       </v-row>
     </v-container>
