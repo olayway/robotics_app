@@ -5,7 +5,11 @@
     </template>
 
     <v-list elevation="0" v-if="subtitles.length > 0">
-      <v-list-item v-for="(item, index) in subtitles" :key="index" @click.prevent>
+      <v-list-item
+        v-for="(item, index) in subtitles"
+        :key="index"
+        @click.prevent
+      >
         <v-list-item-title>{{ item }}</v-list-item-title>
       </v-list-item>
     </v-list>

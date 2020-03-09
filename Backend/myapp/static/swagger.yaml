@@ -1,0 +1,110 @@
+openapi: 3.0.0
+
+info:
+  title: "AutoMate App API"
+  description: "An API for obtaining existing information about successful applications of robotics solutions in the industry and for posting data about new use cases."
+  version: "1.0.0"
+  contact:
+    name: Aleksandra Rubaj
+    email: ola@yway.pl
+
+# servers:
+#   url: https://development.gigantic-server.com/v1
+#   description: Development server
+
+paths:
+  /use-cases:
+    get:
+      tags: [Use cases]
+      description: Obtain information about implemented robotics solutions
+      # query parameters
+      parameters:
+        - name: bodyLimit
+          in: query
+          description: The amount of use-cases returned
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 20
+            example: 15
+        - name: pageLimit
+          in: query
+          description: The amount of pages with use-cases returned
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 5
+            example: 3
+
+      responses:
+        200:
+          description: Successful pull of use-cases
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UseCases"
+    post:
+      description: Creates a new use-case in the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/UseCase"
+
+      responses:
+        200:
+          description: Succesfully created a new use-case
+
+  /use-cases/{id}:
+    get:
+      description: Obtain information about a specific use-case
+      #query parameters
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the use case
+          schema:
+            type: integer
+            example: 123
+
+      responses:
+        200:
+          description: Success pull of the use-case info
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UseCase"
+            application/xml:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UseCase"
+
+components:
+  schemas:
+    UseCases:
+      description: Array of use-cases
+      type: array
+      items:
+        $ref: "#/components/schemas/UseCase"
+
+    UseCase:
+      description: Model of use-case info
+      properties:
+        id:
+          type: string
+          example: 5e63f7ecbcfe1b0c14f28c69
+        company:
+          type: string
+          example: 2K Trend, a.s.
+        applications:
+          type: string
+          example: Machine Tending, Pick and Place
+tags:
+  - name: Use cases
+    description: Applications of robotics solutions
+  - name: Knowledge
+    description: Robotics tutorials, courses and articles

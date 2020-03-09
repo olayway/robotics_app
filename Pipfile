@@ -8,18 +8,14 @@ verify_ssl = true
 [packages]
 scrapy = "*"
 pillow = "*"
-scrapy-splash = "*"
-scrapy-firebase = "*"
-python-pymongo = "*"
 pymongo = "*"
 dnspython = "*"
-logging = "*"
-python-flask = "*"
 flask = "*"
 markupsafe = "*"
-flask-pymongo = "*"
 flask-cors = "*"
 html-sanitizer = "*"
+flask-swagger-ui = "*"
+flask-mongoalchemy = "==0.7.1"
 
 [requires]
 python_version = "3.8"
