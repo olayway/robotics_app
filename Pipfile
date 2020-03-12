@@ -14,8 +14,10 @@ flask = "*"
 markupsafe = "*"
 flask-cors = "*"
 html-sanitizer = "*"
+flask-mongoengine = "*"
+python-dotenv = "*"
+connexion = {extras = ["swagger-ui"],version = "*"}
 flask-swagger-ui = "*"
-flask-mongoalchemy = "==0.7.1"
 
 [requires]
 python_version = "3.8"

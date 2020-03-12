@@ -8,80 +8,105 @@ info:
     name: Aleksandra Rubaj
     email: ola@yway.pl
 
-# servers:
-#   url: https://development.gigantic-server.com/v1
-#   description: Development server
+#servers:
 
 paths:
   /use-cases:
     get:
       tags: [Use cases]
-      description: Obtain information about implemented robotics solutions
+      summary: Returns a list of use-cases.
+      operationId: getUseCases
       # query parameters
       parameters:
         - name: bodyLimit
           in: query
-          description: The amount of use-cases returned
-          schema:
-            type: integer
-            minimum: 10
-            maximum: 20
-            example: 15
-        - name: pageLimit
-          in: query
-          description: The amount of pages with use-cases returned
+          description: The amount of use-cases returned.
           schema:
             type: integer
             minimum: 1
-            maximum: 5
-            example: 3
+            maximum: 15
+            default: 10
+            example: 10
+        - name: industries
+          in: query
+          description: Robotics implementations from specified industry branches.
+          schema:
+            type: array
+            items:
+              type: string
+          explode: false
+          example:
+            [
+              "Food and Agriculture",
+              "Electronics and Technology",
+              "Furniture and Equipment",
+            ]
+        - name: applications
+          in: query
+          description: Robotics implementations by specified applications.
+          schema:
+            type: array
+            items:
+              type: string
+          explode: false
+          example: ["Pick and Place", "Machine Tending", "Welding"]
 
       responses:
-        200:
-          description: Successful pull of use-cases
+        "200":
+          description: A JSON array of use-cases.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/UseCases"
+        default:
+          description: Unexpected error.
     post:
-      description: Creates a new use-case in the database
+      tags: [Use cases]
+      summary: Creates a new use-case in the database.
+      operationId: addUseCase
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
               $ref: "#/components/schemas/UseCase"
 
       responses:
-        200:
-          description: Succesfully created a new use-case
+        "200":
+          description: Succesfully created a new use-case.
 
-  /use-cases/{id}:
+  /use-cases/{caseId}:
+    summary: Represents a single use-case.
+    description: >
+      This resource represents a specific use-case in the system.
+      Each use-case is identified by a numeric 'id'.
     get:
-      description: Obtain information about a specific use-case
+      tags: [Use cases]
+      summary: Returns a use case by ID.
+      operationId: getUseCase
       #query parameters
       parameters:
-        - in: path
-          name: id
+        - name: caseId
+          in: path
+          description: Numeric ID of the use case to get.
           required: true
-          description: The ID of the use case
           schema:
             type: integer
-            example: 123
+            example: 7
 
       responses:
-        200:
-          description: Success pull of the use-case info
+        "200":
+          description: Successful pull of the use-case info.
           content:
             application/json:
               schema:
-                type: object
                 $ref: "#/components/schemas/UseCase"
-            application/xml:
-              schema:
-                type: object
-                $ref: "#/components/schemas/UseCase"
+        "400":
+          description: The specified use-case ID is invalid (not a number).
+        "404":
+          description: A use-case with the specified ID was not found.
+        default:
+          description: Unexpected error.
 
 components:
   schemas:
@@ -92,19 +117,72 @@ components:
         $ref: "#/components/schemas/UseCase"
 
     UseCase:
+      type: object
       description: Model of use-case info
       properties:
         id:
           type: string
-          example: 5e63f7ecbcfe1b0c14f28c69
-        company:
+          example: "5e63f7ecbcfe1b0c14f28c69"
+          readOnly: true
+        url:
           type: string
-          example: 2K Trend, a.s.
-        applications:
-          type: string
-          example: Machine Tending, Pick and Place
+          format: url
+          readOnly: true
+          example: "https://www.universal-robots.com/case-stories/2k-trend/"
+        filter_tags:
+          type: object
+          properties:
+            Applications:
+              type: array
+              items:
+                type: string
+              example: ["Machine Tending", "Pick and Place"]
+            Company:
+              type: string
+              example: "2K Trend, a.s."
+            Industry:
+              type: string
+              example: "Plastic molding"
+            Country:
+              type: string
+              example: "Czech Republic"
+            Company size:
+              type: string
+              example: "30+"
+          required: [Applications, Company, Industry]
+        content:
+          type: object
+          properties:
+            Article_title:
+              type: string
+            Article_sections:
+              type: object
+            Bullet_points:
+              type: object
+          required: [Article_title, Article_sections]
+        image_urls:
+          type: array
+          items:
+            type: string
+            format: url
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: url
+              path:
+                type: string
+              checksum:
+                type: string
+
+#security
+
 tags:
   - name: Use cases
     description: Applications of robotics solutions
   - name: Knowledge
     description: Robotics tutorials, courses and articles
+#externalDocs

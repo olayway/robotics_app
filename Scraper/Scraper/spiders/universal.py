@@ -25,7 +25,7 @@ class UniversalSpider(scrapy.Spider):
 
         for c in cases:
 
-            applications = c.xpath('./p[2]/text()').get()
+            applications = c.xpath('./p[2]/text()').get().split(",")
             url_relative = c.xpath('./@href').get()
             url = urljoin(response.url, url_relative)
 
