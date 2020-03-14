@@ -50,6 +50,14 @@ paths:
               type: string
           explode: false
           example: ["Pick and Place", "Machine Tending", "Welding"]
+        - name: country
+          in: query
+          description: Robotics implementations by country.
+          schema:
+            type: array
+            items:
+              type: string
+          example: ["Czech Republic", "Poland", "Spain"]
 
       responses:
         "200":
@@ -124,11 +132,6 @@ components:
           type: string
           example: "5e63f7ecbcfe1b0c14f28c69"
           readOnly: true
-        url:
-          type: string
-          format: url
-          readOnly: true
-          example: "https://www.universal-robots.com/case-stories/2k-trend/"
         filter_tags:
           type: object
           properties:
@@ -160,11 +163,6 @@ components:
             Bullet_points:
               type: object
           required: [Article_title, Article_sections]
-        image_urls:
-          type: array
-          items:
-            type: string
-            format: url
         images:
           type: array
           items:

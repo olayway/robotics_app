@@ -4,9 +4,10 @@ from flask import Flask
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
 
+
 from .extensions import db
 from .commands import add_usecase
-from .views import test
+from .views import setup 
 
 
 def create_app(test_config=None):
@@ -34,8 +35,15 @@ def create_app(test_config=None):
     db.init_app(app)
     #extensions end#
 
+    #blueprint#
+    app.register_blueprint(setup)
+    #end blueprint#
+
     #clicommands#
     app.cli.add_command(add_usecase)
     #clicommands end#
+
+    # app.add_url_rule("/add", view_func=test)
+    # app.add_url_rule("/get", view_func=get_test)
 
     return app

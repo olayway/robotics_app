@@ -29,7 +29,7 @@ class UniversalSpider(scrapy.Spider):
             url_relative = c.xpath('./@href').get()
             url = urljoin(response.url, url_relative)
 
-            yield scrapy.Request(url, callback=self.parse_case, meta={'Applications': applications})
+            yield scrapy.Request(url, callback=self.parse_case, meta={'applications': applications})
     
     def parse_case(self, response):
 
@@ -40,13 +40,15 @@ class UniversalSpider(scrapy.Spider):
         case['url'] = response.url
 
         case['filter_tags'] = {}
-        case['filter_tags'].update({'Applications': response.meta['Applications']})
+        case['filter_tags'].update({'applications': response.meta['applications']})
 
         filter_tags = response.xpath('//div[@class="hero-info"]/div/div')
 
         for tag in filter_tags:
             title, text = tag.xpath('./span/text()').getall()
-            case['filter_tags'].update({title.strip(): text.strip()})
+            title = title.strip().replace(" ", "_").lower()
+            text = text.strip()
+            case['filter_tags'].update({title: text})
 
 
         case['content'] = {}
@@ -81,7 +83,7 @@ class UniversalSpider(scrapy.Spider):
             bullet_points[title] = sanitizer.sanitize(points)
 
 
-        case['content'].update({'Article_title': article_title, 'Article_sections': article_sections, 'Bullet_points': bullet_points})
+        case['content'].update({'article_title': article_title, 'article_sections': article_sections, 'bullet_points': bullet_points})
 
         images = response.xpath('//div[@class="grid-span10 grid-shift1"]//img/@src').getall()
 

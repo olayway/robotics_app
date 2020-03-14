@@ -1,16 +1,15 @@
 import click 
 from flask.cli import with_appcontext
 
-from .extensions import db
 from .models import *
 
 
 @click.command('add-usecase')
-@click.argument('url')
-@click.argument('filter_tags')
+@click.argument('country')
 @with_appcontext
-def add_usecase(url, filter_tags=None):
-    test = UseCase(url=url, filter_tags=filter_tags)
+def add_usecase(country):
+    test = UseCase(country=country)
     test.other = 'other'
     test.save()
+    print(UseCase)
     click.echo("SUCCESS")
