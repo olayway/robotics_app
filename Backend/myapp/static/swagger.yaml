@@ -99,8 +99,8 @@ paths:
           description: Numeric ID of the use case to get.
           required: true
           schema:
-            type: integer
-            example: 7
+            type: string
+            example: "5e6d20758123157fcacb45fe"
 
       responses:
         "200":

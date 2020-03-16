@@ -1,15 +1,13 @@
 import click 
 from flask.cli import with_appcontext
-
-from .models import *
+from mongoengine.context_managers import switch_collection
+from .models import UseCase
 
 
 @click.command('add-usecase')
-@click.argument('country')
+@click.argument('url')
 @with_appcontext
-def add_usecase(country):
-    test = UseCase(country=country)
-    test.other = 'other'
-    test.save()
-    print(UseCase)
-    click.echo("SUCCESS")
+def add_usecase(url):
+    with switch_collection(UseCase, 'test_collection'):
+        UseCase(url=url).save()
+        click.echo("SUCCESS")

@@ -4,5 +4,5 @@ class UseCaseSchema(Schema):
     id = fields.String()
 
     class Meta:
-        # fields = ('url', 'filter_tags', 'content', 'image_urls', 'images')
-        additional = ('url', 'filter_tags')
+        # fields = ('url', 'tags', 'content', 'image_urls', 'images')
+        additional = ('url', 'tags')

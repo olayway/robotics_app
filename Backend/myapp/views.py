@@ -1,43 +1,61 @@
-from flask import Blueprint, render_template, request, jsonify
-from mongoengine.queryset.visitor import Q
-from marshmallow import pprint
+import json
 
-from .models import *
-from .extensions import db
+from flask import Blueprint, render_template, request, jsonify
+from flask_login import login_required
+
+from .models import UseCase
 from .validation import UseCaseSchema
+from .extensions import db
 
 setup = Blueprint('setup', __name__)
 
 @setup.route('/use-cases')
 def use_cases():
 
-    country = request.args.getlist('country')
-    applications = request.args.getlist('applications')
-    industries = request.args.getlist('industries')
-    # cases = UseCase.objects(Q(filter_tags__industry__in=industries))
-    # cases = UseCase.objects(Q(filter_tags__country=country))
-    # cases = UseCase.objects(Q(filter_tags__applications__in=applications))
+    country = request.args.get('country')
+    applications = request.args.get('applications')
+    industry = request.args.get('industry')
 
-    cases = UseCase.objects(
-        Q(filter_tags__industry__in=industries) & 
-        Q(filter_tags__country__in=country) & 
-        Q(filter_tags__applications__in=applications)
-        )
+    cases = UseCase.objects
 
-    # cases = UseCase.objects(__raw__= {'filter_tags.country': query_params['country']})
+    if country:
+        country = country.split(",")
+        cases = cases.filter(tags__country__in=country)
+    if applications:
+        applications = applications.split(",")
+        cases = cases.filter(tags__applications__in=applications)
+    if industry:
+        industry = industry.split(",")
+        cases = cases.filter(tags__industry__in=industry)
+
+    # cases = UseCase.objects(__raw__ = {'filter_tags.country': 'Spain'}).filter(__raw__={'filter_tags.industry': 'Automotive and Subcontractors'})
+
+    # cases_stats = UseCase.objects(tags__country = 'Spain').filter(tags__industry='Automotive and Subcontractors').explain()['executionStats']
+
     schema = UseCaseSchema(many=True)
     result = schema.dump(cases)
-    print(country)
-    print(applications)
-    print(industries)
-    print(len(result))
+    # print(cases_stats)
+    # print(cases)
+    # with open ('execution_stats.json', 'w') as file:
+        # json.dump(cases_stats, file)
     return jsonify(result)
 
-def get_test():
-    items = UseCase.objects(url = "https://www.universal-robots.com/case-stories/2k-trend/")
-    # response = []
-    # for item in items:
-    #     item['_id'] = str(item['_id'])
-    #     response.append(item)
-    return render_template('index.html', items=items)
-    #  json.dumps(response)
+@setup.route('/use-cases/<caseId>')
+def use_case(caseId):
+    case = UseCase.objects.get(id=caseId)
+    schema = UseCaseSchema()
+    result = schema.dump(case)
+    return result
+
+### for logged in users
+@setup.route('/loggedin')
+@login_required
+def loggedin():
+    return render_template('loggedin.html', name=current_user.username)
+
+@setup.route('/logout', methods = ['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
