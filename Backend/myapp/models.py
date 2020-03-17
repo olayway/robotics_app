@@ -1,6 +1,7 @@
-from mongoengine import *
-# from wtforms import Form, BooleanField, StringField, validators
-import wtforms as wt
+from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField
+from werkzeug.security import generate_password_hash, check_password_hash
+
+### CASES ###
 
 class FilterTags(EmbeddedDocument):
     applications = ListField(StringField(), required=True)
@@ -20,6 +21,7 @@ class Images(EmbeddedDocument):
     checksum = StringField()
 
 class UseCase(Document):
+    """Model for use-case"""
     meta = {'collection': 'universal',
             'indexes': 
             ['tags.country', 'tags.industry', 'tags.applications']
@@ -32,40 +34,37 @@ class UseCase(Document):
     images = ListField(EmbeddedDocumentField(Images))
 
 
-###### USER AUTH ######
+### USERS ###
 
 class User(Document):
+    """Model for user account"""
     meta = {'collection': 'users'}
+
     username = StringField(required=True, unique=True)
-    password = StringField(required=True, unique=True)
-    # first_name = StringField(required=True)
-    # last_name = StringField(required=True, unique_with=first_name)
+    password = StringField(required=True, unique=True, max_length=200)
     email = StringField(required=True, unique=True)
-    created = DateTimeField()
+
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return self.email
 
     def is_authenticated(self):
         return True
 
-    def is_active(self):
-        return True
-    
     def is_anonymous(self):
         return False
 
-    def get_id(self):
-        return True
-        # should return a unicode that uniquely identifies the user, 
-        # and can be used to load the user from the user_loader callback
-
-##### REGISTRATION FORM ######
-
-class RegForm(wt.Form):
-    username = wt.StringField('Username', [wt.validators.Length(min=5, max=20)])
-    password = wt.StringField('Password', [wt.validators.Length(min=8, max=20)])
-    # first_name = wt.StringField('First Name', [wt.validators.Length(min=2, max=20)])
-    # last_name = wt.StringField('Last Name', [wt.validators.Length(min=2, max=20)])
-    email = wt.StringField('Email Address', [wt.validators.Length(min=6, max=35)])
-    # accept_rules = wt.BooleanField('I accept the site rules', [wt.validators.InputRequired()])
+    def set_password(self, password):
+        self.password = generate_password_hash(password, method='sha256')
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+    
+    def __repr__(self):
+        return 'User {}'.format(self.username)
+    
 
 
 

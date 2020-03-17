@@ -6,9 +6,10 @@ from flask_swagger_ui import get_swaggerui_blueprint
 
 from .extensions import db, login_manager, toolbar
 from .commands import add_usecase
-from .views import setup
+from .routes import setup
 from .auth import auth
 from .models import User
+
 
 
 def create_app(test_config=None):
@@ -52,7 +53,8 @@ def create_app(test_config=None):
     #flask-login#
     @login_manager.user_loader
     def load_user(user_id):
-        return User.objects.get(id=user_id)
+        print(user_id)
+        return User.objects.get(email=user_id)
     #flask-login#
 
     # app.add_url_rule("/add", view_func=test)

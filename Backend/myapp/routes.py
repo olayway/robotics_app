@@ -1,7 +1,6 @@
 import json
 
 from flask import Blueprint, render_template, request, jsonify
-from flask_login import login_required
 
 from .models import UseCase
 from .validation import UseCaseSchema
@@ -48,14 +47,5 @@ def use_case(caseId):
     return result
 
 ### for logged in users
-@setup.route('/loggedin')
-@login_required
-def loggedin():
-    return render_template('loggedin.html', name=current_user.username)
 
-@setup.route('/logout', methods = ['GET'])
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
 
