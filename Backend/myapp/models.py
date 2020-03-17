@@ -1,5 +1,6 @@
 from mongoengine import *
-from wtforms import Form, BooleanField, StringField, validators
+# from wtforms import Form, BooleanField, StringField, validators
+import wtforms as wt
 
 class FilterTags(EmbeddedDocument):
     applications = ListField(StringField(), required=True)
@@ -20,7 +21,9 @@ class Images(EmbeddedDocument):
 
 class UseCase(Document):
     meta = {'collection': 'universal',
-            'indexes': [{'fields': ['$tags.country', '$tags.industry', '$tags.applications']}]}
+            'indexes': 
+            ['tags.country', 'tags.industry', 'tags.applications']
+            }
     
     url = StringField(max_length=5)
     tags = EmbeddedDocumentField(FilterTags, db_field='filter_tags')
@@ -56,13 +59,13 @@ class User(Document):
 
 ##### REGISTRATION FORM ######
 
-class RegForm(Form):
-    username = StringField('Username', [validators.Length(min=5, max=20)])
-    password = StringField('Password', [validators.Length(min=8, max=20)])
-    # first_name = StringField('First Name', [validators.Length(min=2, max=20)])
-    # last_name = StringField('Last Name', [validators.Length(min=2, max=20)])
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
-    # accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
+class RegForm(wt.Form):
+    username = wt.StringField('Username', [wt.validators.Length(min=5, max=20)])
+    password = wt.StringField('Password', [wt.validators.Length(min=8, max=20)])
+    # first_name = wt.StringField('First Name', [wt.validators.Length(min=2, max=20)])
+    # last_name = wt.StringField('Last Name', [wt.validators.Length(min=2, max=20)])
+    email = wt.StringField('Email Address', [wt.validators.Length(min=6, max=35)])
+    # accept_rules = wt.BooleanField('I accept the site rules', [wt.validators.InputRequired()])
 
 
 

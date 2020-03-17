@@ -19,7 +19,6 @@ def create_app(test_config=None):
     app.config.from_pyfile('config.py')
 
     #the toolbar is only enabled in debug mode
-    app.debug = True
 
     CORS(app, resources={r'/*': {'origins': '*'}})
 
