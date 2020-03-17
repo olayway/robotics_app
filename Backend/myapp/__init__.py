@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, flash, redirect, url_for, request
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
 
@@ -54,7 +54,14 @@ def create_app(test_config=None):
     @login_manager.user_loader
     def load_user(user_id):
         print(user_id)
-        return User.objects.get(email=user_id)
+        return User.objects.get(id=user_id)
+    
+    login_manager.login_view = 'auth.login'
+
+    # @login_manager.unauthorized_handler
+    # def unauthorized():
+    #     flash('You have to be logged in to access this page.')
+    #     return redirect(url_for('auth.login', next=request.endpoint))
     #flask-login#
 
     # app.add_url_rule("/add", view_func=test)

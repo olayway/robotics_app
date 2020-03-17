@@ -39,7 +39,9 @@ def register():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('auth.loggedin'))
+
     form = LoginForm(request.form)
+
     if request.method == 'POST':
         try:
             assert form.validate(), 'Login Failed'
@@ -58,7 +60,11 @@ def login():
                 print('REGISTERED')
                 if user.check_password(password=password):
                     login_user(user)
+                    next_url = request.args.get('next')[1:]
+                    if next_url:
+                        return redirect(url_for('auth.{}'.format(next_url)))
                     return redirect(url_for('auth.loggedin'))
+
     return render_template('login.html', form=form)
 
 
@@ -70,8 +76,13 @@ def loggedin():
 
 
 
-@auth.route('/logout', methods = ['GET'])
+@auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
+
+@auth.route('/mycases')
+@login_required
+def mycases():
+    return render_template('mycases.html', name=current_user.username)

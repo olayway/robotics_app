@@ -48,7 +48,7 @@ class User(Document):
         return True
 
     def get_id(self):
-        return self.email
+        return str(self.id)
 
     def is_authenticated(self):
         return True

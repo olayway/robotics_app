@@ -46,6 +46,3 @@ def use_case(caseId):
     result = schema.dump(case)
     return result
 
-### for logged in users
-
-
