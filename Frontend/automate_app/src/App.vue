@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <NavBar></NavBar>
+    <NavBar v-if="['Login', 'Register', 'UserPanel'].indexOf($route.name)==-1"></NavBar>
     <NavDrawer></NavDrawer>
     <v-content>
       <router-view></router-view>
     </v-content>
-    <SubsCard></SubsCard>
+    <SubsCard v-if="['Login', 'Register', 'UserPanel'].indexOf($route.name)==-1"></SubsCard>
     <PageFooter></PageFooter>
   </v-app>
 </template>

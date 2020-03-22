@@ -1,5 +1,7 @@
-from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField
+from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField, BooleanField, DateTimeField, ReferenceField
 from werkzeug.security import generate_password_hash, check_password_hash
+# from flask_security import UserMixin, RoleMixin
+from flask_login import UserMixin
 
 ### CASES ###
 
@@ -35,26 +37,25 @@ class UseCase(Document):
 
 
 ### USERS ###
+# class Role(Document, RoleMixin):
+    # name = StringField(max_length=80, unique=True)
+    # description = StringField(max_length=300)
 
-class User(Document):
+
+class User(Document, UserMixin):
+# class User(Document, UserMixin):
     """Model for user account"""
     meta = {'collection': 'users'}
 
     username = StringField(required=True, unique=True)
     password = StringField(required=True, unique=True, max_length=200)
     email = StringField(required=True, unique=True)
-
-    def is_active(self):
-        return True
+    # active = BooleanField(default=True) # ? defaultd
+    # confirmed_at = DateTimeField()
+    # roles = ListField(ReferenceField(Role), default=[]) # ? default 
 
     def get_id(self):
         return str(self.id)
-
-    def is_authenticated(self):
-        return True
-
-    def is_anonymous(self):
-        return False
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
@@ -65,6 +66,7 @@ class User(Document):
     def __repr__(self):
         return 'User {}'.format(self.username)
     
+
 
 
 

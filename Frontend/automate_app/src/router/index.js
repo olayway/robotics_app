@@ -27,6 +27,24 @@ const routes = [
     name: 'UseCase',
     component: () =>
       import(/* webpackChunkName: "use-case" */ '../views/UseCase.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () =>
+      import(/* webpackChunkName: "register" */ '../views/Register.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () =>
+      import(/* webpackChunkName: "login" */ '../views/Login.vue')
+  },
+  {
+    path: '/user-panel',
+    name: 'UserPanel',
+    component: () =>
+      import(/* webpackChunkName: "user-panel" */ '../views/UserPanel.vue')
   }
 ]
 

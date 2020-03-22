@@ -3,7 +3,7 @@
     <v-container>
       <v-row justify="center">
         <div class="main-icon-title">
-          <img src="@/assets/images/main_icon.svg" alt="automate-icon" />
+          <img src="@/assets/images/main_icon.svg" />
           <p class="main-title">Find your Auto-Mate!</p>
         </div>
       </v-row>

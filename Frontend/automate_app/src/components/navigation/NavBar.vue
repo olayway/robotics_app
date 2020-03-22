@@ -4,11 +4,7 @@
       <v-row no-gutters class="align-center">
         <!-- Logo -->
         <v-col md="3">
-          <v-container class="pa-0">
-            <div id="logo" class="tile">
-              <span>auto</span>mate
-            </div>
-          </v-container>
+          <AutoMateLogo fontSize="30px"></AutoMateLogo>
         </v-col>
 
         <!-- Main Navigation Buttons -->
@@ -37,10 +33,11 @@ import { mapGetters } from 'vuex'
 import NavTile from './NavTile.vue'
 import SignInUp from './SignInUp.vue'
 import DrawerButton from './DrawerButton.vue'
+import AutoMateLogo from '../base/AutoMateLogo.vue'
 
 export default {
   name: 'NavBar',
-  components: { NavTile, SignInUp, DrawerButton },
+  components: { NavTile, SignInUp, DrawerButton, AutoMateLogo },
   data() {
     return {
       // navBarStyle: {
@@ -72,15 +69,6 @@ export default {
   font-weight: 500;
   font-size: 16px;
   /* border: 1px solid red; */
-}
-
-#logo {
-  font-size: 30px;
-  color: #f1d302;
-}
-
-#logo span {
-  font-weight: bold;
 }
 
 .tile {

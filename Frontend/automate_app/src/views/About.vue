@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'About',
+  components: {},
   data() {
     return {
       cases: []

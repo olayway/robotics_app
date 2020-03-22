@@ -30,7 +30,7 @@
             and processing of personal data by Adjust, as further described in
             the Privacy Policy.
           </p>
-          <v-btn class="subs-btn" rounded>Let's Go!</v-btn>
+          <FilledButton></FilledButton>
         </v-col>
       </v-row>
     </v-container>
@@ -38,8 +38,12 @@
 </template>
 
 <script>
+import FilledButton from '@/components/base/FilledButton.vue'
 export default {
   name: 'SubsCard',
+  components: {
+    FilledButton
+  },
   data() {
     return {
       placeholder: 'Enter your email here...'
@@ -77,8 +81,7 @@ export default {
 
 .subscribe-form p,
 .subscribe-form div,
-.subs-field,
-.subs-btn {
+.subs-field {
   margin: 10px 0;
 }
 
@@ -89,12 +92,6 @@ export default {
 .divider {
   border-bottom: 1px solid white;
   width: 54px;
-}
-
-.subs-btn {
-  text-transform: initial;
-  font-size: 16px;
-  letter-spacing: 0;
 }
 
 .subs-field {

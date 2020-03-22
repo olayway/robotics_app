@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, url_for, redirect
+from flask import Blueprint, render_template, request, url_for, redirect, make_response
 from flask_login import login_required, login_user, current_user, logout_user
+from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 from werkzeug.security import generate_password_hash
 
 from .models import User
@@ -60,11 +61,11 @@ def login():
                 print('REGISTERED')
                 if user.check_password(password=password):
                     login_user(user)
-                    next_url = request.args.get('next')[1:]
-                    if next_url:
-                        return redirect(url_for('auth.{}'.format(next_url)))
-                    return redirect(url_for('auth.loggedin'))
-
+                    # next_url = request.args.get('next')
+                    access_token = create_access_token(identity=username)
+                    # if next_url:
+                    #     return redirect(url_for('auth.{}'.format(next_url[1:])))
+                    # return redirect(url_for('auth.loggedin'))
     return render_template('login.html', form=form)
 
 
@@ -80,6 +81,7 @@ def loggedin():
 @login_required
 def logout():
     logout_user()
+    print('loggedout')
     return redirect(url_for('auth.login'))
 
 @auth.route('/mycases')
