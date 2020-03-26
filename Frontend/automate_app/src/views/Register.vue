@@ -30,26 +30,15 @@
               </v-row>
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
-                  <v-form class="d-flex flex-column" ref="form" v-model="valid" lazy-validation>
-                    <v-text-field
-                      v-model="name"
-                      :counter="10"
-                      :rules="nameRules"
-                      label="Username"
-                      required
-                    ></v-text-field>
+                  <v-form class="d-flex flex-column" ref="form" lazy-validation>
+                    <v-text-field v-model="username" label="Username" required></v-text-field>
 
-                    <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-                    <v-text-field v-model="email" :rules="emailRules" label="Password" required></v-text-field>
-                    <v-text-field
-                      v-model="email"
-                      :rules="emailRules"
-                      label="Confirm password"
-                      required
-                    ></v-text-field>
+                    <v-text-field v-model="email" label="E-mail" required></v-text-field>
+                    <v-text-field v-model="password" label="Password" required></v-text-field>
+                    <v-text-field v-model="password_confirm" label="Confirm password" required></v-text-field>
 
                     <v-checkbox
-                      v-model="checkbox"
+                      v-model="agree"
                       :rules="[v => !!v || 'You must agree to continue!']"
                       label="I agree to the collection and processing of personal data by AutoMate."
                       required
@@ -77,7 +66,21 @@ export default {
   components: { OutlinedButton, FilledButton, AutoMateLogo },
   data() {
     return {
-      cases: []
+      username: '',
+      email: '',
+      password: '',
+      password_confirm: '',
+      agree: false
+    }
+  },
+  methods: {
+    register() {
+      this.$store.dispatch('register', {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        agree: this.agree
+      })
     }
   }
 }

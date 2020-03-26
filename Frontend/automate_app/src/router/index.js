@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,14 @@ const routes = [
   {
     path: '/user-panel',
     name: 'UserPanel',
+    beforeEnter(to, from, next) {
+      if (!store.getters.isAuthenticated) {
+        console.log('not authenticated')
+        next('/login')
+      } else {
+        next()
+      }
+    },
     component: () =>
       import(/* webpackChunkName: "user-panel" */ '../views/UserPanel.vue')
   },

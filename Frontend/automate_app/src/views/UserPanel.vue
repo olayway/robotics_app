@@ -69,9 +69,8 @@ export default {
     }
   },
   mounted() {
-    const path = 'http://localhost:5000/use-cases'
     this.axios
-      .get(path, {
+      .get('/use-cases', {
         params: {
           country: 'Spain'
         }

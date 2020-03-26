@@ -10,6 +10,8 @@ import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 
+axios.defaults.baseURL = 'http://localhost:5000'
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
 Vue.use(VueAxios, axios)
 
 Vue.directive('click-outside', {

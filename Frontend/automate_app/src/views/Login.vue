@@ -26,30 +26,23 @@
                 <AutoMateLogo fontSize="18px"></AutoMateLogo>
               </v-row>
               <v-row no-gutters class="my-6" justify="center">
-                <p class="form-title">Create an account</p>
+                <p class="form-title">Welcome back !</p>
               </v-row>
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
                   <v-form class="d-flex flex-column" ref="form" v-model="valid" lazy-validation>
-                    <v-text-field
-                      v-model="name"
-                      :counter="10"
-                      :rules="nameRules"
-                      label="Username"
-                      required
-                    ></v-text-field>
+                    <v-text-field v-model="username" label="Username" required></v-text-field>
 
-                    <v-text-field v-model="email" :rules="emailRules" label="Password" required></v-text-field>
-
-                    <v-checkbox
-                      v-model="checkbox"
-                      :rules="[v => !!v || 'You must agree to continue!']"
-                      label="I agree to the collection and processing of personal data by AutoMate."
-                      required
-                      class="checkbox"
-                    ></v-checkbox>
-
-                    <FilledButton class="align-self-center"></FilledButton>
+                    <v-text-field v-model="password" label="Password" required></v-text-field>
+                    <v-btn
+                      class="btn align-self-center"
+                      depressed
+                      color="rgba(20, 18, 40, 0.98)"
+                      dark
+                      rounded
+                      @click="authenticate"
+                    >Let's Go!</v-btn>
+                    <!-- <FilledButton class="align-self-center" @click="authenticate"></FilledButton> -->
                   </v-form>
                 </v-col>
               </v-row>
@@ -62,16 +55,39 @@
 </template>
 
 <script>
+import { EventBus } from '@/utils'
 import OutlinedButton from '@/components/base/OutlinedButton.vue'
-import FilledButton from '@/components/base/FilledButton.vue'
+// import FilledButton from '@/components/base/FilledButton.vue'
 import AutoMateLogo from '@/components/base/AutoMateLogo.vue'
 export default {
-  name: 'Regsiter',
-  components: { OutlinedButton, FilledButton, AutoMateLogo },
+  name: 'Login',
+  components: { OutlinedButton, AutoMateLogo },
   data() {
     return {
-      cases: []
+      username: '',
+      password: '',
+      valid: true,
+      errorMsg: ''
     }
+  },
+  methods: {
+    authenticate() {
+      this.$store
+        .dispatch('login', {
+          username: this.username,
+          password: this.password
+        })
+        .then(() => this.$router.push('/user-panel'))
+        .catch(error => console.log('PUSH error', error))
+    }
+  },
+  mounted() {
+    EventBus.$on('failedAuthentication', msg => {
+      this.errorMsg = msg
+    })
+  },
+  beforeDestroy() {
+    EventBus.$off('failedAuthentication')
   }
 }
 </script>
@@ -99,6 +115,16 @@ form >>> label {
 .checkbox >>> label {
   font-size: 10px;
   line-height: 14px;
+}
+
+.btn {
+  font-family: Maven Pro;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: initial;
+  font-size: 16px;
+  letter-spacing: 0;
+  margin: 10px 0;
 }
 </style>>
   
