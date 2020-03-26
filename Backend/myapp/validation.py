@@ -5,4 +5,4 @@ class UseCaseSchema(Schema):
 
     class Meta:
         # fields = ('url', 'tags', 'content', 'image_urls', 'images')
-        additional = ('url', 'tags')
+        additional = ('url', 'tags', 'content')

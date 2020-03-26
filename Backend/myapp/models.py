@@ -1,7 +1,7 @@
 from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField, BooleanField, DateTimeField, ReferenceField
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import jsonify
 # from flask_security import UserMixin, RoleMixin
-from flask_login import UserMixin
 
 ### CASES ###
 
@@ -42,7 +42,7 @@ class UseCase(Document):
     # description = StringField(max_length=300)
 
 
-class User(Document, UserMixin):
+class User(Document):
 # class User(Document, UserMixin):
     """Model for user account"""
     meta = {'collection': 'users'}
@@ -50,21 +50,48 @@ class User(Document, UserMixin):
     username = StringField(required=True, unique=True)
     password = StringField(required=True, unique=True, max_length=200)
     email = StringField(required=True, unique=True)
+    use_cases = ListField(ReferenceField(UseCase))
     # active = BooleanField(default=True) # ? defaultd
     # confirmed_at = DateTimeField()
     # roles = ListField(ReferenceField(Role), default=[]) # ? default 
 
-    def get_id(self):
-        return str(self.id)
+    # def __init__(self, *args, **kwargs): 
+    #     super().__init__(*args, **kwargs)
+    #     self.username = kwargs['username']
+    #     self.password = generate_password_hash(
+    #                         kwargs['password'], 
+    #                         method='sha256'
+    #                     )
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
+
+    def to_dict(self):
+        return dict(id=self.id, username=self.username)
     
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
+    @classmethod
+    def authenticate(cls, **kwargs):
+        username = kwargs['username']
+        password = kwargs['password']
+        print(username)
+        print(password)
+        try:
+            user = cls.objects.get(username=username)
+            print('user exists')
+            print(user.password)
+            print(password)
+            auth = check_password_hash(user.password, password)
+            print(auth)
+            if auth:
+                print('correct credentials')
+                return user
+            print('invalid password')
+        except:
+            print('exception')
+        
+        return None
     
-    def __repr__(self):
-        return 'User {}'.format(self.username)
+        
     
 
 
