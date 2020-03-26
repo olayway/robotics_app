@@ -1,0 +1,43 @@
+<template>
+  <v-card flat color="grey lighten-5">
+    <v-container class="pa-4">
+      <v-row>
+        <v-col lg="6">
+          <p class="tab-title">Upload Images</p>
+          <v-divider></v-divider>
+          <label for="main_photo">Main photo:</label>
+          <v-file-input chips></v-file-input>
+          <label for="other_photos">Other photos:</label>
+          <v-file-input multiple chips></v-file-input>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" lg="8"></v-col>
+      </v-row>
+    </v-container>
+  </v-card>
+</template>
+
+<script>
+export default {
+  name: 'StepOne',
+  data() {
+    return {
+      tags: {
+        company_name: null,
+        company_size: null,
+        country: null,
+        industry: null,
+        applications: []
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.tab-title {
+  font-size: 25px;
+  color: #3e5292;
+}
+</style>

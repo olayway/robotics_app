@@ -1,5 +1,5 @@
 <template>
-  <v-pagination v-model="page" :length="15" color="#F1D302" :total-visible="7" class="mb-6"></v-pagination>
+  <v-pagination v-model="page" :length="5" circle color="#F1D302" :total-visible="3" class="mb-6"></v-pagination>
 </template>
 
 <script>
@@ -12,3 +12,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>

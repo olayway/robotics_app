@@ -45,6 +45,12 @@ const routes = [
     name: 'UserPanel',
     component: () =>
       import(/* webpackChunkName: "user-panel" */ '../views/UserPanel.vue')
+  },
+  {
+    path: '/new-usecase',
+    name: 'NewUseCase',
+    component: () =>
+      import(/* webpackChunkName: "new-usecase" */ '../views/NewUseCase.vue')
   }
 ]
 
