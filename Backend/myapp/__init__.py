@@ -67,25 +67,23 @@ def create_app(test_config=None):
 
     # add custom data claims to tokens
     @jwt.user_claims_loader
-    def add_claims_to_access_token(identity):
-        use_cases = identity['use_cases']
+    def add_claims_to_access_token(user):
+        use_cases = user['use_cases']
         custom_claims = {
             'use_cases': [str(case['id']) for case in use_cases]
         }
         return custom_claims
-    ######
 
-    # define the identitity of the access token
-    # @jwt.user_identity_loader
-    # def user_identity_lookup(user):
-        # return user.username
-    ######
+    @jwt.user_identity_loader
+    def user_identity_lookup(user):
+        return user['username']
 
-    # called whenever a protected endpoint is accessed - returns object based on identity from the token
     @jwt.user_loader_callback_loader
     def user_loader_callback(identity):
-        print('USER LOADER IDENTITY', identity)
-        return User.objects(username=identity['username']).get()
+        user = User.objects(username=identity).get()
+        if not user:
+            return None
+        return user
 
     @jwt.user_loader_error_loader
     def custom_user_loader_error(identity):

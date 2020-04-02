@@ -87,15 +87,14 @@ def fresh_login():
 @jwt_refresh_token_required
 def refresh():
     print('CURRENT USER', current_user)
-    user = get_jwt_identity()
     # current_user = get_jwt_identity()
     expires = timedelta(minutes=5)
     access_token = create_access_token(
-        identity=user, expires_delta=expires, fresh=False)
+        identity=current_user, expires_delta=expires, fresh=False)
 
     response = jsonify(
         {'token_refreshed': True, 'acces_token_exp': expires.total_seconds()})
-    set_access_cookies(resp, access_token)
+    set_access_cookies(response, access_token)
     return response, 200
 
 # endpoint for revoking access token
@@ -127,7 +126,7 @@ def profile():
     # TODO query mongoDB for extracted ids and return them to the user
 
     response = jsonify({
-        'logged_in_as': get_jwt_identity()['username'],
+        'logged_in_as': get_jwt_identity(),
         'use_cases': get_jwt_claims()['use_cases']
     })
     return response, 200
