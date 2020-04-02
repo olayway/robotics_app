@@ -5,6 +5,7 @@ from flask import jsonify
 
 ### CASES ###
 
+
 class FilterTags(EmbeddedDocument):
     applications = ListField(StringField(), required=True)
     company = StringField(required=True)
@@ -12,23 +13,25 @@ class FilterTags(EmbeddedDocument):
     country = StringField(required=True)
     company_size = StringField(required=True)
 
+
 class Content(EmbeddedDocument):
     title = StringField(db_field='article_title')
     sections = DictField(db_field='article_sections')
     bullets = DictField(db_field='bullet_points')
+
 
 class Images(EmbeddedDocument):
     url = StringField()
     path = StringField()
     checksum = StringField()
 
+
 class UseCase(Document):
     """Model for use-case"""
     meta = {'collection': 'universal',
-            'indexes': 
+            'indexes':
             ['tags.country', 'tags.industry', 'tags.applications']
             }
-    
     url = StringField(max_length=5)
     tags = EmbeddedDocumentField(FilterTags, db_field='filter_tags')
     content = EmbeddedDocumentField(Content)
@@ -43,7 +46,7 @@ class UseCase(Document):
 
 
 class User(Document):
-# class User(Document, UserMixin):
+    # class User(Document, UserMixin):
     """Model for user account"""
     meta = {'collection': 'users'}
 
@@ -51,15 +54,15 @@ class User(Document):
     password = StringField(required=True, unique=True, max_length=200)
     email = StringField(required=True, unique=True)
     use_cases = ListField(ReferenceField(UseCase))
-    # active = BooleanField(default=True) # ? defaultd
+    active = BooleanField(default=True)
     # confirmed_at = DateTimeField()
-    # roles = ListField(ReferenceField(Role), default=[]) # ? default 
+    # roles = ListField(ReferenceField(Role), default=[]) # ? default
 
-    # def __init__(self, *args, **kwargs): 
+    # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     self.username = kwargs['username']
     #     self.password = generate_password_hash(
-    #                         kwargs['password'], 
+    #                         kwargs['password'],
     #                         method='sha256'
     #                     )
 
@@ -68,7 +71,7 @@ class User(Document):
 
     def to_dict(self):
         return dict(id=self.id, username=self.username)
-    
+
     @classmethod
     def authenticate(cls, **kwargs):
         username = kwargs['username']
@@ -88,17 +91,6 @@ class User(Document):
             print('invalid password')
         except:
             print('exception')
-        
+
         return None
-    
-        
-    
-
-
-
-
-
-
-
-
 
