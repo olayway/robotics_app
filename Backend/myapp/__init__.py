@@ -21,7 +21,7 @@ def create_app(test_config=None):
     app.config.from_object('config')
     app.config.from_pyfile('config.py')
 
-    CORS(app, resources={r'/*': {'origins': '*'}})
+    CORS(app, resources={r'/*': {'origins': '*'}}, supports_credentials=True)
 
     #swagger config#
     SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
@@ -45,14 +45,10 @@ def create_app(test_config=None):
     # security_ctx = security.init_app(app, user_datastore)
     #extensions end#
 
-    #storage engine for revoked tokens#
-    # (consider redis or postgres for production version)
-    blacklist = set()
-    #end storage engine#
-
     # check if the tokens identifier is in the blacklist set
     @jwt.token_in_blacklist_loader
     def check_if_token_revoked(decrypted_token):
+        from .auth import blacklist
         jti = decrypted_token['jti']
         return jti in blacklist
 

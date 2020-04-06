@@ -20,7 +20,6 @@ connexion = {extras = ["swagger-ui"],version = "*"}
 flask-swagger-ui = "*"
 marshmallow = "*"
 flask-shell-ipython = "*"
-flask-login = "*"
 flask-wtf = "*"
 flask-debugtoolbar = "*"
 flask-jwt-extended = "*"

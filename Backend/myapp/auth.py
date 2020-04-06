@@ -1,10 +1,16 @@
 from flask import Blueprint, jsonify, render_template, request, url_for, redirect, make_response
-from flask_jwt_extended import jwt_required, create_access_token, jwt_refresh_token_required, create_refresh_token, get_jwt_identity, jwt_optional, set_access_cookies, set_refresh_cookies, unset_jwt_cookies, get_jwt_claims, fresh_jwt_required, current_user
-from datetime import timedelta
+from flask_jwt_extended import jwt_required, create_access_token, jwt_refresh_token_required, create_refresh_token, get_jwt_identity, jwt_optional, set_access_cookies, set_refresh_cookies, unset_jwt_cookies, get_jwt_claims, fresh_jwt_required, current_user, get_raw_jwt
+from time import mktime
+from datetime import datetime, timedelta
 
 from .models import User
 
 auth = Blueprint('auth', __name__)
+
+#storage engine for revoked tokens#
+# (consider redis or postgres for production version)
+blacklist = set()
+#end storage engine#
 
 
 @auth.route('/token/register', methods=['POST'])
@@ -47,8 +53,7 @@ def login():
 
     response = jsonify({
         'logged_in_as': user.username,
-        'access_token_exp': access_expires.total_seconds(),
-        'refresh_token_exp': refresh_expires.total_seconds()
+        'access_token_exp': mktime((datetime.now() + access_expires).timetuple())
     })
 
     set_access_cookies(response, access_token)
@@ -103,17 +108,19 @@ def refresh():
 def logout():
     jti = get_raw_jwt()['jti']
     blacklist.add(jti)
+    print(blacklist)
     response = jsonify({'msg': 'Successfully logged out'})
     # unset_jwt_cookies(response)
     return response, 200
 
 
 # endpoint for revoking refresh token
-@auth.route('/token/remove-refresh', methods=['POST'])
+@auth.route('/token/remove-refresh', methods=['GET'])
 @jwt_refresh_token_required
 def logout2():
     jti = get_raw_jwt()['jti']
     blacklist.add(jti)
+    print(blacklist)
     response = jsonify({'msg': 'Successfully logged out'})
     # unset_jwt_cookies(response)
     return response, 200
