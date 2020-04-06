@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { authenticate, register } from '@/api'
-import { isValidJWT, EventBus } from '@/utils'
+import { login, register, refreshToken, logout } from '@/api'
+import { EventBus } from '@/utils'
+import createPersistedState from 'vuex-persistedstate'
+// import { refreshToken } from '../api'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage
+    })
+  ],
   state: {
     userData: {},
-    jwt: '',
+    accessTokenExp: null,
     navTiles: [
       { title: 'Home', subtitles: [] },
       { title: 'Why Automate', subtitles: [] },
@@ -23,53 +30,84 @@ export default new Vuex.Store({
     drawerState: false
   },
   getters: {
-    isAuthenticated(state) {
-      return isValidJWT(state.jwt)
+    getUserData(state) {
+      return state.userData
     },
-    navTiles(state) {
+    getIsAuthenticated(state) {
+      const exp = new Date(state.accessTokenExp * 1000)
+      const now = new Date()
+      console.log('EXP', exp)
+      console.log('NOW', now)
+      return now < exp
+    },
+    getNavTiles(state) {
       return state.navTiles
     },
-    drawerState(state) {
+    getDrawerState(state) {
       return state.drawerState
     }
   },
   mutations: {
     setUserData(state, payload) {
-      console.log('setUserData payload =', payload)
       state.userData = payload
     },
-    setJwtToken(state, payload) {
-      console.log('setJwtToken payload =', payload)
-      localStorage.token = payload
-      state.jwt = payload
+    setAccessTokenExp(state, payload) {
+      state.accessTokenExp = payload
     },
-    toggleDrawer(state) {
+    setDrawerState(state) {
       state.drawerState = !state.drawerState
     }
   },
   actions: {
-    login(context, credentials) {
-      context.commit('setUserData', credentials)
-      return authenticate(credentials)
-        .then(response =>
-          context.commit('setJwtToken', response.data.access_token)
-        )
+    login({ commit }, payload) {
+      return login(payload)
+        .then(response => {
+          // if (response.status === 200) {
+          const access_token_exp = response.data.access_token_exp
+          commit('setUserData', payload)
+          commit('setAccessTokenExp', access_token_exp)
+          // }
+        })
         .catch(error => {
           console.log('Error Authenticating:', error)
-          EventBus.$emit('failedAuthentication', error)
+          // EventBus.$emit('failedAuthentication', error)
         })
     },
-    register(context, userData) {
-      context.commit('setUserData', { userData })
+    register({ commit, dispatch }, userData) {
+      commit('setUserData', { userData })
       return register(userData)
-        .then(context.dispatch('login', userData))
+        .then(() => dispatch('login', userData))
         .catch(error => {
           console.log('Error Registering:', error)
           EventBus.$emit('failedRegistering', error)
         })
     },
-    toggleDrawer(context) {
-      context.commit('toggleDrawer')
+    refreshToken({ commit, dispatch }) {
+      return refreshToken()
+        .then(response => {
+          // if (response.status === 200) {
+          const access_token_exp = response.data.access_token_exp
+          commit('setAccessTokenExp', access_token_exp)
+          // }
+        })
+        .catch(error => {
+          dispatch('logout', error)
+          console.log('Error refreshing token:', error)
+          // EventBus.$emit('failedTokenRefresh', error)
+        })
+    },
+    logout({ commit }) {
+      return logout()
+        .then(() => {
+          commit('setUserData', {})
+          commit('setAccessTokenExp', null)
+        })
+        .catch(error => {
+          console.log('Error Logging out ???', error)
+        })
+    },
+    setDrawerState(context) {
+      context.commit('setDrawerState')
     }
   },
   modules: {}

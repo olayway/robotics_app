@@ -11,7 +11,7 @@
         <v-col class="d-none d-lg-block" md="6">
           <v-container class="d-flex justify-center pa-0">
             <NavTile
-              v-for="(item, index) in navTiles"
+              v-for="(item, index) in getNavTiles"
               :key="index"
               :title="item.title"
               :subtitles="item.subtitles"
@@ -53,7 +53,7 @@ export default {
         return SignInUp
       }
     },
-    ...mapGetters(['navTiles'])
+    ...mapGetters(['getNavTiles'])
   }
 }
 </script>

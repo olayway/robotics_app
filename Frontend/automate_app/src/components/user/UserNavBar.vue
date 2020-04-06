@@ -29,6 +29,7 @@
       fab
       depressed
       color="rgba(213, 213, 213, 0.26)"
+      @click="logout"
     >
       <v-icon>mdi-power</v-icon>
     </v-btn>
@@ -42,6 +43,11 @@ export default {
   components: { OutlinedButton },
   data() {
     return {}
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout').then(() => this.$router.push('/login'))
+    }
   }
 }
 </script>

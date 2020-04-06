@@ -44,8 +44,15 @@
                       required
                       class="checkbox"
                     ></v-checkbox>
-
-                    <FilledButton class="align-self-center"></FilledButton>
+                    <v-btn
+                      class="btn align-self-center"
+                      depressed
+                      color="rgba(20, 18, 40, 0.98)"
+                      dark
+                      rounded
+                      @click="register"
+                    >Let's Go!</v-btn>
+                    <!-- <FilledButton class="align-self-center"></FilledButton> -->
                   </v-form>
                 </v-col>
               </v-row>
@@ -59,11 +66,11 @@
 
 <script>
 import OutlinedButton from '@/components/base/OutlinedButton.vue'
-import FilledButton from '@/components/base/FilledButton.vue'
+// import FilledButton from '@/components/base/FilledButton.vue'
 import AutoMateLogo from '@/components/base/AutoMateLogo.vue'
 export default {
   name: 'Regsiter',
-  components: { OutlinedButton, FilledButton, AutoMateLogo },
+  components: { OutlinedButton, AutoMateLogo },
   data() {
     return {
       username: '',
@@ -75,12 +82,15 @@ export default {
   },
   methods: {
     register() {
-      this.$store.dispatch('register', {
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        agree: this.agree
-      })
+      if (this.password === this.password_confirm && this.agree == true) {
+        this.$store
+          .dispatch('register', {
+            username: this.username,
+            email: this.email,
+            password: this.password
+          })
+          .then(() => this.$router.push('/user-panel'))
+      }
     }
   }
 }
@@ -109,6 +119,16 @@ form >>> label {
 .checkbox >>> label {
   font-size: 10px;
   line-height: 14px;
+}
+
+.btn {
+  font-family: Maven Pro;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: initial;
+  font-size: 16px;
+  letter-spacing: 0;
+  margin: 10px 0;
 }
 </style>>
   

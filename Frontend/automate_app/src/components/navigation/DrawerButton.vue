@@ -1,5 +1,5 @@
 <template>
-  <v-container @click.stop="toggleDrawer" class="d-flex justify-end pa-0">
+  <v-container @click.stop="setDrawerState" class="d-flex justify-end pa-0">
     <v-app-bar-nav-icon class="mx-2" fab dark small color="yellow"></v-app-bar-nav-icon>
   </v-container>
 </template>
@@ -12,7 +12,7 @@ export default {
     return {}
   },
   methods: {
-    ...mapActions(['toggleDrawer'])
+    ...mapActions(['setDrawerState'])
   }
 }
 </script>

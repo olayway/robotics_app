@@ -30,7 +30,12 @@
               </v-row>
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
-                  <v-form class="d-flex flex-column" ref="form" v-model="valid" lazy-validation>
+                  <v-form
+                    class="d-flex flex-column"
+                    ref="form"
+                    v-model="form_valid"
+                    lazy-validation
+                  >
                     <v-text-field v-model="username" label="Username" required></v-text-field>
 
                     <v-text-field v-model="password" label="Password" required></v-text-field>
@@ -40,7 +45,7 @@
                       color="rgba(20, 18, 40, 0.98)"
                       dark
                       rounded
-                      @click="authenticate"
+                      @click="login"
                     >Let's Go!</v-btn>
                     <!-- <FilledButton class="align-self-center" @click="authenticate"></FilledButton> -->
                   </v-form>
@@ -66,19 +71,16 @@ export default {
     return {
       username: '',
       password: '',
-      valid: true,
+      form_valid: true, // TODO asdfasdfdf
       errorMsg: ''
     }
   },
   methods: {
-    authenticate() {
+    login() {
+      const { username, password } = this
       this.$store
-        .dispatch('login', {
-          username: this.username,
-          password: this.password
-        })
+        .dispatch('login', { username, password })
         .then(() => this.$router.push('/user-panel'))
-        .catch(error => console.log('PUSH error', error))
     }
   },
   mounted() {

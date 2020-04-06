@@ -5,12 +5,12 @@
     floating
     right
     stateless
-    v-model="drawerState"
+    v-model="getDrawerState"
     absolute
-    v-click-outside="toggleDrawer"
+    v-click-outside="setDrawerState"
   >
     <v-list dense nav class="py-0">
-      <v-container v-for="(item, index) in navTiles" :key="index">
+      <v-container v-for="(item, index) in getNavTiles" :key="index">
         <v-list-item v-if="!item.subtitles.length" link>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -44,10 +44,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['navTiles', 'drawerState'])
+    ...mapGetters(['getNavTiles', 'getDrawerState'])
   },
   methods: {
-    ...mapActions(['toggleDrawer'])
+    ...mapActions(['setDrawerState'])
   },
   collapseList() {
     this.listOpen = false
