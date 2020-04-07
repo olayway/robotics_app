@@ -23,8 +23,7 @@ export function logout() {
   console.log('API: handle user logout')
   return axios
     .get('/token/remove-refresh', { withCredentials: true })
-    .then(response => {
-      console.log('API: refresh token revoked', response.data.msg)
+    .then(() => {
       return axios.get('/token/remove', { withCredentials: true })
     })
 }

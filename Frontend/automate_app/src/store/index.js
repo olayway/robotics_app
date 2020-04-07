@@ -17,6 +17,7 @@ export default new Vuex.Store({
   state: {
     userData: {},
     accessTokenExp: null,
+    intervalID: null,
     navTiles: [
       { title: 'Home', subtitles: [] },
       { title: 'Why Automate', subtitles: [] },
@@ -36,8 +37,6 @@ export default new Vuex.Store({
     getIsAuthenticated(state) {
       const exp = new Date(state.accessTokenExp * 1000)
       const now = new Date()
-      console.log('EXP', exp)
-      console.log('NOW', now)
       return now < exp
     },
     getNavTiles(state) {
@@ -53,19 +52,34 @@ export default new Vuex.Store({
     },
     setAccessTokenExp(state, payload) {
       state.accessTokenExp = payload
+      console.log('EXP:', new Date(payload * 1000))
     },
     setDrawerState(state) {
       state.drawerState = !state.drawerState
+    },
+    setIntervalID(state, payload) {
+      state.intervalID = payload
+    },
+    clearInterval(state) {
+      clearInterval(state.intervalID)
+      state.intervalID = null
     }
   },
   actions: {
-    login({ commit }, payload) {
+    login({ commit, dispatch }, payload) {
       return login(payload)
         .then(response => {
           // if (response.status === 200) {
           const access_token_exp = response.data.access_token_exp
           commit('setUserData', payload)
           commit('setAccessTokenExp', access_token_exp)
+          const now = new Date()
+          const exp = new Date(access_token_exp * 1000)
+          const interval = exp - now - 30000
+          const intervalID = setInterval(() => {
+            dispatch('refreshToken')
+          }, interval)
+          commit('setIntervalID', intervalID)
           // }
         })
         .catch(error => {
@@ -98,9 +112,11 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       return logout()
-        .then(() => {
+        .then(response => {
           commit('setUserData', {})
           commit('setAccessTokenExp', null)
+          commit('clearInterval')
+          console.log(response.data.msg)
         })
         .catch(error => {
           console.log('Error Logging out ???', error)
