@@ -4,7 +4,9 @@
       <v-row no-gutters class="align-center">
         <!-- Logo -->
         <v-col md="3">
-          <AutoMateLogo fontSize="30px"></AutoMateLogo>
+          <router-link to="/">
+            <AutoMateLogo fontSize="30px"></AutoMateLogo>
+          </router-link>
         </v-col>
 
         <!-- Main Navigation Buttons -->

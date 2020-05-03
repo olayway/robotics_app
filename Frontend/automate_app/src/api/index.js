@@ -24,6 +24,11 @@ export function logout() {
   return axios
     .get('/token/remove-refresh', { withCredentials: true })
     .then(() => {
-      return axios.get('/token/remove', { withCredentials: true })
+      return axios.get('/api/profile/token/remove', { withCredentials: true })
     })
+}
+
+export function getUserUseCases() {
+  console.log("API: get user's use cases")
+  return axios.get('/api/profile/use-cases', { withCredentials: true })
 }

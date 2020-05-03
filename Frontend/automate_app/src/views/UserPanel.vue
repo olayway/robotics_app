@@ -58,6 +58,8 @@
 
 <script>
 import PanelUseCase from '../components/user/PanelUseCase.vue'
+import { getUserUseCases } from '../api'
+
 export default {
   name: 'UserPanel',
   components: { PanelUseCase },
@@ -69,16 +71,11 @@ export default {
     }
   },
   mounted() {
-    this.axios
-      .get('/use-cases', {
-        params: {
-          country: 'Spain'
-        }
-      })
+    getUserUseCases()
       .then(response => {
-        this.useCases = response.data
+        this.UseCases = response['your_use_cases']
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log("Error fetching user's use cases:", error))
   }
 }
 </script>

@@ -12,7 +12,9 @@
                       <p>New to AutoMate?</p>
                     </v-row>
                     <v-row justify="center">
-                      <OutlinedButton>Register</OutlinedButton>
+                      <router-link to="/register">
+                        <OutlinedButton class="register-button">Register</OutlinedButton>
+                      </router-link>
                     </v-row>
                   </v-col>
                 </v-row>
@@ -128,5 +130,8 @@ form >>> label {
   letter-spacing: 0;
   margin: 10px 0;
 }
-</style>>
-  
+
+/* span.v-btn__content {
+  text-decoration: none;
+} */
+</style>

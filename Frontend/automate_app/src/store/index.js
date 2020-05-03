@@ -111,12 +111,13 @@ export default new Vuex.Store({
         })
     },
     logout({ commit }) {
+      console.log('LOGGING OUT')
       return logout()
         .then(response => {
+          console.log('RESPONSE DATA MSG', response.data.msg)
           commit('setUserData', {})
           commit('setAccessTokenExp', null)
           commit('clearInterval')
-          console.log(response.data.msg)
         })
         .catch(error => {
           console.log('Error Logging out ???', error)

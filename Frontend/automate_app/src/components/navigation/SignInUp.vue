@@ -1,6 +1,8 @@
 <template>
   <v-container class="sign-in-up d-flex justify-end pa-0">
-    <a class="tile">Log In</a>
+    <router-link to="/login">
+      <a class="tile">Log In</a>
+    </router-link>
     <v-btn
       @click.prevent
       depressed
@@ -9,7 +11,9 @@
       :ripple="false"
       class="tile register-button"
     >
-      <a href="#">Sign Up</a>
+      <router-link to="/register">
+        <a href="#">Sign Up</a>
+      </router-link>
     </v-btn>
   </v-container>
 </template>

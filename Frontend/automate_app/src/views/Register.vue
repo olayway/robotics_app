@@ -12,7 +12,9 @@
                       <p>Already have an account?</p>
                     </v-row>
                     <v-row justify="center">
-                      <OutlinedButton>Sign In</OutlinedButton>
+                      <router-link to="/login">
+                        <OutlinedButton>Sign In</OutlinedButton>
+                      </router-link>
                     </v-row>
                   </v-col>
                 </v-row>
