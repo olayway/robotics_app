@@ -44,7 +44,7 @@ def login():
             "msg": "Invalid credentials"})
         return response, 401
 
-    access_expires = timedelta(minutes=2)
+    access_expires = timedelta(minutes=1)
     refresh_expires = timedelta(minutes=5)
     access_token = create_access_token(
         identity=user, expires_delta=access_expires, fresh=True)
@@ -53,7 +53,8 @@ def login():
 
     response = jsonify({
         'logged_in_as': user.username,
-        'access_token_exp': mktime((datetime.now() + access_expires).timetuple())
+        'access_token_exp': mktime((datetime.now() + access_expires).timetuple()),
+        'fresh': True
     })
 
     set_access_cookies(response, access_token)
@@ -74,13 +75,14 @@ def fresh_login():
             "msg": "Invalid credentials"})
         return response, 401
 
-    access_expires = timedelta(minutes=2)
+    access_expires = timedelta(minutes=1)
     access_token = create_access_token(
         identity=user, expires_delta=access_expires, fresh=True)
 
     response = jsonify({
         'logged_in_as': user.username,
-        'access_token_exp': access_expires.total_seconds(),
+        'access_token_exp': mktime((datetime.now() + access_expires).timetuple()),
+        'fresh': True
     })
 
     set_access_cookies(response, access_token)
@@ -93,17 +95,20 @@ def fresh_login():
 def refresh():
     print('CURRENT USER', current_user)
     # current_user = get_jwt_identity()
-    expires = timedelta(minutes=5)
+    access_expires = timedelta(minutes=1)
     access_token = create_access_token(
-        identity=current_user, expires_delta=expires, fresh=False)
+        identity=current_user, expires_delta=access_expires, fresh=False)
 
-    response = jsonify(
-        {'token_refreshed': True, 'acces_token_exp': expires.total_seconds()})
+    response = jsonify({
+        'access_token_exp': mktime((datetime.now() + access_expires).timetuple()),
+        'fresh': False
+    })
+
     set_access_cookies(response, access_token)
     return response, 200
 
 # endpoint for revoking access token
-@auth.route('/token/remove', methods=['GET'])
+@auth.route('/api/profile/token/remove', methods=['GET'])
 @jwt_required
 def logout():
     jti = get_raw_jwt()['jti']
@@ -126,17 +131,17 @@ def logout2():
     return response, 200
 
 
-@auth.route('/api/profile', methods=['GET'])
-@jwt_required
-def profile():
-    # TODO extract use-case ids from token claims
-    # TODO query mongoDB for extracted ids and return them to the user
+# @auth.route('/api/profile', methods=['GET'])
+# @jwt_required
+# def profile():
+#     # TODO extract use-case ids from token claims
+#     # TODO query mongoDB for extracted ids and return them to the user
 
-    response = jsonify({
-        'logged_in_as': get_jwt_identity(),
-        'use_cases': get_jwt_claims()['use_cases']
-    })
-    return response, 200
+#     response = jsonify({
+#         'logged_in_as': get_jwt_identity(),
+#         'use_cases': get_jwt_claims()['use_cases']
+#     })
+#     return response, 200
 
 
 @auth.route('/api/profile/settings', methods=['GET', 'POST'])
@@ -145,21 +150,15 @@ def edit_user_settings():
     username = get_jwt_identity()
     return jsonify(fresh_logged_in_as=username), 200
 
-# @auth.route('/api/optional_login', methods=['GET'])
-# @jwt_optional
-# def optional_login():
-#     current_user = get_jwt_identity()
-#     if current_user:
-#         return jsonify(logged_in_as=current_user), 200
-#     return jsonify(logged_in_as='anonymous user'), 200
 
-# @auth.route('/logout')
-# # @login_required
-# def logout():
-#     logout_user()
-#     print('loggedout')
-#     return redirect(url_for('auth.login'))
-# @auth.route('/mycases')
-# # @login_required
-# def mycases():
-#     return render_template('mycases.html', name=current_user.username)
+@auth.route('/api/profile/use-cases', methods=['GET', 'POST'])
+@jwt_required
+def user_use_cases():
+    claims = get_jwt_claims()
+    use_cases = claims['use_cases']
+    print('claims', claims)
+    print('use_cases', use_cases)
+    response = jsonify({
+        'your_use_cases': use_cases
+    })
+    return response, 200

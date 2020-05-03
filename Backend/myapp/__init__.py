@@ -32,8 +32,9 @@ def create_app(test_config=None):
         }
     )
 
-    app.register_blueprint(SWAGGERUI_BLUEPRINT,
-                           url_prefix=app.config["SWAGGER_URL"])
+    app.register_blueprint(
+        SWAGGERUI_BLUEPRINT,
+        url_prefix=app.config["SWAGGER_URL"])
     #swagger config end#
 
     #extensions#
