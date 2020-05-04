@@ -33,11 +33,27 @@
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
                   <v-form class="d-flex flex-column" ref="form" lazy-validation>
-                    <v-text-field v-model="username" label="Username" required></v-text-field>
+                    <v-text-field
+                      v-model="username"
+                      label="Username"
+                      required
+                    ></v-text-field>
 
-                    <v-text-field v-model="email" label="E-mail" required></v-text-field>
-                    <v-text-field v-model="password" label="Password" required></v-text-field>
-                    <v-text-field v-model="password_confirm" label="Confirm password" required></v-text-field>
+                    <v-text-field
+                      v-model="email"
+                      label="E-mail"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="password"
+                      label="Password"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="password_confirm"
+                      label="Confirm password"
+                      required
+                    ></v-text-field>
 
                     <v-checkbox
                       v-model="agree"
@@ -53,7 +69,8 @@
                       dark
                       rounded
                       @click="register"
-                    >Let's Go!</v-btn>
+                      >Let's Go!</v-btn
+                    >
                     <!-- <FilledButton class="align-self-center"></FilledButton> -->
                   </v-form>
                 </v-col>
@@ -131,6 +148,5 @@ form >>> label {
   font-size: 16px;
   letter-spacing: 0;
   margin: 10px 0;
-}
-</style>>
-  
+}</style
+>>

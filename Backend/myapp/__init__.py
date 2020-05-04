@@ -72,6 +72,7 @@ def create_app(test_config=None):
             use_case = case.tags.to_mongo().to_dict()
             use_case['id'] = str(case.id)
             use_case['title'] = case.content.title
+            use_case['status'] = case.status
             use_cases_claims.append(use_case)
 
         custom_claims = {

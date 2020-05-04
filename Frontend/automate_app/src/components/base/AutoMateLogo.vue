@@ -1,7 +1,5 @@
 <template>
-  <div id="logo" :style="{fontSize: fontSize}">
-    <span>auto</span>mate
-  </div>
+  <div id="logo" :style="{ fontSize: fontSize }"><span>auto</span>mate</div>
 </template>
 
 <script>

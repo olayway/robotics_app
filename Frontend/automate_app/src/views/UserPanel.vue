@@ -31,6 +31,10 @@
                 </v-col>
                 <v-divider vertical class="mx-2"></v-divider>
                 <v-col>
+                  <span>Status</span>
+                </v-col>
+                <v-divider vertical class="mx-2"></v-divider>
+                <v-col>
                   <span>Options</span>
                 </v-col>
               </v-row>
@@ -47,10 +51,22 @@
     </v-row>
     <v-row class="px-3 px-md-6" no-gutters>
       <v-col align="start">
-        <v-pagination class="page-num" v-model="page" :length="3" color="indigo darken-4" circle></v-pagination>
+        <v-pagination
+          class="page-num"
+          v-model="page"
+          :length="3"
+          color="indigo darken-4"
+          circle
+        ></v-pagination>
       </v-col>
       <v-col align="end">
-        <v-btn class="delete-button elevation-2" rounded color="red lighten-1" dark>Delete</v-btn>
+        <v-btn
+          class="delete-button elevation-2"
+          rounded
+          color="red lighten-1"
+          dark
+          >Delete</v-btn
+        >
       </v-col>
     </v-row>
   </v-container>

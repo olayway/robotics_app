@@ -1,7 +1,11 @@
 <template>
   <v-app-bar app height="55px" class="nav-bar" tile flat>
     <v-app-bar-nav-icon>
-      <v-img height="40px" width="40px" src="@/assets/images/main_icon.svg"></v-img>
+      <v-img
+        height="40px"
+        width="40px"
+        src="@/assets/images/main_icon.svg"
+      ></v-img>
     </v-app-bar-nav-icon>
     <!-- <v-divider class="divider" dark vertical></v-divider> -->
     <div>

@@ -93,6 +93,7 @@ def fresh_login():
 @auth.route('/api/profile/use-cases', methods=['GET', 'POST'])
 @jwt_required
 def user_use_cases():
+    # TODO remove data from token claims and query mongodb here
     claims = get_jwt_claims()
     use_cases = claims['use_cases']
     print('claims', claims)

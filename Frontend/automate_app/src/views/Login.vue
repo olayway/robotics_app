@@ -13,7 +13,9 @@
                     </v-row>
                     <v-row justify="center">
                       <router-link to="/register">
-                        <OutlinedButton class="register-button">Register</OutlinedButton>
+                        <OutlinedButton class="register-button"
+                          >Register</OutlinedButton
+                        >
                       </router-link>
                     </v-row>
                   </v-col>
@@ -38,9 +40,17 @@
                     v-model="form_valid"
                     lazy-validation
                   >
-                    <v-text-field v-model="username" label="Username" required></v-text-field>
+                    <v-text-field
+                      v-model="username"
+                      label="Username"
+                      required
+                    ></v-text-field>
 
-                    <v-text-field v-model="password" label="Password" required></v-text-field>
+                    <v-text-field
+                      v-model="password"
+                      label="Password"
+                      required
+                    ></v-text-field>
                     <v-btn
                       class="btn align-self-center"
                       depressed
@@ -48,7 +58,8 @@
                       dark
                       rounded
                       @click="login"
-                    >Let's Go!</v-btn>
+                      >Let's Go!</v-btn
+                    >
                     <!-- <FilledButton class="align-self-center" @click="authenticate"></FilledButton> -->
                   </v-form>
                 </v-col>
@@ -73,7 +84,7 @@ export default {
     return {
       username: '',
       password: '',
-      form_valid: true, // TODO asdfasdfdf
+      form_valid: true,
       errorMsg: ''
     }
   },

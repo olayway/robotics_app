@@ -27,8 +27,8 @@ export default {
   name: 'MainSection',
   data() {
     return {
-      section_title: null,
-      section_content: null
+      section_title: '',
+      section_content: ''
     }
   }
 }

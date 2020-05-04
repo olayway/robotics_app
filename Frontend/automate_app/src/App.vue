@@ -1,13 +1,19 @@
 <template>
   <v-app>
-    <NavBar v-if="[...userViews, ...loginViews].indexOf($route.name)==-1"></NavBar>
-    <UserNavBar v-else-if="userViews.indexOf($route.name)!==-1"></UserNavBar>
-    <NavDrawer v-if="[...userViews, ...loginViews].indexOf($route.name)==-1"></NavDrawer>
-    <UserDrawer v-else-if="userViews.indexOf($route.name)!==-1"></UserDrawer>
+    <NavBar
+      v-if="[...userViews, ...loginViews].indexOf($route.name) == -1"
+    ></NavBar>
+    <UserNavBar v-else-if="userViews.indexOf($route.name) !== -1"></UserNavBar>
+    <NavDrawer
+      v-if="[...userViews, ...loginViews].indexOf($route.name) == -1"
+    ></NavDrawer>
+    <UserDrawer v-else-if="userViews.indexOf($route.name) !== -1"></UserDrawer>
     <v-content>
       <router-view></router-view>
     </v-content>
-    <SubsCard v-if="[...userViews, ...loginViews].indexOf($route.name)==-1"></SubsCard>
+    <SubsCard
+      v-if="[...userViews, ...loginViews].indexOf($route.name) == -1"
+    ></SubsCard>
     <PageFooter></PageFooter>
   </v-app>
 </template>
@@ -34,12 +40,10 @@ export default {
 
   data() {
     return {
-      userViews: ['UserPanel', 'NewUseCase'],
+      userViews: ['UserPanel', 'NewUseCase', 'Settings'],
       loginViews: ['Login', 'Register']
     }
   },
   methods: {}
 }
 </script>
-
-

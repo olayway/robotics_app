@@ -6,7 +6,9 @@
           <p class="tab-title">Preview & Save</p>
           <v-divider></v-divider>
           <v-btn color="green" rounded class="white--text my-4">Save</v-btn>
-          <v-btn color="red" rounded class="white--text my-4 ml-2">Discard</v-btn>
+          <v-btn color="red" rounded class="white--text my-4 ml-2"
+            >Discard</v-btn
+          >
         </v-col>
       </v-row>
       <v-row>

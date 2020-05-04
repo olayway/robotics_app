@@ -3,20 +3,14 @@
     <v-row no-gutters>
       <v-col class="pa-3 pa-md-6">
         <v-card tile class="elevation-3">
-          <v-toolbar dark dense tile class="new-toolbar">New use-case</v-toolbar>
+          <v-toolbar dark dense tile class="new-toolbar"
+            >New use-case</v-toolbar
+          >
           <v-tabs color="indigo darken-3" vertical>
-            <v-tab>
-              <v-icon left>mdi-home</v-icon>Step 1
-            </v-tab>
-            <v-tab>
-              <v-icon left>mdi-text</v-icon>Step 2
-            </v-tab>
-            <v-tab>
-              <v-icon left>mdi-image-plus</v-icon>Step 3
-            </v-tab>
-            <v-tab>
-              <v-icon left>mdi-content-save</v-icon>Step 4
-            </v-tab>
+            <v-tab> <v-icon left>mdi-home</v-icon>Step 1 </v-tab>
+            <v-tab> <v-icon left>mdi-text</v-icon>Step 2 </v-tab>
+            <v-tab> <v-icon left>mdi-image-plus</v-icon>Step 3 </v-tab>
+            <v-tab> <v-icon left>mdi-content-save</v-icon>Step 4 </v-tab>
             <!-- STEP 1 -->
             <v-tab-item>
               <StepOne></StepOne>
@@ -41,7 +35,7 @@
 </template>
 
 <script>
-import StepOne from '../components/user/StepOne.vue'
+import StepOne from '../components/user/StepOne'
 import StepTwo from '../components/user/StepTwo.vue'
 import StepThree from '../components/user/StepThree.vue'
 import StepFour from '../components/user/StepFour.vue'

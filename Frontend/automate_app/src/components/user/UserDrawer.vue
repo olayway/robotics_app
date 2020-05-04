@@ -1,9 +1,16 @@
 <template>
   <div>
-    <v-navigation-drawer absolute style="margin-top: 55px" mini-variant permanent>
+    <v-navigation-drawer
+      absolute
+      style="margin-top: 55px"
+      mini-variant
+      permanent
+    >
       <v-list dense>
         <v-list-item v-for="(nav, index) in navs" :key="index" link>
-          <v-icon color="grey lighten-1">{{ nav.icon }}</v-icon>
+          <router-link :to="nav.link" class="router-icon">
+            <v-icon color="grey lighten-1">{{ nav.icon }}</v-icon>
+          </router-link>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -17,9 +24,13 @@ export default {
   data() {
     return {
       navs: [
-        { title: 'All use-cases', icon: 'mdi-view-dashboard' },
-        { title: 'New use-case', icon: 'mdi-note-plus' },
-        { title: 'Settings', icon: 'mdi-settings' }
+        {
+          title: 'All use-cases',
+          icon: 'mdi-view-dashboard',
+          link: '/user-panel'
+        },
+        { title: 'New use-case', icon: 'mdi-note-plus', link: '/new-case' },
+        { title: 'Settings', icon: 'mdi-settings', link: '/settings' }
       ]
     }
   }
@@ -27,4 +38,7 @@ export default {
 </script>
 
 <style scoped>
+.router-icon {
+  text-decoration: None;
+}
 </style>

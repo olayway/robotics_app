@@ -32,11 +32,14 @@ class UseCase(Document):
             'indexes':
             ['tags.country', 'tags.industry', 'tags.applications']
             }
-    url = StringField(max_length=5)
+    options = ['active', 'inactive', 'draft']
+
+    url = StringField()
     tags = EmbeddedDocumentField(FilterTags, db_field='filter_tags')
     content = EmbeddedDocumentField(Content)
     image_urls = ListField(StringField())
     images = ListField(EmbeddedDocumentField(Images))
+    status = StringField(choices=options)
 
 
 ### USERS ###
@@ -93,4 +96,3 @@ class User(Document):
             print('exception')
 
         return None
-

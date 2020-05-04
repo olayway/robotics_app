@@ -12,21 +12,25 @@
               dense
               v-model="selected"
             ></v-checkbox>
-            <span class="content">{{index}}</span>
+            <span class="content">{{ index }}</span>
           </v-row>
         </v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{selected}}</v-col>
+        <v-col>{{ useCase.title }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{useCase.industry}}</v-col>
+        <v-col>{{ useCase.industry }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{useCase.company}}</v-col>
+        <v-col>{{ useCase.company }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
           <ul>
-            <li v-for="(item, index) in useCase.applications" :key="index">{{item}}</li>
+            <li v-for="(item, index) in useCase.applications" :key="index">
+              {{ item }}
+            </li>
           </ul>
         </v-col>
+        <v-divider vertical class="mx-2"></v-divider>
+        <v-col>{{ useCase.status }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
           <v-btn fab small icon color="red lighten-3">
@@ -34,6 +38,9 @@
           </v-btn>
           <v-btn fab small icon color="grey" depressed dark>
             <v-icon>mdi-file-cancel</v-icon>
+          </v-btn>
+          <v-btn fab small icon color="green lighten-2" depressed dark>
+            <v-icon>mdi-file-check</v-icon>
           </v-btn>
           <v-btn fab small icon color="indigo accent-1" depressed dark>
             <v-icon>mdi-file-edit</v-icon>

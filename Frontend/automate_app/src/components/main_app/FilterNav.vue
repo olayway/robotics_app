@@ -13,8 +13,8 @@
         multiple
         dark
         background-color="#6976A4"
-        :label="key | capitalize"
         v-for="(value, key) in filters"
+        :label="key | capitalize"
         :key="key"
         :items="value"
       ></v-select>
@@ -87,7 +87,6 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 // :style="fixedFilterNav ? filterNavStyle : ''"

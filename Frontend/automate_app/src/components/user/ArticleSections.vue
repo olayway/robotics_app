@@ -23,7 +23,9 @@
     <v-card-text>
       <v-btn outlined small color="green" @click="addTab">Add section</v-btn>
       <v-divider vertical class="mx-2"></v-divider>
-      <v-btn outlined small color="red" @click="deleteTab">Remove section</v-btn>
+      <v-btn outlined small color="red" @click="deleteTab"
+        >Remove section</v-btn
+      >
       <v-divider vertical class="mx-2"></v-divider>
       <v-btn outlined small color="grey" @click="deleteTab">Reset</v-btn>
     </v-card-text>
@@ -38,8 +40,7 @@ export default {
   data() {
     return {
       tabs: [1],
-      current_tab: null,
-      article_title: null
+      current_tab: null
     }
   },
   methods: {

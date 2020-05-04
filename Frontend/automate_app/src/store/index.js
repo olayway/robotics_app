@@ -28,7 +28,22 @@ export default new Vuex.Store({
       { title: 'Subscribe', subtitles: [] },
       { title: 'Contact', subtitles: [] }
     ],
-    drawerState: false
+    drawerState: false,
+    editUseCase: {
+      filter_tags: {
+        applications: [],
+        company: '',
+        industry: '',
+        country: '',
+        company_size: ''
+      },
+      content: {
+        article_title: '',
+        article_sections: null,
+        bullet_points: null
+      },
+      images: []
+    }
   },
   getters: {
     getUserData(state) {

@@ -55,6 +55,27 @@ const routes = [
     },
     component: () =>
       import(/* webpackChunkName: "user-panel" */ '../views/UserPanel.vue')
+  },
+  {
+    path: '/new-case',
+    name: 'NewUseCase',
+    beforeEnter(to, from, next) {
+      if (!store.getters.getIsAuthenticated) {
+        console.log('not authenticated')
+        next('/login')
+      } else {
+        console.log('redir to user panel')
+        next()
+      }
+    },
+    component: () =>
+      import(/* webpackChunkName: "new-use-case" */ '../views/NewUseCase.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () =>
+      import(/* webpackChunkName: "settings" */ '../views/Settings.vue')
   }
 ]
 

@@ -9,10 +9,16 @@
           <v-file-input chips></v-file-input>
           <label for="other_photos">Other photos:</label>
           <v-file-input multiple chips></v-file-input>
+          <v-btn class="save-button my-3" outlined color="green lighten-1"
+            >Save</v-btn
+          >
+          <v-btn
+            class="reset-button my-3 ml-3"
+            outlined
+            color="orange lighten-1"
+            >Reset</v-btn
+          >
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" lg="8"></v-col>
       </v-row>
     </v-container>
   </v-card>
