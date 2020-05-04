@@ -13,7 +13,8 @@ blacklist = set()
 #end storage engine#
 
 
-@auth.route('/token/register', methods=['POST'])
+# registering new user
+@auth.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
     user = User.authenticate(**data)
@@ -32,8 +33,8 @@ def register():
     return response, 201
 
 
-@auth.route('/token/auth', methods=['POST'])
 # standard login - refresh token and fresh access token returned
+@auth.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
     user = User.authenticate(**data)
@@ -44,8 +45,8 @@ def login():
             "msg": "Invalid credentials"})
         return response, 401
 
-    access_expires = timedelta(minutes=1)
-    refresh_expires = timedelta(minutes=5)
+    access_expires = timedelta(minutes=5)
+    refresh_expires = timedelta(hours=1)
     access_token = create_access_token(
         identity=user, expires_delta=access_expires, fresh=True)
     refresh_token = create_refresh_token(
@@ -62,9 +63,8 @@ def login():
 
     return response, 200
 
-
-@auth.route('/token/fresh-auth', methods=['POST'])
-# fresh login (eg. for changing user settings) - only fresh access token returned (no refresh token)
+# fresh login (eg. for changing user settings) - only fresh access token returned (no new refresh token)
+@auth.route('/api/fresh-login', methods=['POST'])
 def fresh_login():
     data = request.get_json()
     user = User.authenticate(**data)
@@ -89,8 +89,40 @@ def fresh_login():
 
     return response, 200
 
+# endpoint for fetching user's use cases
+@auth.route('/api/profile/use-cases', methods=['GET', 'POST'])
+@jwt_required
+def user_use_cases():
+    claims = get_jwt_claims()
+    use_cases = claims['use_cases']
+    print('claims', claims)
+    print('use_cases', use_cases)
+    response = jsonify({
+        'your_use_cases': use_cases
+    })
+    return response, 200
 
-@auth.route('/token/refresh', methods=['GET'])
+# endpoint for revoking access token
+@auth.route('/api/profile/logout', methods=['GET'])
+@jwt_required
+def logout():
+    jti = get_raw_jwt()['jti']
+    blacklist.add(jti)
+    print(blacklist)
+    response = jsonify({'msg': 'Successfully logged out'})
+    # unset_jwt_cookies(response)
+    return response, 200
+
+
+@auth.route('/api/profile/settings', methods=['GET', 'POST'])
+@fresh_jwt_required
+def edit_user_settings():
+    username = get_jwt_identity()
+    return jsonify(fresh_logged_in_as=username), 200
+
+
+# endpoint for refreshing access token
+@auth.route('/api/refresh', methods=['GET'])
 @jwt_refresh_token_required
 def refresh():
     print('CURRENT USER', current_user)
@@ -107,20 +139,9 @@ def refresh():
     set_access_cookies(response, access_token)
     return response, 200
 
-# endpoint for revoking access token
-@auth.route('/api/profile/token/remove', methods=['GET'])
-@jwt_required
-def logout():
-    jti = get_raw_jwt()['jti']
-    blacklist.add(jti)
-    print(blacklist)
-    response = jsonify({'msg': 'Successfully logged out'})
-    # unset_jwt_cookies(response)
-    return response, 200
-
 
 # endpoint for revoking refresh token
-@auth.route('/token/remove-refresh', methods=['GET'])
+@auth.route('/api/refresh/remove', methods=['GET'])
 @jwt_refresh_token_required
 def logout2():
     jti = get_raw_jwt()['jti']
@@ -128,37 +149,4 @@ def logout2():
     print(blacklist)
     response = jsonify({'msg': 'Successfully logged out'})
     # unset_jwt_cookies(response)
-    return response, 200
-
-
-# @auth.route('/api/profile', methods=['GET'])
-# @jwt_required
-# def profile():
-#     # TODO extract use-case ids from token claims
-#     # TODO query mongoDB for extracted ids and return them to the user
-
-#     response = jsonify({
-#         'logged_in_as': get_jwt_identity(),
-#         'use_cases': get_jwt_claims()['use_cases']
-#     })
-#     return response, 200
-
-
-@auth.route('/api/profile/settings', methods=['GET', 'POST'])
-@fresh_jwt_required
-def edit_user_settings():
-    username = get_jwt_identity()
-    return jsonify(fresh_logged_in_as=username), 200
-
-
-@auth.route('/api/profile/use-cases', methods=['GET', 'POST'])
-@jwt_required
-def user_use_cases():
-    claims = get_jwt_claims()
-    use_cases = claims['use_cases']
-    print('claims', claims)
-    print('use_cases', use_cases)
-    response = jsonify({
-        'your_use_cases': use_cases
-    })
     return response, 200

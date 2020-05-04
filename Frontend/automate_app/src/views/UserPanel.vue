@@ -73,7 +73,7 @@ export default {
   mounted() {
     getUserUseCases()
       .then(response => {
-        this.UseCases = response['your_use_cases']
+        this.useCases = response.data.your_use_cases
       })
       .catch(error => console.log("Error fetching user's use cases:", error))
   }

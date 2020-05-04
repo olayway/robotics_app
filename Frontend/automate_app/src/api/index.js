@@ -6,25 +6,29 @@ import axios from 'axios'
 
 export function login(credentials) {
   console.log('API: handle login')
-  return axios.post('/token/auth', credentials, { withCredentials: true })
+  return axios.post('/api/login', credentials, { withCredentials: true })
 }
 
 export function refreshToken() {
   console.log('API: handle refreshing token')
-  return axios.get('/token/refresh', { withCredentials: true })
+  return axios.get('/api/refresh', { withCredentials: true })
 }
 
 export function register(userData) {
   console.log('API: handle user signup', userData)
-  return axios.post('/token/register', userData, { withCredentials: true })
+  return axios.post('/api/register', userData, {
+    withCredentials: true
+  })
 }
 
 export function logout() {
   console.log('API: handle user logout')
+  // logout & revoke access token
   return axios
-    .get('/token/remove-refresh', { withCredentials: true })
+    .get('/api/profile/logout', { withCredentials: true })
     .then(() => {
-      return axios.get('/api/profile/token/remove', { withCredentials: true })
+      // revoke refresh token
+      return axios.get('/api/refresh/remove', { withCredentials: true })
     })
 }
 

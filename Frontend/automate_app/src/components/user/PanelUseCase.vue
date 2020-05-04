@@ -18,13 +18,13 @@
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>{{selected}}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{useCase.tags.industry}}</v-col>
+        <v-col>{{useCase.industry}}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{useCase.tags.company}}</v-col>
+        <v-col>{{useCase.company}}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
           <ul>
-            <li v-for="(item, index) in useCase.tags.applications" :key="index">{{item}}</li>
+            <li v-for="(item, index) in useCase.applications" :key="index">{{item}}</li>
           </ul>
         </v-col>
         <v-divider vertical class="mx-2"></v-divider>
