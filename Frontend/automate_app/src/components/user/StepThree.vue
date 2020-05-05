@@ -27,17 +27,7 @@
 <script>
 export default {
   name: 'StepOne',
-  data() {
-    return {
-      tags: {
-        company_name: null,
-        company_size: null,
-        country: null,
-        industry: null,
-        applications: []
-      }
-    }
-  }
+  data() {}
 }
 </script>
 

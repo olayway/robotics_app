@@ -16,7 +16,13 @@
             background-color="white"
             outlined
             dense
-            v-model="article_title"
+            :value="getUseCaseData.content.article_title"
+            @input="
+              updateUseCaseData({
+                userInput: { article_title: $event },
+                key: 'content'
+              })
+            "
           ></v-text-field>
           <v-divider class="my-5"></v-divider>
 
@@ -40,15 +46,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import ArticleSections from './ArticleSections'
 import BPSections from './BPSections'
 export default {
   name: 'StepTwo',
   components: { ArticleSections, BPSections },
   data() {
-    return {
-      article_title: ''
-    }
+    return {}
+  },
+  computed: {
+    ...mapGetters(['getUseCaseData'])
+  },
+  methods: {
+    ...mapActions(['updateUseCaseData'])
   }
 }
 </script>

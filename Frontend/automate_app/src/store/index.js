@@ -39,8 +39,9 @@ export default new Vuex.Store({
       },
       content: {
         article_title: '',
-        article_sections: null,
-        bullet_points: null
+        // TODO update scraper -> {tabId: x, title: y, content: z}
+        article_sections: {},
+        bullet_points: {}
       },
       images: []
     }

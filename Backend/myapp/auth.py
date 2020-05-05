@@ -45,7 +45,7 @@ def login():
             "msg": "Invalid credentials"})
         return response, 401
 
-    access_expires = timedelta(minutes=5)
+    access_expires = timedelta(minutes=10)
     refresh_expires = timedelta(hours=1)
     access_token = create_access_token(
         identity=user, expires_delta=access_expires, fresh=True)
@@ -75,7 +75,7 @@ def fresh_login():
             "msg": "Invalid credentials"})
         return response, 401
 
-    access_expires = timedelta(minutes=1)
+    access_expires = timedelta(minutes=10)
     access_token = create_access_token(
         identity=user, expires_delta=access_expires, fresh=True)
 
@@ -128,7 +128,7 @@ def edit_user_settings():
 def refresh():
     print('CURRENT USER', current_user)
     # current_user = get_jwt_identity()
-    access_expires = timedelta(minutes=1)
+    access_expires = timedelta(minutes=10)
     access_token = create_access_token(
         identity=current_user, expires_delta=access_expires, fresh=False)
 

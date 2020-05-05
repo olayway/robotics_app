@@ -2,7 +2,7 @@
   <div>
     <label for="article_sections">Article sections</label>
     <v-tabs
-      v-model="current_tab"
+      v-model="currentTab"
       height="30px"
       hide-slider
       style="border-radius: 5px"
@@ -11,18 +11,21 @@
       dark
       class="my-2"
     >
-      <v-tab v-for="(n, index) in tabs" :key="n">Section {{ index + 1 }}</v-tab>
+      <v-tab v-for="(uid, index) in tabs" :key="uid"
+        >Section {{ index + 1 }}</v-tab
+      >
     </v-tabs>
 
-    <v-tabs-items ref="tabs" v-model="current_tab">
-      <v-tab-item v-for="n in tabs" :key="n">
-        <MainSection></MainSection>
+    <v-tabs-items ref="tabs" v-model="currentTab">
+      <v-tab-item v-for="uid in tabs" :key="uid">
+        <MainSection :tab-id="uid"></MainSection>
       </v-tab-item>
     </v-tabs-items>
 
     <v-card-text>
       <v-btn outlined small color="green" @click="addTab">Add section</v-btn>
       <v-divider vertical class="mx-2"></v-divider>
+      <!-- TODO disable possibility to remove the only exisiting section -->
       <v-btn outlined small color="red" @click="deleteTab"
         >Remove section</v-btn
       >
@@ -39,17 +42,28 @@ export default {
   components: { MainSection },
   data() {
     return {
-      tabs: [1],
-      current_tab: null
+      tabs: [],
+      currentTab: ''
     }
   },
   methods: {
     addTab() {
-      this.tabs.push(this.tabs.length + 1)
+      const newTabUid = this.generateUid()
+      this.tabs.push(newTabUid)
     },
     deleteTab() {
-      this.tabs.splice(this.current_tab, 1)
+      this.tabs.splice(this.currentTab, 1)
+    },
+    generateUid() {
+      return Math.random()
+        .toString(36)
+        .substring(7)
     }
+  },
+  created() {
+    const baseTabUid = this.generateUid()
+    this.tabs.push(baseTabUid)
+    this.currentTab = baseTabUid
   }
 }
 </script>

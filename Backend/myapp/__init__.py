@@ -65,6 +65,7 @@ def create_app(test_config=None):
     # add custom data claims to tokens
     @jwt.user_claims_loader
     def add_claims_to_access_token(user):
+        #  TODO move to endpoint for fetching use-case data, add only use-case id's to token claims
         use_cases = user['use_cases']
         use_cases_claims = []
 

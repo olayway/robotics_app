@@ -2,7 +2,6 @@
   <v-card flat tile color="grey lighten-5" class="my-3">
     <label for="section_title">Section title:</label>
     <v-text-field
-      id="section_title"
       color="indigo"
       background-color="white"
       outlined
@@ -15,7 +14,7 @@
     <v-text-field
       v-for="n in 3"
       :key="n"
-      :label="n"
+      :label="n.toString()"
       color="indigo"
       hide-details
       v-model="section_bulletpoints"
