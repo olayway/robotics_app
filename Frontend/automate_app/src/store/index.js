@@ -29,10 +29,10 @@ export default new Vuex.Store({
       { title: 'Contact', subtitles: [] }
     ],
     drawerState: false,
-    editUseCase: {
+    useCaseData: {
       filter_tags: {
-        applications: [],
         company: '',
+        applications: [],
         industry: '',
         country: '',
         company_size: ''
@@ -59,6 +59,9 @@ export default new Vuex.Store({
     },
     getDrawerState(state) {
       return state.drawerState
+    },
+    getUseCaseData(state) {
+      return state.useCaseData
     }
   },
   mutations: {
@@ -78,6 +81,13 @@ export default new Vuex.Store({
     clearInterval(state) {
       clearInterval(state.intervalID)
       state.intervalID = null
+    },
+    setUseCaseData(state, payload) {
+      const { userInput, key } = payload
+      const useCaseData = state.useCaseData
+      Object.assign(useCaseData, {
+        [key]: { ...useCaseData[key], ...userInput }
+      })
     }
   },
   actions: {
@@ -138,9 +148,13 @@ export default new Vuex.Store({
           console.log('Error Logging out ???', error)
         })
     },
-    setDrawerState(context) {
-      context.commit('setDrawerState')
+    setDrawerState({ commit }) {
+      commit('setDrawerState')
+    },
+    updateUseCaseData({ commit }, payload) {
+      // TODO
+      console.log('userInput', payload)
+      commit('setUseCaseData', payload)
     }
-  },
-  modules: {}
+  }
 })

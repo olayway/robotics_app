@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import StepOne from '../components/user/StepOne'
+import StepOne from '../components/user/StepOne.vue'
 import StepTwo from '../components/user/StepTwo.vue'
 import StepThree from '../components/user/StepThree.vue'
 import StepFour from '../components/user/StepFour.vue'
