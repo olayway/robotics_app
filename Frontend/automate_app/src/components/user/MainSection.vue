@@ -8,11 +8,11 @@
       dense
       hide-details
       class="mb-2"
-      :value="getUseCaseData.content.article_sections[tabId].title"
+      :value="getContent.article_sections[tabIndex].title"
       @input="
         setSectionData({
           userInput: { title: $event },
-          sectionId: tabId
+          tabIndex: tabIndex
         })
       "
     ></v-text-field>
@@ -22,11 +22,11 @@
       color="indigo"
       hide-details
       outlined
-      :value="getUseCaseData.content.article_sections[tabId].content"
+      :value="getContent.article_sections[tabIndex].content"
       @input="
         setSectionData({
-          userInput: { title: $event },
-          sectionId: tabId
+          userInput: { content: $event },
+          tabIndex: tabIndex
         })
       "
     ></v-textarea>
@@ -39,28 +39,19 @@ import { mapActions } from 'vuex'
 export default {
   name: 'MainSection',
   props: {
-    tabId: {
+    tabIndex: {
       type: String,
       required: true
     }
   },
   data() {
-    return {
-      tabData: {
-        tabId: this.tabId,
-        title: '',
-        content: ''
-      }
-    }
+    return {}
   },
   computed: {
-    ...mapGetters(['getUseCaseData'])
-  },
-  created() {
-    this.setBasicInfo()
+    ...mapGetters(['getContent'])
   },
   methods: {
-    ...mapActions(['setSectionData'])
+    ...mapActions(['setSectionData', 'addNewSection'])
   }
 }
 </script>

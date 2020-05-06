@@ -16,7 +16,7 @@
             background-color="white"
             outlined
             dense
-            :value="getUseCaseData.content.article_title"
+            :value="getContent.article_title"
             @input="setArticleTitle"
           ></v-text-field>
           <v-divider class="my-5"></v-divider>
@@ -52,10 +52,10 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['getUseCaseData'])
+    ...mapGetters(['getContent'])
   },
   methods: {
-    ...mapActions(['setArticleTitle'])
+    ...mapActions(['setArticleTitle', 'addNewSection'])
   }
 }
 </script>

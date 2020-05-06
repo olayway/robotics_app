@@ -11,46 +11,63 @@
       dark
       class="my-2"
     >
-      <v-tab v-for="(uid, index) in tabs" :key="uid"
+      <v-tab v-for="(section, index) in articleSections" :key="index"
         >Section {{ index + 1 }}</v-tab
       >
     </v-tabs>
 
     <v-tabs-items ref="tabs" v-model="currentTab">
-      <v-tab-item v-for="uid in tabs" :key="uid">
-        <MainSection :tab-id="uid"></MainSection>
+      <v-tab-item v-for="(section, i) in articleSections" :key="i">
+        <MainSection :tab-index="i.toString()"></MainSection>
       </v-tab-item>
     </v-tabs-items>
 
     <v-card-text>
-      <v-btn outlined small color="green" @click="addTab">Add section</v-btn>
+      <v-btn outlined small color="green" @click="addNewSection"
+        >Add section</v-btn
+      >
       <v-divider vertical class="mx-2"></v-divider>
       <!-- TODO disable possibility to remove the only exisiting section -->
-      <v-btn outlined small color="red" @click="deleteTab"
+      <v-btn
+        outlined
+        small
+        color="red"
+        @click="deleteSection({ mouse: $event, tabIndex: currentTab })"
         >Remove section</v-btn
       >
       <v-divider vertical class="mx-2"></v-divider>
-      <v-btn outlined small color="grey" @click="deleteTab">Reset</v-btn>
+      <!-- TODO add reset functionality -->
+      <v-btn
+        outlined
+        small
+        color="grey"
+        @click="deleteSection({ mouse: $event, tabIndex: currentTab })"
+        >Reset</v-btn
+      >
     </v-card-text>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import MainSection from '../user/MainSection.vue'
 export default {
   name: 'ArticleSections',
   components: { MainSection },
   data() {
     return {
-      tabs: [],
-      currentTab: ''
+      currentTab: 0
     }
   },
-  created() {
-    const baseTabUid = this.generateUid()
-    this.tabs.push(baseTabUid)
-    this.currentTab = baseTabUid
+  computed: {
+    ...mapGetters(['getContent']),
+    articleSections() {
+      return this.getContent['article_sections']
+    }
   },
-  methods: {}
+  methods: {
+    ...mapActions(['addNewSection', 'deleteSection'])
+  }
 }
 </script>

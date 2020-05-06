@@ -39,9 +39,10 @@ export default new Vuex.Store({
       },
       content: {
         article_title: '',
-        // TODO update scraper -> {tabId: x, title: y, content: z}
-        article_sections: {},
-        bullet_points: {}
+        // TODO update scraper -> Array<{title: String, content: String}>
+        article_sections: [{ title: '', content: '' }],
+        // TODO update scraper -> Array<{title: String, content: String}>
+        bullet_points: []
       },
       images: []
     }
@@ -61,8 +62,11 @@ export default new Vuex.Store({
     getDrawerState(state) {
       return state.drawerState
     },
-    getUseCaseData(state) {
-      return state.useCaseData
+    getBasicInfo(state) {
+      return state.useCaseData.filter_tags
+    },
+    getContent(state) {
+      return state.useCaseData.content
     }
   },
   mutations: {
@@ -92,23 +96,24 @@ export default new Vuex.Store({
     setArticleTitle(state, payload) {
       state.useCaseData.content.article_title = payload
     },
-    addSection(state, payload) {
-      state.useCaseData.content.article_sections = payload
+    addNewSection(state) {
+      var articleSectionsRef = state.useCaseData.content.article_sections
+      const newSection = { title: '', content: '' }
+      const articleSections = articleSectionsRef
+      articleSections.push(newSection)
+      articleSectionsRef = articleSections
     },
-    setSectionData(state, { userInput, sectionId }) {
-      const useCaseData = state.useCaseData
-      Object.assign(useCaseData, {
-        content: {
-          ...useCaseData.content,
-          article_sections: {
-            ...useCaseData.content.article_sections,
-            [sectionId]: {
-              ...useCaseData.content.article_sections[sectionId],
-              ...userInput
-            }
-          }
-        }
-      })
+    deleteSection(state, payload) {
+      var articleSections = state.useCaseData.content.article_sections
+      articleSections.splice(payload, 1)
+      state.useCaseData.content.article_sections = articleSections
+    },
+    setSectionData(state, { userInput, tabIndex }) {
+      const sectionData = {
+        ...state.useCaseData.content.article_sections[tabIndex],
+        ...userInput
+      }
+      state.useCaseData.content.article_sections[tabIndex] = sectionData
     }
   },
   actions: {
@@ -180,8 +185,12 @@ export default new Vuex.Store({
       console.log('userInput', userInput)
       commit('setArticleTitle', userInput)
     },
-    addSection({ commit }, payload) {
-      commit('addSection', payload)
+    addNewSection({ commit }) {
+      commit('addNewSection')
+    },
+    deleteSection({ commit }, { tabIndex }) {
+      console.log('delete tab number', tabIndex)
+      commit('deleteSection', tabIndex)
     },
     setSectionData({ commit }, payload) {
       console.log('userInput', payload)

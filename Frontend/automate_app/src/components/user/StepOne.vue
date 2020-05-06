@@ -19,7 +19,7 @@
               dense
               counter="15"
               :rules="[rules.counter, rules.required]"
-              :value="getUseCaseData.filter_tags.company"
+              :value="getBasicInfo.company"
               @input="setBasicInfo({ company: $event })"
             ></v-text-field>
             <label for="company_size">Company size</label>
@@ -31,7 +31,7 @@
               dense
               :items="inputOptions.company_size"
               :rules="[rules.required]"
-              :value="getUseCaseData.filter_tags.company_size"
+              :value="getBasicInfo.company_size"
               @input="setBasicInfo({ company_size: $event })"
             ></v-select>
             <label for="country">Country</label>
@@ -43,7 +43,7 @@
               dense
               :items="inputOptions.country"
               :rules="[rules.required]"
-              :value="getUseCaseData.filter_tags.country"
+              :value="getBasicInfo.country"
               @input="setBasicInfo({ country: $event })"
             ></v-select>
             <label for="industry">Industry</label>
@@ -55,7 +55,7 @@
               dense
               :items="inputOptions.industry"
               :rules="[rules.required]"
-              :value="getUseCaseData.filter_tags.industry"
+              :value="getBasicInfo.industry"
               @input="setBasicInfo({ industry: $event })"
             ></v-select>
             <label for="applications">Applications</label>
@@ -70,7 +70,7 @@
               persistent-hint
               :items="inputOptions.applications"
               :rules="[rules.required]"
-              :value="getUseCaseData.filter_tags.applications"
+              :value="getBasicInfo.applications"
               @input="setBasicInfo({ applications: $event })"
             ></v-select>
             <v-btn class="save-button my-3" outlined color="green lighten-1"
@@ -119,7 +119,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getUseCaseData'])
+    ...mapGetters(['getBasicInfo'])
   },
   methods: {
     ...mapActions(['setBasicInfo'])
