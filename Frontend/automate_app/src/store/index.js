@@ -42,7 +42,7 @@ export default new Vuex.Store({
         // TODO update scraper -> Array<{title: String, content: String}>
         article_sections: [{ title: '', content: '' }],
         // TODO update scraper -> Array<{title: String, content: String}>
-        bullet_points: []
+        bullet_points: [{ title: '', content: ['', '', ''] }]
       },
       images: []
     }
@@ -114,6 +114,33 @@ export default new Vuex.Store({
         ...userInput
       }
       state.useCaseData.content.article_sections[tabIndex] = sectionData
+    },
+    addNewSectionBP(state) {
+      var BPSectionsRef = state.useCaseData.content.bullet_points
+      const newBPSection = { title: '', content: ['', '', ''] }
+      const BPSections = BPSectionsRef
+      BPSections.push(newBPSection)
+      BPSectionsRef = BPSections
+    },
+    deleteSectionBP(state, payload) {
+      console.log('BP TB REMOVED', payload)
+      var BPSections = state.useCaseData.content.bullet_points
+      BPSections.splice(payload, 1)
+      state.useCaseData.content.bullet_points = BPSections
+    },
+    setSectionDataBP(state, { userInput, tabIndex }) {
+      if (Object.keys(userInput)[0] == 'title') {
+        const BPsectionData = {
+          ...state.useCaseData.content.bullet_points[tabIndex],
+          ...userInput
+        }
+        state.useCaseData.content.bullet_points[tabIndex] = BPsectionData
+      } else {
+        const { text, pointNo } = userInput.content
+        state.useCaseData.content.bullet_points[tabIndex].content[
+          pointNo
+        ] = text
+      }
     }
   },
   actions: {
@@ -195,6 +222,17 @@ export default new Vuex.Store({
     setSectionData({ commit }, payload) {
       console.log('userInput', payload)
       commit('setSectionData', payload)
+    },
+    addNewSectionBP({ commit }) {
+      commit('addNewSectionBP')
+    },
+    deleteSectionBP({ commit }, { tabIndex }) {
+      console.log('delete tab number', tabIndex)
+      commit('deleteSectionBP', tabIndex)
+    },
+    setSectionDataBP({ commit }, payload) {
+      console.log('userInput', payload)
+      commit('setSectionDataBP', payload)
     }
   }
 })

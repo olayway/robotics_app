@@ -17,7 +17,7 @@
     </v-tabs>
 
     <v-tabs-items ref="tabs" v-model="currentTab">
-      <v-tab-item v-for="(section, i) in articleSections" :key="i">
+      <v-tab-item v-for="(tab, i) in articleSections" :key="i">
         <MainSection :tab-index="i.toString()"></MainSection>
       </v-tab-item>
     </v-tabs-items>
@@ -36,14 +36,6 @@
         >Remove section</v-btn
       >
       <v-divider vertical class="mx-2"></v-divider>
-      <!-- TODO add reset functionality -->
-      <v-btn
-        outlined
-        small
-        color="grey"
-        @click="deleteSection({ mouse: $event, tabIndex: currentTab })"
-        >Reset</v-btn
-      >
     </v-card-text>
   </div>
 </template>

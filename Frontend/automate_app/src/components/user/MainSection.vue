@@ -8,7 +8,7 @@
       dense
       hide-details
       class="mb-2"
-      :value="getContent.article_sections[tabIndex].title"
+      :value="sectionData.title"
       @input="
         setSectionData({
           userInput: { title: $event },
@@ -22,7 +22,7 @@
       color="indigo"
       hide-details
       outlined
-      :value="getContent.article_sections[tabIndex].content"
+      :value="sectionData.content"
       @input="
         setSectionData({
           userInput: { content: $event },
@@ -48,7 +48,10 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['getContent'])
+    ...mapGetters(['getContent']),
+    sectionData() {
+      return this.getContent.article_sections[this.tabIndex]
+    }
   },
   methods: {
     ...mapActions(['setSectionData', 'addNewSection'])

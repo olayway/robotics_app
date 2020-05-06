@@ -2,7 +2,7 @@
   <div>
     <label for="article_bullets">Article bullet-point sections</label>
     <v-tabs
-      v-model="current_tab"
+      v-model="currentTab"
       height="30px"
       hide-slider
       style="border-radius: 5px"
@@ -11,45 +11,54 @@
       dark
       class="my-2"
     >
-      <v-tab v-for="(n, index) in tabs" :key="n">Section {{ index + 1 }}</v-tab>
+      <v-tab v-for="(section, index) in bulletPointSections" :key="index"
+        >Section {{ index + 1 }}</v-tab
+      >
     </v-tabs>
 
-    <v-tabs-items ref="tabs" v-model="current_tab">
-      <v-tab-item v-for="n in tabs" :key="n">
-        <BulletPoints></BulletPoints>
+    <v-tabs-items ref="tabs" v-model="currentTab">
+      <v-tab-item v-for="(tab, i) in bulletPointSections" :key="i">
+        <BulletPoints :tab-index="i.toString()"></BulletPoints>
       </v-tab-item>
     </v-tabs-items>
 
     <v-card-text>
-      <v-btn outlined small color="green" @click="addTab">Add section</v-btn>
+      <v-btn outlined small color="green" @click="addNewSectionBP"
+        >Add section</v-btn
+      >
       <v-divider class="mx-2" vertical></v-divider>
-      <v-btn outlined small color="red" @click="deleteTab"
+      <v-btn
+        outlined
+        small
+        color="red"
+        @click="deleteSectionBP({ mouse: $event, tabIndex: currentTab })"
         >Remove section</v-btn
       >
       <v-divider class="mx-2" vertical></v-divider>
-      <v-btn outlined small color="grey" @click="deleteTab">Reset</v-btn>
     </v-card-text>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import BulletPoints from './BulletPoints'
 export default {
   name: 'BPSections',
   components: { BulletPoints },
   data() {
     return {
-      tabs: [1],
-      current_tab: null
+      currentTab: 0
+    }
+  },
+  computed: {
+    ...mapGetters(['getContent']),
+    bulletPointSections() {
+      return this.getContent['bullet_points']
     }
   },
   methods: {
-    addTab() {
-      this.tabs.push(this.tabs.length + 1)
-    },
-    deleteTab() {
-      this.tabs.splice(this.current_tab, 1)
-    }
+    ...mapActions(['addNewSectionBP', 'deleteSectionBP'])
   }
 }
 </script>
