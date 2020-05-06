@@ -4,12 +4,12 @@
       <a class="tile">Log In</a>
     </router-link>
     <v-btn
-      @click.prevent
       depressed
       small
       color="#02B159"
       :ripple="false"
       class="tile register-button"
+      @click.prevent
     >
       <router-link to="/register">
         <a href="#">Sign Up</a>

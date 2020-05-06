@@ -5,12 +5,12 @@
         <v-col align-self="start">
           <v-row align="center" no-gutters>
             <v-checkbox
+              v-model="selected"
               color="indigo darken-4"
               :ripple="false"
               class="ma-0"
               hide-details
               dense
-              v-model="selected"
             ></v-checkbox>
             <span class="content">{{ index }}</span>
           </v-row>
@@ -24,7 +24,7 @@
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
           <ul>
-            <li v-for="(item, index) in useCase.applications" :key="index">
+            <li v-for="(item, i) in useCase.applications" :key="i">
               {{ item }}
             </li>
           </ul>
@@ -55,8 +55,14 @@
 export default {
   name: 'PanelUseCase',
   props: {
-    useCase: Object,
-    index: Number
+    useCase: {
+      type: Object,
+      required: true
+    },
+    index: {
+      type: Number,
+      required: true
+    }
   },
   data() {
     return {

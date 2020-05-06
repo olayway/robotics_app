@@ -3,6 +3,8 @@
     <!-- cache-items? -->
     <v-container class="d-flex flex-row">
       <v-select
+        v-for="(value, key) in filters"
+        :key="key"
         class="ma-2"
         hide-details
         solo
@@ -13,9 +15,7 @@
         multiple
         dark
         background-color="#6976A4"
-        v-for="(value, key) in filters"
         :label="key | capitalize"
-        :key="key"
         :items="value"
       ></v-select>
     </v-container>
@@ -25,6 +25,11 @@
 <script>
 export default {
   name: 'FilterNav',
+  filters: {
+    capitalize: value => {
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
   data() {
     return {
       filters: {
@@ -45,9 +50,16 @@ export default {
       // filterResultsPosition: null
     }
   },
-  filters: {
-    capitalize: value => {
-      return value.charAt(0).toUpperCase() + value.slice(1)
+  watch: {
+    filterResultsPosition: function(value) {
+      let navHeight = document
+        .querySelector('#filterNav')
+        .getBoundingClientRect().height
+      if (value < navHeight) {
+        this.fixedFilterNav = true
+      } else {
+        this.fixedFilterNav = false
+      }
     }
   },
   created() {
@@ -70,18 +82,6 @@ export default {
       //   'FILTERHEIGHT',
       //   document.querySelector('#filterNav').getBoundingClientRect().height
       // )
-    }
-  },
-  watch: {
-    filterResultsPosition: function(value) {
-      let navHeight = document
-        .querySelector('#filterNav')
-        .getBoundingClientRect().height
-      if (value < navHeight) {
-        this.fixedFilterNav = true
-      } else {
-        this.fixedFilterNav = false
-      }
     }
   }
 }

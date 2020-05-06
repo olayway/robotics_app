@@ -5,7 +5,12 @@
 <script>
 export default {
   name: 'AutoMateLogo',
-  props: ['fontSize'],
+  props: {
+    fontSize: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {}
   }

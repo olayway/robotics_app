@@ -1,13 +1,13 @@
 <template>
   <v-navigation-drawer
+    v-model="getDrawerState"
+    v-click-outside="setDrawerState"
     class="pa-2"
     temporary
     floating
     right
     stateless
-    v-model="getDrawerState"
     absolute
-    v-click-outside="setDrawerState"
   >
     <v-list dense nav class="py-0">
       <v-container v-for="(item, index) in getNavTiles" :key="index">
@@ -17,7 +17,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-group v-model="listOpen" v-else no-action>
+        <v-list-group v-else v-model="listOpen" no-action>
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title v-text="item.title"></v-list-item-title>

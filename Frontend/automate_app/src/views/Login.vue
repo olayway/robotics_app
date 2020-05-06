@@ -27,7 +27,7 @@
           <v-col cols="8">
             <v-container class="pb-12">
               <v-row no-gutters justify="end">
-                <AutoMateLogo fontSize="18px"></AutoMateLogo>
+                <AutoMateLogo font-size="18px"></AutoMateLogo>
               </v-row>
               <v-row no-gutters class="my-6" justify="center">
                 <p class="form-title">Welcome back !</p>
@@ -35,9 +35,9 @@
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
                   <v-form
-                    class="d-flex flex-column"
                     ref="form"
                     v-model="form_valid"
+                    class="d-flex flex-column"
                     lazy-validation
                   >
                     <v-text-field
@@ -88,14 +88,6 @@ export default {
       errorMsg: ''
     }
   },
-  methods: {
-    login() {
-      const { username, password } = this
-      this.$store
-        .dispatch('login', { username, password })
-        .then(() => this.$router.push('/user-panel'))
-    }
-  },
   mounted() {
     EventBus.$on('failedAuthentication', msg => {
       this.errorMsg = msg
@@ -103,6 +95,14 @@ export default {
   },
   beforeDestroy() {
     EventBus.$off('failedAuthentication')
+  },
+  methods: {
+    login() {
+      const { username, password } = this
+      this.$store
+        .dispatch('login', { username, password })
+        .then(() => this.$router.push('/user-panel'))
+    }
   }
 }
 </script>

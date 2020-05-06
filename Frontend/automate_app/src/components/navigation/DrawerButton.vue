@@ -1,5 +1,5 @@
 <template>
-  <v-container @click.stop="setDrawerState" class="d-flex justify-end pa-0">
+  <v-container class="d-flex justify-end pa-0" @click.stop="setDrawerState">
     <v-app-bar-nav-icon
       class="mx-2"
       fab

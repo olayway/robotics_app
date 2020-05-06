@@ -15,6 +15,9 @@ export default {
       case_data: null
     }
   },
+  created() {
+    this.getCase()
+  },
   methods: {
     getCase() {
       const path = 'http://localhost:5000/test'
@@ -26,9 +29,6 @@ export default {
         })
         .catch(error => console.error(error))
     }
-  },
-  created() {
-    this.getCase()
   }
 }
 </script>

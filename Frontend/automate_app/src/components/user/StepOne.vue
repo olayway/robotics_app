@@ -9,7 +9,7 @@
       </v-row>
       <v-row>
         <v-col lg="8">
-          <v-form class="step1-form" ref="form">
+          <v-form ref="form" class="step1-form">
             <label for="company_name">Company name</label>
             <v-text-field
               id="company"
@@ -20,12 +20,7 @@
               counter="15"
               :rules="[rules.counter, rules.required]"
               :value="getUseCaseData.filter_tags.company"
-              @input="
-                updateUseCaseData({
-                  userInput: { company: $event },
-                  key: 'filter_tags'
-                })
-              "
+              @input="setBasicInfo({ company: $event })"
             ></v-text-field>
             <label for="company_size">Company size</label>
             <v-select
@@ -37,12 +32,7 @@
               :items="inputOptions.company_size"
               :rules="[rules.required]"
               :value="getUseCaseData.filter_tags.company_size"
-              @input="
-                updateUseCaseData({
-                  userInput: { company_size: $event },
-                  key: 'filter_tags'
-                })
-              "
+              @input="setBasicInfo({ company_size: $event })"
             ></v-select>
             <label for="country">Country</label>
             <v-select
@@ -54,12 +44,7 @@
               :items="inputOptions.country"
               :rules="[rules.required]"
               :value="getUseCaseData.filter_tags.country"
-              @input="
-                updateUseCaseData({
-                  userInput: { country: $event },
-                  key: 'filter_tags'
-                })
-              "
+              @input="setBasicInfo({ country: $event })"
             ></v-select>
             <label for="industry">Industry</label>
             <v-select
@@ -71,12 +56,7 @@
               :items="inputOptions.industry"
               :rules="[rules.required]"
               :value="getUseCaseData.filter_tags.industry"
-              @input="
-                updateUseCaseData({
-                  userInput: { industry: $event },
-                  key: 'filter_tags'
-                })
-              "
+              @input="setBasicInfo({ industry: $event })"
             ></v-select>
             <label for="applications">Applications</label>
             <v-select
@@ -91,12 +71,7 @@
               :items="inputOptions.applications"
               :rules="[rules.required]"
               :value="getUseCaseData.filter_tags.applications"
-              @input="
-                updateUseCaseData({
-                  userInput: { applications: $event },
-                  key: 'filter_tags'
-                })
-              "
+              @input="setBasicInfo({ applications: $event })"
             ></v-select>
             <v-btn class="save-button my-3" outlined color="green lighten-1"
               >Save</v-btn
@@ -147,7 +122,7 @@ export default {
     ...mapGetters(['getUseCaseData'])
   },
   methods: {
-    ...mapActions(['updateUseCaseData'])
+    ...mapActions(['setBasicInfo'])
   }
 }
 </script>

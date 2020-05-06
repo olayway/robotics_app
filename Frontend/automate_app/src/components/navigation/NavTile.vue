@@ -4,7 +4,7 @@
       <a class="tile" v-on="on">{{ title }}</a>
     </template>
 
-    <v-list elevation="0" v-if="subtitles.length > 0">
+    <v-list v-if="subtitles.length > 0" elevation="0">
       <v-list-item
         v-for="(item, index) in subtitles"
         :key="index"
@@ -25,7 +25,8 @@ export default {
       required: true
     },
     subtitles: {
-      type: Array
+      type: Array,
+      required: true
     }
   },
   data() {

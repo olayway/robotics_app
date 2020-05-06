@@ -83,11 +83,31 @@ export default new Vuex.Store({
       clearInterval(state.intervalID)
       state.intervalID = null
     },
-    setUseCaseData(state, payload) {
-      const { userInput, key } = payload
+    setBasicInfo(state, payload) {
       const useCaseData = state.useCaseData
       Object.assign(useCaseData, {
-        [key]: { ...useCaseData[key], ...userInput }
+        filter_tags: { ...useCaseData.filter_tags, ...payload }
+      })
+    },
+    setArticleTitle(state, payload) {
+      state.useCaseData.content.article_title = payload
+    },
+    addSection(state, payload) {
+      state.useCaseData.content.article_sections = payload
+    },
+    setSectionData(state, { userInput, sectionId }) {
+      const useCaseData = state.useCaseData
+      Object.assign(useCaseData, {
+        content: {
+          ...useCaseData.content,
+          article_sections: {
+            ...useCaseData.content.article_sections,
+            [sectionId]: {
+              ...useCaseData.content.article_sections[sectionId],
+              ...userInput
+            }
+          }
+        }
       })
     }
   },
@@ -152,10 +172,20 @@ export default new Vuex.Store({
     setDrawerState({ commit }) {
       commit('setDrawerState')
     },
-    updateUseCaseData({ commit }, payload) {
-      // TODO
+    setBasicInfo({ commit }, userInput) {
+      console.log('userInput', userInput)
+      commit('setBasicInfo', userInput)
+    },
+    setArticleTitle({ commit }, userInput) {
+      console.log('userInput', userInput)
+      commit('setArticleTitle', userInput)
+    },
+    addSection({ commit }, payload) {
+      commit('addSection', payload)
+    },
+    setSectionData({ commit }, payload) {
       console.log('userInput', payload)
-      commit('setUseCaseData', payload)
+      commit('setSectionData', payload)
     }
   }
 })

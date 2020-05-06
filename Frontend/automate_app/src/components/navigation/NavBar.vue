@@ -5,7 +5,7 @@
         <!-- Logo -->
         <v-col md="3">
           <router-link to="/">
-            <AutoMateLogo fontSize="30px"></AutoMateLogo>
+            <AutoMateLogo font-size="30px"></AutoMateLogo>
           </router-link>
         </v-col>
 

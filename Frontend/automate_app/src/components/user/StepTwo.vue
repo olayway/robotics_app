@@ -17,12 +17,7 @@
             outlined
             dense
             :value="getUseCaseData.content.article_title"
-            @input="
-              updateUseCaseData({
-                userInput: { article_title: $event },
-                key: 'content'
-              })
-            "
+            @input="setArticleTitle"
           ></v-text-field>
           <v-divider class="my-5"></v-divider>
 
@@ -60,7 +55,7 @@ export default {
     ...mapGetters(['getUseCaseData'])
   },
   methods: {
-    ...mapActions(['updateUseCaseData'])
+    ...mapActions(['setArticleTitle'])
   }
 }
 </script>

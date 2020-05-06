@@ -43,7 +43,7 @@
           <PanelUseCase
             v-for="(item, index) in useCases"
             :key="index"
-            :useCase="item"
+            :use-case="item"
             :index="index"
           ></PanelUseCase>
         </v-card>
@@ -52,8 +52,8 @@
     <v-row class="px-3 px-md-6" no-gutters>
       <v-col align="start">
         <v-pagination
-          class="page-num"
           v-model="page"
+          class="page-num"
           :length="3"
           color="indigo darken-4"
           circle

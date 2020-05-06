@@ -25,14 +25,14 @@
           <v-col cols="8">
             <v-container class="pb-12">
               <v-row no-gutters justify="end">
-                <AutoMateLogo fontSize="18px"></AutoMateLogo>
+                <AutoMateLogo font-size="18px"></AutoMateLogo>
               </v-row>
               <v-row no-gutters class="my-6" justify="center">
                 <p class="form-title">Create an account</p>
               </v-row>
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
-                  <v-form class="d-flex flex-column" ref="form" lazy-validation>
+                  <v-form ref="form" class="d-flex flex-column" lazy-validation>
                     <v-text-field
                       v-model="username"
                       label="Username"

@@ -46,24 +46,11 @@ export default {
       currentTab: ''
     }
   },
-  methods: {
-    addTab() {
-      const newTabUid = this.generateUid()
-      this.tabs.push(newTabUid)
-    },
-    deleteTab() {
-      this.tabs.splice(this.currentTab, 1)
-    },
-    generateUid() {
-      return Math.random()
-        .toString(36)
-        .substring(7)
-    }
-  },
   created() {
     const baseTabUid = this.generateUid()
     this.tabs.push(baseTabUid)
     this.currentTab = baseTabUid
-  }
+  },
+  methods: {}
 }
 </script>

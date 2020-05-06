@@ -8,11 +8,11 @@
       dense
       hide-details
       class="mb-2"
-      :value="getUseCaseData.content.article_sections"
+      :value="getUseCaseData.content.article_sections[tabId].title"
       @input="
-        updateUseCaseData({
-          userInput: { section_title: $event },
-          key: 'content'
+        setSectionData({
+          userInput: { title: $event },
+          sectionId: tabId
         })
       "
     ></v-text-field>
@@ -22,11 +22,11 @@
       color="indigo"
       hide-details
       outlined
-      :value="Object.entries(tabData)"
+      :value="getUseCaseData.content.article_sections[tabId].content"
       @input="
-        updateUseCaseData({
-          userInput: { section_content: $event },
-          key: 'content'
+        setSectionData({
+          userInput: { title: $event },
+          sectionId: tabId
         })
       "
     ></v-textarea>
@@ -56,11 +56,11 @@ export default {
   computed: {
     ...mapGetters(['getUseCaseData'])
   },
-  methods: {
-    ...mapActions(['updateUseCaseData'])
-  },
   created() {
-    this.updateUseCaseData()
+    this.setBasicInfo()
+  },
+  methods: {
+    ...mapActions(['setSectionData'])
   }
 }
 </script>
