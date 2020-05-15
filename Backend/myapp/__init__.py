@@ -21,7 +21,7 @@ def create_app(test_config=None):
     app.config.from_object('config')
     app.config.from_pyfile('config.py')
 
-    CORS(app, resources={r'/*': {'origins': '*'}}, supports_credentials=True)
+    CORS(app, supports_credentials=True)
 
     #swagger config#
     SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
@@ -70,9 +70,12 @@ def create_app(test_config=None):
         use_cases_claims = []
 
         for case in use_cases:
-            use_case = case.tags.to_mongo().to_dict()
+            use_case = case.filter_tags.to_mongo().to_dict()
+            # use_case = case.tags.to_mongo().to_dict()
             use_case['id'] = str(case.id)
-            use_case['title'] = case.content.title
+            use_case['title'] = case.content.article_title
+            # use_case['title'] = case.content.title
+
             use_case['status'] = case.status
             use_cases_claims.append(use_case)
 

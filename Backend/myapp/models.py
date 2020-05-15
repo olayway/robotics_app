@@ -1,4 +1,4 @@
-from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField, BooleanField, DateTimeField, ReferenceField
+from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField, BooleanField, DateTimeField, ReferenceField, BinaryField
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify
 # from flask_security import UserMixin, RoleMixin
@@ -15,31 +15,50 @@ class FilterTags(EmbeddedDocument):
 
 
 class Content(EmbeddedDocument):
-    title = StringField(db_field='article_title')
-    sections = DictField(db_field='article_sections')
-    bullets = DictField(db_field='bullet_points')
+    # title = StringField(db_field='article_title')
+    # sections = DictField(db_field='article_sections')
+    # bullets = DictField(db_field='bullet_points')
+    article_title = StringField()
+    article_sections = ListField(DictField())
+    # article_sections = DictField()
+    bullet_points = ListField(DictField())
+    # bullet_points = DictField()
 
 
 class Images(EmbeddedDocument):
     url = StringField()
     path = StringField()
     checksum = StringField()
+    blob = BinaryField()
 
 
 class UseCase(Document):
     """Model for use-case"""
     meta = {'collection': 'universal',
             'indexes':
-            ['tags.country', 'tags.industry', 'tags.applications']
+            ['filter_tags.country', 'filter_tags.industry', 'filter_tags.applications']
             }
     options = ['active', 'inactive', 'draft']
 
     url = StringField()
-    tags = EmbeddedDocumentField(FilterTags, db_field='filter_tags')
+    filter_tags = EmbeddedDocumentField(FilterTags)
     content = EmbeddedDocumentField(Content)
     image_urls = ListField(StringField())
     images = ListField(EmbeddedDocumentField(Images))
     status = StringField(choices=options)
+
+    # meta = {'collection': 'universal',
+    #         'indexes':
+    #         ['tags.country', 'tags.industry', 'tags.applications']
+    #         }
+    # options = ['active', 'inactive', 'draft']
+
+    # url = StringField()
+    # tags = EmbeddedDocumentField(FilterTags)
+    # content = EmbeddedDocumentField(Content)
+    # image_urls = ListField(StringField())
+    # images = ListField(EmbeddedDocumentField(Images))
+    # status = StringField(choices=options)
 
 
 ### USERS ###

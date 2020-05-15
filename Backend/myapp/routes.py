@@ -8,6 +8,7 @@ from .extensions import db
 
 setup = Blueprint('setup', __name__)
 
+
 @setup.route('/use-cases')
 def use_cases():
 
@@ -19,13 +20,23 @@ def use_cases():
 
     if country:
         country = country.split(",")
-        cases = cases.filter(tags__country__in=country)
+        cases = cases.filter(filter_tags__country__in=country)
     if applications:
         applications = applications.split(",")
-        cases = cases.filter(tags__applications__in=applications)
+        cases = cases.filter(filter_tags__applications__in=applications)
     if industry:
         industry = industry.split(",")
-        cases = cases.filter(tags__industry__in=industry)
+        cases = cases.filter(filter_tags__industry__in=industry)
+
+    # if country:
+    #     country = country.split(",")
+    #     cases = cases.filter(tags__country__in=country)
+    # if applications:
+    #     applications = applications.split(",")
+    #     cases = cases.filter(tags__applications__in=applications)
+    # if industry:
+    #     industry = industry.split(",")
+    #     cases = cases.filter(tags__industry__in=industry)
 
     # cases = UseCase.objects(__raw__ = {'filter_tags.country': 'Spain'}).filter(__raw__={'filter_tags.industry': 'Automotive and Subcontractors'})
 
@@ -36,8 +47,9 @@ def use_cases():
     # print(cases_stats)
     # print(cases)
     # with open ('execution_stats.json', 'w') as file:
-        # json.dump(cases_stats, file)
+    # json.dump(cases_stats, file)
     return jsonify(result)
+
 
 @setup.route('/use-cases/<caseId>')
 def use_case(caseId):
@@ -45,4 +57,3 @@ def use_case(caseId):
     schema = UseCaseSchema()
     result = schema.dump(case)
     return result
-

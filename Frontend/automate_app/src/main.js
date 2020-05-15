@@ -5,14 +5,16 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueCookies from 'vue-cookies'
 
 // import './assets/css/main.css'
 
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'http://localhost:5000'
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
-Vue.use(VueAxios, axios)
+axios.defaults.withCredentials = true
+
+Vue.use(VueAxios, axios, VueCookies)
 
 Vue.directive('click-outside', {
   bind: function(el, binding, vnode) {

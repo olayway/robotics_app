@@ -44,7 +44,9 @@ export default new Vuex.Store({
         // TODO update scraper -> Array<{title: String, content: String}>
         bullet_points: [{ title: '', content: ['', '', ''] }]
       },
-      images: []
+      mainImage: '',
+      images: [],
+      status: 'draft'
     }
   },
   getters: {
@@ -141,6 +143,12 @@ export default new Vuex.Store({
           pointNo
         ] = text
       }
+    },
+    uploadMainImage(state, file) {
+      state.useCaseData.mainImage = file
+    },
+    uploadImage(state, files) {
+      state.useCaseData.images = [...files]
     }
   },
   actions: {
@@ -233,6 +241,12 @@ export default new Vuex.Store({
     setSectionDataBP({ commit }, payload) {
       console.log('userInput', payload)
       commit('setSectionDataBP', payload)
+    },
+    uploadMainImage({ commit }, payload) {
+      commit('uploadMainImage', payload)
+    },
+    uploadImage({ commit }, payload) {
+      commit('uploadImage', payload)
     }
   }
 })

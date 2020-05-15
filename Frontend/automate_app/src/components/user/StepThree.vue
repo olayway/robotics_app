@@ -6,10 +6,29 @@
           <p class="tab-title">Upload Images</p>
           <v-divider></v-divider>
           <label for="main_photo">Main photo:</label>
-          <v-file-input chips></v-file-input>
+          <v-file-input
+            accept="image/*"
+            show-size
+            counter
+            chips
+            clearable
+            @change="uploadMainImage"
+          ></v-file-input>
           <label for="other_photos">Other photos:</label>
-          <v-file-input multiple chips></v-file-input>
-          <v-btn class="save-button my-3" outlined color="green lighten-1"
+          <v-file-input
+            accept="image/*"
+            multiple
+            show-size
+            counter
+            chips
+            clearable
+            @change="uploadImage"
+          ></v-file-input>
+          <v-btn
+            class="save-button my-3"
+            outlined
+            color="green lighten-1"
+            @click="save"
             >Save</v-btn
           >
           <v-btn
@@ -25,9 +44,24 @@
 </template>
 
 <script>
+import { saveUseCase } from '../../api'
+import { mapActions } from 'vuex'
 export default {
-  name: 'StepOne',
-  data() {}
+  name: 'StepThree',
+  data() {
+    return {}
+  },
+  methods: {
+    ...mapActions(['uploadMainImage', 'uploadImage']),
+    save() {
+      const useCaseData = this.$store.state.useCaseData
+      const csrf_access_token = window.$cookies.get('csrf_access_token')
+      console.log('STORE USE CASE DATA', useCaseData)
+      saveUseCase(useCaseData, csrf_access_token).then(response => {
+        console.log(response)
+      })
+    }
+  }
 }
 </script>
 

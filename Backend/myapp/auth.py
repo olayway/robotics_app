@@ -1,9 +1,12 @@
+import json
+
 from flask import Blueprint, jsonify, render_template, request, url_for, redirect, make_response
 from flask_jwt_extended import jwt_required, create_access_token, jwt_refresh_token_required, create_refresh_token, get_jwt_identity, jwt_optional, set_access_cookies, set_refresh_cookies, unset_jwt_cookies, get_jwt_claims, fresh_jwt_required, current_user, get_raw_jwt
 from time import mktime
 from datetime import datetime, timedelta
+from bson import Binary
 
-from .models import User
+from .models import User, UseCase, FilterTags, Content, Images
 
 auth = Blueprint('auth', __name__)
 
@@ -93,15 +96,37 @@ def fresh_login():
 @auth.route('/api/profile/use-cases', methods=['GET', 'POST'])
 @jwt_required
 def user_use_cases():
-    # TODO remove data from token claims and query mongodb here
-    claims = get_jwt_claims()
-    use_cases = claims['use_cases']
-    print('claims', claims)
-    print('use_cases', use_cases)
-    response = jsonify({
-        'your_use_cases': use_cases
-    })
+    if request.method == 'GET':
+        # TODO remove data from token claims and query mongodb here
+        claims = get_jwt_claims()
+        use_cases = claims['use_cases']
+        # print('claims', claims)
+        # print('use_cases', use_cases)
+        response = jsonify({
+            'your_use_cases': use_cases
+        })
+    if request.method == 'POST':
+        # user = current_user
+        # images
+        files = request.files.to_dict()
+        print('files', files)
+        for (name, image) in files.items():
+            image.save(
+                '/home/ola/Coding/PortfolioProject/Backend/images/{}'.format(name))
+
+        # other data
+        form_data = {key: json.loads(value)
+                     for (key, value) in request.form.to_dict().items()}
+        new_use_case = UseCase(**form_data)
+        new_use_case.save()
+        current_user.update(use_cases=[new_use_case])
+        print(form_data)
+        response = jsonify({
+            'msg': 'Your use-case have been saved successfully'
+        })
+
     return response, 200
+
 
 # endpoint for revoking access token
 @auth.route('/api/profile/logout', methods=['GET'])
