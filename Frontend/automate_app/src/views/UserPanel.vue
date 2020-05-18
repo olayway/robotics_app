@@ -99,6 +99,7 @@ export default {
 <style scoped>
 .user-panel {
   font-family: Maven Pro;
+  font-size: 14px;
 }
 
 .panel-title {

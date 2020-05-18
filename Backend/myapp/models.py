@@ -6,7 +6,7 @@ from flask import jsonify
 ### CASES ###
 
 
-class FilterTags(EmbeddedDocument):
+class BasicInfo(EmbeddedDocument):
     applications = ListField(StringField(), required=True)
     company = StringField(required=True)
     industry = StringField(required=True)
@@ -15,50 +15,25 @@ class FilterTags(EmbeddedDocument):
 
 
 class Content(EmbeddedDocument):
-    # title = StringField(db_field='article_title')
-    # sections = DictField(db_field='article_sections')
-    # bullets = DictField(db_field='bullet_points')
     article_title = StringField()
     article_sections = ListField(DictField())
-    # article_sections = DictField()
     bullet_points = ListField(DictField())
-    # bullet_points = DictField()
-
-
-class Images(EmbeddedDocument):
-    url = StringField()
-    path = StringField()
-    checksum = StringField()
-    blob = BinaryField()
 
 
 class UseCase(Document):
     """Model for use-case"""
     meta = {'collection': 'universal',
             'indexes':
-            ['filter_tags.country', 'filter_tags.industry', 'filter_tags.applications']
+            ['basic_info.country', 'basic_info.industry', 'basic_info.applications']
             }
     options = ['active', 'inactive', 'draft']
 
     url = StringField()
-    filter_tags = EmbeddedDocumentField(FilterTags)
+    basic_info = EmbeddedDocumentField(BasicInfo)
     content = EmbeddedDocumentField(Content)
-    image_urls = ListField(StringField())
-    images = ListField(EmbeddedDocumentField(Images))
+    thumbnail = BinaryField()
+    images = ListField(BinaryField())
     status = StringField(choices=options)
-
-    # meta = {'collection': 'universal',
-    #         'indexes':
-    #         ['tags.country', 'tags.industry', 'tags.applications']
-    #         }
-    # options = ['active', 'inactive', 'draft']
-
-    # url = StringField()
-    # tags = EmbeddedDocumentField(FilterTags)
-    # content = EmbeddedDocumentField(Content)
-    # image_urls = ListField(StringField())
-    # images = ListField(EmbeddedDocumentField(Images))
-    # status = StringField(choices=options)
 
 
 ### USERS ###

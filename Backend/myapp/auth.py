@@ -4,9 +4,11 @@ from flask import Blueprint, jsonify, render_template, request, url_for, redirec
 from flask_jwt_extended import jwt_required, create_access_token, jwt_refresh_token_required, create_refresh_token, get_jwt_identity, jwt_optional, set_access_cookies, set_refresh_cookies, unset_jwt_cookies, get_jwt_claims, fresh_jwt_required, current_user, get_raw_jwt
 from time import mktime
 from datetime import datetime, timedelta
-from bson import Binary
+from base64 import b64encode
+from PIL import Image
+from io import BytesIO
 
-from .models import User, UseCase, FilterTags, Content, Images
+from .models import User, UseCase, BasicInfo, Content
 
 auth = Blueprint('auth', __name__)
 
@@ -97,30 +99,45 @@ def fresh_login():
 @jwt_required
 def user_use_cases():
     if request.method == 'GET':
-        # TODO remove data from token claims and query mongodb here
         claims = get_jwt_claims()
         use_cases = claims['use_cases']
-        # print('claims', claims)
-        # print('use_cases', use_cases)
         response = jsonify({
             'your_use_cases': use_cases
         })
     if request.method == 'POST':
-        # user = current_user
-        # images
-        files = request.files.to_dict()
-        print('files', files)
-        for (name, image) in files.items():
-            image.save(
-                '/home/ola/Coding/PortfolioProject/Backend/images/{}'.format(name))
 
-        # other data
+        # text data
+        form_data_dict = request.form.to_dict()
+        print('formData', request.form)
+        # converting nested json values to dictionaries
         form_data = {key: json.loads(value)
-                     for (key, value) in request.form.to_dict().items()}
-        new_use_case = UseCase(**form_data)
-        new_use_case.save()
-        current_user.update(use_cases=[new_use_case])
+                     for (key, value) in form_data_dict.items()}
         print(form_data)
+
+        # images
+        files_dict = request.files.to_dict()
+        print('files', files_dict)
+        images = []
+        thumbnail = None
+
+        for (name, image) in files_dict.items():
+            image_byte = image.read()
+            image_base64 = b64encode(image_byte)
+            images.append(image_base64)
+            if name == 'mainImage':
+                img = Image.open(image, mode='r')
+                size = 250, 250
+                img.thumbnail(size)
+                buffer = BytesIO()
+                img.save(buffer, format='JPEG')
+                thumbnail_byte = buffer.getvalue()
+                thumbnail_base64 = b64encode(thumbnail_byte)
+
+        # add to db
+        new_use_case = UseCase(
+            **form_data, images=images, thumbnail=thumbnail_base64)
+        new_use_case.save()
+        current_user.update(use_cases=[*current_user.use_cases, new_use_case])
         response = jsonify({
             'msg': 'Your use-case have been saved successfully'
         })

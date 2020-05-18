@@ -24,6 +24,7 @@ flask-wtf = "*"
 flask-debugtoolbar = "*"
 flask-jwt-extended = "*"
 base64 = "*"
+stringio = "*"
 
 [requires]
 python_version = "3.8"

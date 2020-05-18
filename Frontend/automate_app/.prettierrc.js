@@ -1,5 +1,5 @@
 module.exports = {
-  semi: false,
-  singleQuote: true,
-  bracketSpacing: true
+	semi: false,
+	singleQuote: true,
+	bracketSpacing: true
 }

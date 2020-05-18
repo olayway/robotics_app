@@ -30,7 +30,7 @@ export default new Vuex.Store({
     ],
     drawerState: false,
     useCaseData: {
-      filter_tags: {
+      basic_info: {
         company: '',
         applications: [],
         industry: '',
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       return state.drawerState
     },
     getBasicInfo(state) {
-      return state.useCaseData.filter_tags
+      return state.useCaseData.basic_info
     },
     getContent(state) {
       return state.useCaseData.content
@@ -92,7 +92,7 @@ export default new Vuex.Store({
     setBasicInfo(state, payload) {
       const useCaseData = state.useCaseData
       Object.assign(useCaseData, {
-        filter_tags: { ...useCaseData.filter_tags, ...payload }
+        basic_info: { ...useCaseData.basic_info, ...payload }
       })
     },
     setArticleTitle(state, payload) {

@@ -42,11 +42,11 @@ export function saveUseCase(useCaseData, csrf_access_token) {
     if (!['images', 'mainImage'].includes(key)) {
       value = JSON.stringify(value)
       useCase.append(key, value)
-    } else if (key == 'images') {
+    } else if (key == 'images' && useCaseData['images'] !== []) {
       for (let i = 0; i < value.length; i++) {
         useCase.append(`image${i}`, value[i])
       }
-    } else {
+    } else if (key == 'mainImage' && !!useCaseData['mainImage']) {
       useCase.append(key, value)
     }
   }

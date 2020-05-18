@@ -20,27 +20,13 @@ def use_cases():
 
     if country:
         country = country.split(",")
-        cases = cases.filter(filter_tags__country__in=country)
+        cases = cases.filter(basic_info__country__in=country)
     if applications:
         applications = applications.split(",")
-        cases = cases.filter(filter_tags__applications__in=applications)
+        cases = cases.filter(basic_info__applications__in=applications)
     if industry:
         industry = industry.split(",")
-        cases = cases.filter(filter_tags__industry__in=industry)
-
-    # if country:
-    #     country = country.split(",")
-    #     cases = cases.filter(tags__country__in=country)
-    # if applications:
-    #     applications = applications.split(",")
-    #     cases = cases.filter(tags__applications__in=applications)
-    # if industry:
-    #     industry = industry.split(",")
-    #     cases = cases.filter(tags__industry__in=industry)
-
-    # cases = UseCase.objects(__raw__ = {'filter_tags.country': 'Spain'}).filter(__raw__={'filter_tags.industry': 'Automotive and Subcontractors'})
-
-    # cases_stats = UseCase.objects(tags__country = 'Spain').filter(tags__industry='Automotive and Subcontractors').explain()['executionStats']
+        cases = cases.filter(basic_info__industry__in=industry)
 
     schema = UseCaseSchema(many=True)
     result = schema.dump(cases)

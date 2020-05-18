@@ -1,5 +1,6 @@
 yaskawa.json
 universal_robots.json
+images/
 ur_images/
 yaskawa_images/
 .scrapy

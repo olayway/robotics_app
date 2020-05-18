@@ -132,7 +132,7 @@ components:
           type: string
           example: "5e63f7ecbcfe1b0c14f28c69"
           readOnly: true
-        filter_tags:
+        basic_info:
           type: object
           properties:
             Applications:
