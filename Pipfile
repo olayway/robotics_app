@@ -23,6 +23,7 @@ flask-shell-ipython = "*"
 flask-wtf = "*"
 flask-debugtoolbar = "*"
 flask-jwt-extended = "*"
+base64 = "*"
 
 [requires]
 python_version = "3.8"

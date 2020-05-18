@@ -1,6 +1,7 @@
 yaskawa.json
 universal_robots.json
-*/*image*
+ur_images/
+yaskawa_images/
 .scrapy
 
 *.pyc

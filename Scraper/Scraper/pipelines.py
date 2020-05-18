@@ -7,10 +7,13 @@
 
 import pymongo
 import logging
+from base64 import b64encode
+
 
 class ScraperPipeline(object):
     def process_item(self, item, spider):
         return item
+
 
 class MongoPipeline(object):
 
@@ -35,10 +38,21 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
+
+        def encoded(image_path):
+            with open('../ur_images/{}'.format(image_path), 'rb') as image_file:
+                # result of reading a file -> bytes
+                byte_content = image_file.read()
+            # result of b64 encoding -> bytes again
+            base64_bytes = b64encode(byte_content)
+            # result -> decoding bytes to utf-string
+            base64_string = base64_bytes.decode('utf-8')
+            return base64_string
+
         # self.db[self.collection_name].insert_one(dict(item))
+        del item['image_urls']
+        item['images'] = list(
+            map(lambda x: encoded(x['path']), item['images']))
         self.db[spider.name].insert_one(dict(item))
         logging.debug("Post added to MongoDB")
         return item
-
-
-
