@@ -33,16 +33,17 @@
         <v-col>{{ useCase.status }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
-          <v-btn fab small icon color="red lighten-3">
+          <v-btn fab x-small icon color="red lighten-3" @click="remove">
             <v-icon>mdi-file-remove</v-icon>
           </v-btn>
-          <v-btn fab small icon color="grey" depressed dark>
+
+          <v-btn fab x-small icon color="grey" depressed dark>
             <v-icon>mdi-file-cancel</v-icon>
           </v-btn>
-          <v-btn fab small icon color="green lighten-2" depressed dark>
+          <v-btn fab x-small icon color="green lighten-2" depressed dark>
             <v-icon>mdi-file-check</v-icon>
           </v-btn>
-          <v-btn fab small icon color="indigo accent-1" depressed dark>
+          <v-btn fab x-small icon color="indigo accent-1" depressed dark>
             <v-icon>mdi-file-edit</v-icon>
           </v-btn>
         </v-col>
@@ -52,8 +53,11 @@
 </template>
 
 <script>
+// import ConfirmDialog from './ConfirmDialog.vue'
+import { deleteUseCase } from '../../api'
 export default {
   name: 'PanelUseCase',
+  // components: { ConfirmDialog },
   props: {
     useCase: {
       type: Object,
@@ -67,6 +71,15 @@ export default {
   data() {
     return {
       selected: false
+    }
+  },
+  methods: {
+    remove() {
+      console.log('deleetiiiiing')
+      const csrfAccess = window.$cookies.get('csrf_access_token')
+      deleteUseCase(this.useCase.id, csrfAccess)
+        .then(response => console.log(response.data))
+        .catch(error => console.log('Error deleting use case', error))
     }
   }
 }

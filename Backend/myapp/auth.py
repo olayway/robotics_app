@@ -95,7 +95,7 @@ def fresh_login():
     return response, 200
 
 # endpoint for fetching user's use cases
-@auth.route('/api/profile/use-cases', methods=['GET', 'POST'])
+@auth.route('/api/profile/use-cases', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required
 def user_use_cases():
     if request.method == 'GET':
@@ -104,21 +104,18 @@ def user_use_cases():
         response = jsonify({
             'your_use_cases': use_cases
         })
-    if request.method == 'POST':
+
+    if request.method == 'PUT':
 
         # text data
         form_data_dict = request.form.to_dict()
-        print('formData', request.form)
         # converting nested json values to dictionaries
         form_data = {key: json.loads(value)
                      for (key, value) in form_data_dict.items()}
-        print(form_data)
 
         # images
         files_dict = request.files.to_dict()
-        print('files', files_dict)
         images = []
-        thumbnail = None
 
         for (name, image) in files_dict.items():
             image_byte = image.read()
@@ -140,6 +137,14 @@ def user_use_cases():
         current_user.update(use_cases=[*current_user.use_cases, new_use_case])
         response = jsonify({
             'msg': 'Your use-case have been saved successfully'
+        })
+
+    # remove from db
+    if request.method == 'DELETE':
+        use_case_id = request.get_json()['use_case_id']
+        UseCase.objects(id=use_case_id).delete()
+        response = jsonify({
+            'msg': 'Use-case deleted'
         })
 
     return response, 200

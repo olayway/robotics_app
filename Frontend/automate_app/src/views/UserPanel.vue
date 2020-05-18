@@ -41,7 +41,7 @@
             </v-container>
           </v-toolbar>
           <PanelUseCase
-            v-for="(item, index) in useCases"
+            v-for="(item, index) in getUserUseCases"
             :key="index"
             :use-case="item"
             :index="index"
@@ -74,24 +74,19 @@
 
 <script>
 import PanelUseCase from '../components/user/PanelUseCase.vue'
-import { getUserUseCases } from '../api'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'UserPanel',
   components: { PanelUseCase },
   data() {
     return {
-      useCases: [],
       selected: [],
       page: 1
     }
   },
-  mounted() {
-    getUserUseCases()
-      .then(response => {
-        this.useCases = response.data.your_use_cases
-      })
-      .catch(error => console.log("Error fetching user's use cases:", error))
+  computed: {
+    ...mapGetters(['getUserUseCases'])
   }
 }
 </script>

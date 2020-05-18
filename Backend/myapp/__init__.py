@@ -66,17 +66,17 @@ def create_app(test_config=None):
     @jwt.user_claims_loader
     def add_claims_to_access_token(user):
         use_cases = user['use_cases']
-        use_cases_claims = []
+        use_cases_data = []
 
         for case in use_cases:
             use_case = case.basic_info.to_mongo().to_dict()
             use_case['id'] = str(case.id)
             use_case['title'] = case.content.article_title
             use_case['status'] = case.status
-            use_cases_claims.append(use_case)
+            use_cases_data.append(use_case)
 
         custom_claims = {
-            'use_cases': use_cases_claims
+            'use_cases': use_cases_data
         }
         return custom_claims
 

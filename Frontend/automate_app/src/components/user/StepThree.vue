@@ -55,9 +55,9 @@ export default {
     ...mapActions(['uploadMainImage', 'uploadImage']),
     save() {
       const useCaseData = this.$store.state.useCaseData
-      const csrf_access_token = window.$cookies.get('csrf_access_token')
+      const csrfAccess = window.$cookies.get('csrf_access_token')
       console.log('STORE USE CASE DATA', useCaseData)
-      saveUseCase(useCaseData, csrf_access_token).then(response => {
+      saveUseCase(useCaseData, csrfAccess).then(response => {
         console.log(response)
       })
     }

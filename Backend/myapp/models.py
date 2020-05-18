@@ -1,4 +1,4 @@
-from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField, BooleanField, DateTimeField, ReferenceField, BinaryField
+from mongoengine import Document, EmbeddedDocument, EmbeddedDocumentField, StringField, ListField, DictField, BooleanField, DateTimeField, ReferenceField, BinaryField, PULL
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify
 # from flask_security import UserMixin, RoleMixin
@@ -50,7 +50,8 @@ class User(Document):
     username = StringField(required=True, unique=True)
     password = StringField(required=True, unique=True, max_length=200)
     email = StringField(required=True, unique=True)
-    use_cases = ListField(ReferenceField(UseCase))
+    use_cases = ListField(ReferenceField(
+        'UseCase', reverse_delete_rule=PULL))
     active = BooleanField(default=True)
     # confirmed_at = DateTimeField()
     # roles = ListField(ReferenceField(Role), default=[]) # ? default

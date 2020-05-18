@@ -50,9 +50,19 @@ export function saveUseCase(useCaseData, csrf_access_token) {
       useCase.append(key, value)
     }
   }
-  return axios.post('/api/profile/use-cases', useCase, {
+  return axios.put('/api/profile/use-cases', useCase, {
     headers: {
       'X-CSRF-TOKEN': csrf_access_token
     }
+  })
+}
+
+export function deleteUseCase(useCaseId, csrf_access_token) {
+  console.log(`API: deleting use case no ${useCaseId}`)
+  return axios.delete('/api/profile/use-cases', {
+    headers: {
+      'X-CSRF-TOKEN': csrf_access_token
+    },
+    data: { use_case_id: useCaseId }
   })
 }

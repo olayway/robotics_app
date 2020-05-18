@@ -50,6 +50,7 @@ const routes = [
         next('/login')
       } else {
         console.log('redir to user panel')
+        store.dispatch('setUserUseCases')
         next()
       }
     },

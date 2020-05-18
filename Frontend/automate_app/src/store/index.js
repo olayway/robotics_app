@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { login, register, refreshToken, logout } from '@/api'
+import { login, register, refreshToken, logout, getUserUseCases } from '@/api'
 import { EventBus } from '@/utils'
 import createPersistedState from 'vuex-persistedstate'
 // import { refreshToken } from '../api'
@@ -16,6 +16,7 @@ export default new Vuex.Store({
   ],
   state: {
     userData: {},
+    userUseCases: [],
     accessTokenExp: null,
     intervalID: null,
     navTiles: [
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     getUserData(state) {
       return state.userData
     },
+    getUserUseCases(state) {
+      return state.userUseCases
+    },
     getIsAuthenticated(state) {
       const exp = new Date(state.accessTokenExp * 1000)
       const now = new Date()
@@ -74,6 +78,9 @@ export default new Vuex.Store({
   mutations: {
     setUserData(state, payload) {
       state.userData = payload
+    },
+    setUserUseCases(state, payload) {
+      state.userUseCases = payload
     },
     setAccessTokenExp(state, payload) {
       state.accessTokenExp = payload
@@ -208,6 +215,13 @@ export default new Vuex.Store({
         .catch(error => {
           console.log('Error Logging out ???', error)
         })
+    },
+    setUserUseCases({ commit }) {
+      getUserUseCases()
+        .then(response => {
+          commit('setUserUseCases', response.data.your_use_cases)
+        })
+        .catch(error => console.log("Error fetching user's use cases:", error))
     },
     setDrawerState({ commit }) {
       commit('setDrawerState')
