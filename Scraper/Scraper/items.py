@@ -14,3 +14,4 @@ class ScraperItem(scrapy.Item):
     content = scrapy.Field()
     image_urls = scrapy.Field()
     images = scrapy.Field()
+    status = scrapy.Field()

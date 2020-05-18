@@ -40,7 +40,7 @@ class MongoPipeline(object):
     def process_item(self, item, spider):
 
         def encoded(image_path):
-            with open('../ur_images/{}'.format(image_path), 'rb') as image_file:
+            with open('./ur_images/{}'.format(image_path), 'rb') as image_file:
                 # result of reading a file -> bytes
                 byte_content = image_file.read()
             # result of b64 encoding -> bytes again

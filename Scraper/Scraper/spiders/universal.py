@@ -11,8 +11,8 @@ class UniversalSpider(scrapy.Spider):
     start_urls = ['https://www.universal-robots.com/case-stories/']
 
     custom_settings = {
-        'FEED_FORMAT': 'json',
-        'FEED_URI': 'universal_robots.json',
+        # 'FEED_FORMAT': 'json',
+        # 'FEED_URI': 'universal_robots.json',
         'ITEM_PIPELINES': {'scrapy.pipelines.images.ImagesPipeline': 1,
                            'Scraper.pipelines.ScraperPipeline': 300,
                            'Scraper.pipelines.MongoPipeline': 400},
@@ -88,5 +88,6 @@ class UniversalSpider(scrapy.Spider):
             '//div[@class="grid-span10 grid-shift1"]//img/@src').getall()
 
         case['image_urls'] = [response.urljoin(i) for i in images]
+        case['status'] = 'active'
 
         return case
