@@ -159,15 +159,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login({ commit, dispatch }, payload) {
-      return login(payload)
+    login({ commit, dispatch }, { username, password }) {
+      return login({ username, password })
         .then(response => {
           // if (response.status === 200) {
-          const access_token_exp = response.data.access_token_exp
-          commit('setUserData', payload)
-          commit('setAccessTokenExp', access_token_exp)
+          const accessTokenExp = response.data.access_token_exp
+          const companyName = response.data.company_name
+          commit('setUserData', { username, companyName })
+          commit('setAccessTokenExp', accessTokenExp)
           const now = new Date()
-          const exp = new Date(access_token_exp * 1000)
+          const exp = new Date(accessTokenExp * 1000)
           const interval = exp - now - 30000
           const intervalID = setInterval(() => {
             dispatch('refreshToken')
@@ -180,8 +181,7 @@ export default new Vuex.Store({
           // EventBus.$emit('failedAuthentication', error)
         })
     },
-    register({ commit, dispatch }, userData) {
-      commit('setUserData', { userData })
+    register({ dispatch }, userData) {
       return register(userData)
         .then(() => dispatch('login', userData))
         .catch(error => {
@@ -193,8 +193,8 @@ export default new Vuex.Store({
       return refreshToken()
         .then(response => {
           // if (response.status === 200) {
-          const access_token_exp = response.data.access_token_exp
-          commit('setAccessTokenExp', access_token_exp)
+          const accessTokenExp = response.data.access_token_exp
+          commit('setAccessTokenExp', accessTokenExp)
           // }
         })
         .catch(error => {

@@ -37,8 +37,7 @@ class UniversalSpider(scrapy.Spider):
 
         case = ScraperItem()
 
-        # case['url'] = response.url
-
+        case['provider'] = 'Universal Robots'
         case['basic_info'] = {}
         case['basic_info'].update(
             {'applications': response.meta['applications']})

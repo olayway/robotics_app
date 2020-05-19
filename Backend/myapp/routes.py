@@ -1,6 +1,7 @@
 import json
 
 from flask import Blueprint, render_template, request, jsonify
+from marshmallow import pprint
 
 from .models import UseCase
 from .validation import UseCaseSchema
@@ -37,9 +38,12 @@ def use_cases():
     return jsonify(result)
 
 
-@setup.route('/use-cases/<caseId>')
-def use_case(caseId):
+@setup.route('/api/use-case/<caseId>', methods=['GET'])
+def fetch_use_case(caseId):
+    # TODO fetch if is active
     case = UseCase.objects.get(id=caseId)
     schema = UseCaseSchema()
     result = schema.dump(case)
-    return result
+    pprint(result)
+    # response = jsonify(result)
+    return result, 200

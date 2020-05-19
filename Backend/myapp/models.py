@@ -22,13 +22,14 @@ class Content(EmbeddedDocument):
 
 class UseCase(Document):
     """Model for use-case"""
-    meta = {'collection': 'universal',
+    meta = {'collection': 'use_cases',
             'indexes':
             ['basic_info.country', 'basic_info.industry', 'basic_info.applications']
             }
     options = ['active', 'inactive', 'draft']
 
     url = StringField()
+    provider = StringField()
     basic_info = EmbeddedDocumentField(BasicInfo)
     content = EmbeddedDocumentField(Content)
     thumbnail = BinaryField()
@@ -48,8 +49,9 @@ class User(Document):
     meta = {'collection': 'users'}
 
     username = StringField(required=True, unique=True)
-    password = StringField(required=True, unique=True, max_length=200)
     email = StringField(required=True, unique=True)
+    company_name = StringField(required=True)
+    password = StringField(required=True, unique=True, max_length=200)
     use_cases = ListField(ReferenceField(
         'UseCase', reverse_delete_rule=PULL))
     active = BooleanField(default=True)

@@ -52,7 +52,7 @@ class MongoPipeline(object):
             # thumbnail
             path = './ur_images/{}'.format(item['images'][0]['path'])
             img = Image.open(path, mode='r')
-            size = 250, 250
+            size = 150, 150
             img.thumbnail(size)
             buffer = BytesIO()
             img.save(buffer, format='JPEG')
@@ -66,6 +66,7 @@ class MongoPipeline(object):
 
         del item['image_urls']
 
-        self.db[spider.name].insert_one(dict(item))
+        self.db['use_cases'].insert_one(dict(item))
+        # self.db[spider.name].insert_one(dict(item))
         logging.debug("Post added to MongoDB")
         return item

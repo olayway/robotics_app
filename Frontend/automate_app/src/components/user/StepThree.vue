@@ -55,11 +55,14 @@ export default {
     ...mapActions(['uploadMainImage', 'uploadImage']),
     save() {
       const useCaseData = this.$store.state.useCaseData
+      const companyName = this.$store.state.userData.companyName
       const csrfAccess = window.$cookies.get('csrf_access_token')
       console.log('STORE USE CASE DATA', useCaseData)
-      saveUseCase(useCaseData, csrfAccess).then(response => {
-        console.log(response)
-      })
+      saveUseCase({ ...useCaseData, provider: companyName }, csrfAccess).then(
+        response => {
+          console.log(response)
+        }
+      )
     }
   }
 }

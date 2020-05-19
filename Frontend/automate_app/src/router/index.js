@@ -24,7 +24,7 @@ const routes = [
       import(/* webpackChunkName: "learn" */ '../views/Learn.vue')
   },
   {
-    path: '/use-case',
+    path: '/use-case/:id',
     name: 'UseCase',
     component: () =>
       import(/* webpackChunkName: "use-case" */ '../views/UseCase.vue')

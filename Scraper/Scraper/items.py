@@ -10,9 +10,11 @@ import scrapy
 
 class ScraperItem(scrapy.Item):
     # url = scrapy.Field()
+    provider = scrapy.Field()
     basic_info = scrapy.Field()
     content = scrapy.Field()
     image_urls = scrapy.Field()
-    thumbnail = scrapy.Field()
     images = scrapy.Field()
     status = scrapy.Field()
+    thumbnail = scrapy.Field()
+

@@ -1,33 +1,46 @@
 <template>
   <div>
-    <CaseMain></CaseMain>
-    <div>{{ case_data.data }}</div>
+    <CaseTitleBar
+      :image="caseData.images[0]"
+      :thumbnail="caseData.thumbnail"
+      :provider="caseData.provider"
+      :basic-info="caseData.basic_info"
+    ></CaseTitleBar>
+    <ArticleSection
+      v-for="(article, index) of caseData.content.article_sections"
+      :key="index"
+      :title="article.title"
+      >{{ article.content.join() }}</ArticleSection
+    >
   </div>
 </template>
 
 <script>
-import CaseMain from '@/components/applications/CaseMain'
+import { fetchUseCase } from '../api'
+import CaseTitleBar from '@/components/applications/CaseTitleBar'
+import ArticleSection from '@/components/applications/ArticleSection'
+
 export default {
   name: 'UseCase',
-  components: { CaseMain },
+  components: { CaseTitleBar, ArticleSection },
   data() {
     return {
-      case_data: null
+      caseData: null
+    }
+  },
+  watch: {
+    $route() {
+      this.getCaseData()
     }
   },
   created() {
-    this.getCase()
+    this.getCaseData()
   },
   methods: {
-    getCase() {
-      const path = 'http://localhost:5000/test'
-      this.axios
-        .get(path)
-        .then(res => {
-          this.case_data = res
-          console.log(res)
-        })
-        .catch(error => console.error(error))
+    getCaseData() {
+      fetchUseCase(this.$route.params.id)
+        .then(response => (this.caseData = response.data))
+        .catch(error => console.log('Error fetching use-case data', error))
     }
   }
 }

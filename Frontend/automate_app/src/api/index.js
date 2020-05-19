@@ -66,3 +66,8 @@ export function deleteUseCase(useCaseId, csrf_access_token) {
     data: { use_case_id: useCaseId }
   })
 }
+
+export function fetchUseCase(useCaseId) {
+  console.log('API: fetching use case data from DB')
+  return axios.get(`/api/use-case/${useCaseId}`)
+}

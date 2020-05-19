@@ -59,6 +59,7 @@ def login():
 
     response = jsonify({
         'logged_in_as': user.username,
+        'company_name': user.company_name,
         'access_token_exp': mktime((datetime.now() + access_expires).timetuple()),
         'fresh': True
     })
@@ -123,7 +124,7 @@ def user_use_cases():
             images.append(image_base64)
             if name == 'mainImage':
                 img = Image.open(image, mode='r')
-                size = 250, 250
+                size = 150, 150
                 img.thumbnail(size)
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG')

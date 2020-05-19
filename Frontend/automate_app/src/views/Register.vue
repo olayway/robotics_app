@@ -45,6 +45,11 @@
                       required
                     ></v-text-field>
                     <v-text-field
+                      v-model="company_name"
+                      label="Company name"
+                      required
+                    ></v-text-field>
+                    <v-text-field
                       v-model="password"
                       label="Password"
                       required
@@ -94,6 +99,7 @@ export default {
     return {
       username: '',
       email: '',
+      company_name: '',
       password: '',
       password_confirm: '',
       agree: false
@@ -105,6 +111,7 @@ export default {
         this.$store
           .dispatch('register', {
             username: this.username,
+            company_name: this.company_name,
             email: this.email,
             password: this.password
           })
