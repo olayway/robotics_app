@@ -53,11 +53,17 @@
                       v-model="password"
                       label="Password"
                       required
+                      :type="showPassword ? 'text' : 'password'"
+                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                      @click:append="showPassword = !showPassword"
                     ></v-text-field>
                     <v-text-field
                       v-model="password_confirm"
                       label="Confirm password"
                       required
+                      :type="showConfirm ? 'text' : 'password'"
+                      :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
+                      @click:append="showConfirm = !showConfirm"
                     ></v-text-field>
 
                     <v-checkbox
@@ -102,7 +108,9 @@ export default {
       company_name: '',
       password: '',
       password_confirm: '',
-      agree: false
+      agree: false,
+      showPassword: false,
+      showConfirm: false
     }
   },
   methods: {

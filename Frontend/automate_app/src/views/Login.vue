@@ -50,6 +50,9 @@
                       v-model="password"
                       label="Password"
                       required
+                      :type="showPassword ? 'text' : 'password'"
+                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                      @click:append="showPassword = !showPassword"
                     ></v-text-field>
                     <v-btn
                       class="btn align-self-center"
@@ -85,7 +88,8 @@ export default {
       username: '',
       password: '',
       form_valid: true,
-      errorMsg: ''
+      errorMsg: '',
+      showPassword: false
     }
   },
   mounted() {
