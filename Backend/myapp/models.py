@@ -24,7 +24,8 @@ class UseCase(Document):
     """Model for use-case"""
     meta = {'collection': 'use_cases',
             'indexes':
-            ['basic_info.country', 'basic_info.industry', 'basic_info.applications']
+            ['basic_info.country', 'basic_info.industry',
+                'basic_info.applications', 'basic_info.company']
             }
     options = ['active', 'inactive', 'draft']
 
@@ -60,7 +61,7 @@ class User(Document):
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
-    #     self.username = kwargs['username']
+    #     self.username = kwasrgs['username']
     #     self.password = generate_password_hash(
     #                         kwargs['password'],
     #                         method='sha256'

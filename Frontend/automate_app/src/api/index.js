@@ -71,3 +71,13 @@ export function fetchUseCase(useCaseId) {
   console.log('API: fetching use case data from DB')
   return axios.get(`/api/use-case/${useCaseId}`)
 }
+
+export function getFilters() {
+  console.log('API: fetching filters options')
+  return axios.get('/api/main/filters')
+}
+
+export function getUseCases(selections) {
+  console.log('API: fetching filtered use-cases')
+  return axios.get('/api/main/use-cases', { params: selections })
+}

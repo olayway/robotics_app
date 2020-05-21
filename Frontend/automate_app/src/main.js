@@ -8,7 +8,7 @@ import VueAxios from 'vue-axios'
 import VueCookies from 'vue-cookies'
 
 // import './assets/css/main.css'
-
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'http://localhost:5000'

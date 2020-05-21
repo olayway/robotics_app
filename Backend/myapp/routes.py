@@ -7,15 +7,35 @@ from .models import UseCase
 from .validation import UseCaseSchema
 from .extensions import db
 
-setup = Blueprint('setup', __name__)
+main = Blueprint('main', __name__)
 
 
-@setup.route('/use-cases')
+@main.route('/api/main/filters', methods=['GET'])
+def get_filters():
+    # use_case_field - string describing collection field
+    def getUnique(use_case_field):
+        unique_values = db.get_db().use_cases.distinct(use_case_field)
+        unique_values = filter(None, unique_values)
+        unique_values = list(
+            set(map(lambda value: value.lower().strip(), unique_values)))
+        return unique_values
+
+    response = jsonify({
+        "industry": getUnique('basic_info.industry'),
+        "company": getUnique('basic_info.company'),
+        "country": getUnique('basic_info.country'),
+        "application": getUnique('basic_info.applications')
+    })
+    return response, 200
+
+
+@main.route('/api/main/use-cases')
 def use_cases():
 
     country = request.args.get('country')
-    applications = request.args.get('applications')
+    applications = request.args.get('application')
     industry = request.args.get('industry')
+    company = request.args.get('company')
 
     cases = UseCase.objects
 
@@ -28,17 +48,17 @@ def use_cases():
     if industry:
         industry = industry.split(",")
         cases = cases.filter(basic_info__industry__in=industry)
+    if company:
+        company = company.split(",")
+        cases = cases.filter(basic_info__company__in=company)
 
     schema = UseCaseSchema(many=True)
     result = schema.dump(cases)
-    # print(cases_stats)
-    # print(cases)
-    # with open ('execution_stats.json', 'w') as file:
-    # json.dump(cases_stats, file)
+
     return jsonify(result)
 
 
-@setup.route('/api/use-case/<caseId>', methods=['GET'])
+@main.route('/api/use-case/<caseId>', methods=['GET'])
 def fetch_use_case(caseId):
     # TODO fetch if is active
     case = UseCase.objects.get(id=caseId)
