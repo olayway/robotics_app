@@ -117,23 +117,27 @@ def user_use_cases():
         # images
         files_dict = request.files.to_dict()
         images = []
+        main_image = None
+        main_thumbnail = None
 
         for (name, image) in files_dict.items():
             image_byte = image.read()
             image_base64 = b64encode(image_byte)
             images.append(image_base64)
             if name == 'mainImage':
+                main_image = image_base64
+                # create main image thumbnail
                 img = Image.open(image, mode='r')
-                size = 150, 150
+                size = 100, 100
                 img.thumbnail(size)
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG')
                 thumbnail_byte = buffer.getvalue()
-                thumbnail_base64 = b64encode(thumbnail_byte)
+                main_thumbnail = b64encode(thumbnail_byte)
 
         # add to db
         new_use_case = UseCase(
-            **form_data, images=images, thumbnail=thumbnail_base64)
+            **form_data, images=images, main_image=main_image, main_thumbnail=main_thumbnail)
         new_use_case.save()
         current_user.update(use_cases=[*current_user.use_cases, new_use_case])
         response = jsonify({

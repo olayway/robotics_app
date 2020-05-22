@@ -16,5 +16,5 @@ class ScraperItem(scrapy.Item):
     image_urls = scrapy.Field()
     images = scrapy.Field()
     status = scrapy.Field()
-    thumbnail = scrapy.Field()
-
+    main_image = scrapy.Field()
+    main_thumbnail = scrapy.Field()

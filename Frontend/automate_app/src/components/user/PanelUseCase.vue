@@ -20,7 +20,7 @@
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>{{ useCase.industry }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{ useCase.company }}</v-col>
+        <v-col>{{ useCase.customer }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
           <ul>

@@ -7,11 +7,14 @@ from flask import jsonify
 
 
 class BasicInfo(EmbeddedDocument):
+    meta = {'strict': False}
+
     applications = ListField(StringField(), required=True)
-    company = StringField(required=True)
+    customer = StringField(required=True)
     industry = StringField(required=True)
     country = StringField(required=True)
     company_size = StringField(required=True)
+    # sector = StringField()
 
 
 class Content(EmbeddedDocument):
@@ -21,19 +24,18 @@ class Content(EmbeddedDocument):
 
 
 class UseCase(Document):
-    """Model for use-case"""
     meta = {'collection': 'use_cases',
             'indexes':
             ['basic_info.country', 'basic_info.industry',
-                'basic_info.applications', 'basic_info.company']
+                'basic_info.applications', 'basic_info.customer', 'status', 'provider']
             }
     options = ['active', 'inactive', 'draft']
 
-    url = StringField()
     provider = StringField()
     basic_info = EmbeddedDocumentField(BasicInfo)
     content = EmbeddedDocumentField(Content)
-    thumbnail = BinaryField()
+    main_image = BinaryField()
+    main_thumbnail = BinaryField()
     images = ListField(BinaryField())
     status = StringField(choices=options)
 

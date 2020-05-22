@@ -50,19 +50,21 @@ class MongoPipeline(object):
 
         if item['images']:
             # thumbnail
-            path = './ur_images/{}'.format(item['images'][0]['path'])
-            img = Image.open(path, mode='r')
-            size = 150, 150
+            main_path = './ur_images/{}'.format(item['images'][0]['path'])
+            img = Image.open(main_path, mode='r')
+            size = 100, 100
             img.thumbnail(size)
             buffer = BytesIO()
             img.save(buffer, format='JPEG')
             thumbnail_byte = buffer.getvalue()
             thumbnail_base64 = b64encode(thumbnail_byte)
-            item['thumbnail'] = Binary(thumbnail_base64)
+            item['main_thumbnail'] = Binary(thumbnail_base64)
 
             # all images
             item['images'] = list(
                 map(lambda x: encoded(x['path']), item['images']))
+
+            item['main_image'] = item['images'][0]
 
         del item['image_urls']
 

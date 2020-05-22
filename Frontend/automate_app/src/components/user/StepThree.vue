@@ -35,7 +35,7 @@
             class="reset-button my-3 ml-3"
             outlined
             color="orange lighten-1"
-            >Reset</v-btn
+            >Discard</v-btn
           >
         </v-col>
       </v-row>
@@ -57,10 +57,10 @@ export default {
       const useCaseData = this.$store.state.useCaseData
       const companyName = this.$store.state.userData.companyName
       const csrfAccess = window.$cookies.get('csrf_access_token')
-      console.log('STORE USE CASE DATA', useCaseData)
       saveUseCase({ ...useCaseData, provider: companyName }, csrfAccess).then(
         response => {
           console.log(response)
+          this.$router.push('/user-panel')
         }
       )
     }

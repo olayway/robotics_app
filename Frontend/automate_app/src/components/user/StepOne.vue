@@ -19,8 +19,8 @@
               dense
               counter="15"
               :rules="[rules.counter, rules.required]"
-              :value="getBasicInfo.company"
-              @input="setBasicInfo({ company: $event })"
+              :value="getBasicInfo.customer"
+              @input="setBasicInfo({ customer: $event })"
             ></v-text-field>
             <label for="company_size">Company size</label>
             <v-select
@@ -74,19 +74,6 @@
               @input="setBasicInfo({ applications: $event })"
             ></v-select>
           </v-form>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-btn class="save-button my-3" outlined color="green lighten-1"
-            >Save</v-btn
-          >
-          <v-btn
-            class="reset-button my-3 ml-3"
-            outlined
-            color="orange lighten-1"
-            >Reset</v-btn
-          >
         </v-col>
       </v-row>
     </v-container>

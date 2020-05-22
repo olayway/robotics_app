@@ -1,7 +1,7 @@
 <template>
   <v-pagination
-    v-model="page"
-    :length="5"
+    v-model="currentPage"
+    :length="total"
     circle
     color="#F1D302"
     :total-visible="3"
@@ -12,9 +12,20 @@
 <script>
 export default {
   name: 'PageNav',
+  props: {
+    total: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
-      page: 1
+      currentPage: 1
+    }
+  },
+  watch: {
+    currentPage: function(newValue) {
+      this.$emit('page-change', newValue)
     }
   }
 }

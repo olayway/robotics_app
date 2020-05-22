@@ -32,7 +32,7 @@ export default new Vuex.Store({
     drawerState: false,
     useCaseData: {
       basic_info: {
-        company: '',
+        customer: '',
         applications: [],
         industry: '',
         country: '',
@@ -40,9 +40,7 @@ export default new Vuex.Store({
       },
       content: {
         article_title: '',
-        // TODO update scraper -> Array<{title: String, content: String}>
         article_sections: [{ title: '', content: '' }],
-        // TODO update scraper -> Array<{title: String, content: String}>
         bullet_points: [{ title: '', content: ['', '', ''] }]
       },
       mainImage: '',

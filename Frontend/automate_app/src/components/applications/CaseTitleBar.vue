@@ -9,7 +9,7 @@
       <v-row align="center" justify="center">
         <v-col cols="8">
           <h1 class="title-title">{{ provider | capitalize }}</h1>
-          <p class="title-text">Customer: {{ basicInfo.company }}</p>
+          <p class="title-text">Customer: {{ basicInfo.customer }}</p>
           <p class="title-text">Country: {{ basicInfo.country }}</p>
           <p class="title-text">Industry: {{ basicInfo.industry }}</p>
           <p class="title-text">Company size: {{ basicInfo.company_size }}</p>

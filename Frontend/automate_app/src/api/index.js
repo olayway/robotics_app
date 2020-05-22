@@ -1,38 +1,32 @@
-import axios from 'axios'
-
-// export function addNewUseCase(useCase) {
-//   return axios.post('/api/use-cases', useCase)
-// }
+import $axios from '../plugins/axios'
 
 export function login(credentials) {
   console.log('API: handle login')
-  return axios.post('/api/login', credentials)
+  return $axios.post('/api/login', credentials)
 }
 
 export function refreshToken() {
   console.log('API: handle refreshing token')
-  return axios.get('/api/refresh')
+  return $axios.get('/api/refresh')
 }
 
 export function register(userData) {
   console.log('API: handle user signup', userData)
-  return axios.post('/api/register', userData, {
-    withCredentials: true
-  })
+  return $axios.post('/api/register', userData)
 }
 
 export function logout() {
   console.log('API: handle user logout')
   // logout & revoke access token
-  return axios.get('/api/profile/logout').then(() => {
+  return $axios.get('/api/profile/logout').then(() => {
     // revoke refresh token
-    return axios.get('/api/refresh/remove')
+    return $axios.get('/api/refresh/remove')
   })
 }
 
 export function getUserUseCases() {
   console.log("API: get user's use cases")
-  return axios.get('/api/profile/use-cases')
+  return $axios.get('/api/profile/use-cases')
 }
 
 export function saveUseCase(useCaseData, csrf_access_token) {
@@ -50,7 +44,7 @@ export function saveUseCase(useCaseData, csrf_access_token) {
       useCase.append(key, value)
     }
   }
-  return axios.put('/api/profile/use-cases', useCase, {
+  return $axios.put('/api/profile/use-cases', useCase, {
     headers: {
       'X-CSRF-TOKEN': csrf_access_token
     }
@@ -59,7 +53,7 @@ export function saveUseCase(useCaseData, csrf_access_token) {
 
 export function deleteUseCase(useCaseId, csrf_access_token) {
   console.log(`API: deleting use case no ${useCaseId}`)
-  return axios.delete('/api/profile/use-cases', {
+  return $axios.delete('/api/profile/use-cases', {
     headers: {
       'X-CSRF-TOKEN': csrf_access_token
     },
@@ -69,15 +63,20 @@ export function deleteUseCase(useCaseId, csrf_access_token) {
 
 export function fetchUseCase(useCaseId) {
   console.log('API: fetching use case data from DB')
-  return axios.get(`/api/use-case/${useCaseId}`)
+  return $axios.get(`/api/use-case/${useCaseId}`)
 }
 
-export function getFilters() {
-  console.log('API: fetching filters options')
-  return axios.get('/api/main/filters')
-}
-
-export function getUseCases(selections) {
+export function getUseCases(appliedFilters, currentPage = 1) {
   console.log('API: fetching filtered use-cases')
-  return axios.get('/api/main/use-cases', { params: selections })
+  console.log('CURRENT PAGE', currentPage)
+  var params = new URLSearchParams()
+  params.append('page_num', currentPage)
+  if (appliedFilters) {
+    for (const [key, array] of Object.entries(appliedFilters)) {
+      if (array) {
+        array.forEach(value => params.append(key, value))
+      }
+    }
+  }
+  return $axios.get('/api/main/use-cases', { params: params })
 }

@@ -1,4 +1,5 @@
 import json
+from math import ceil
 
 from flask import Blueprint, render_template, request, jsonify
 from marshmallow import pprint
@@ -10,52 +11,67 @@ from .extensions import db
 main = Blueprint('main', __name__)
 
 
-@main.route('/api/main/filters', methods=['GET'])
-def get_filters():
-    # use_case_field - string describing collection field
-    def getUnique(use_case_field):
-        unique_values = db.get_db().use_cases.distinct(use_case_field)
-        unique_values = filter(None, unique_values)
-        unique_values = list(
-            set(map(lambda value: value.lower().strip(), unique_values)))
-        return unique_values
-
-    response = jsonify({
-        "industry": getUnique('basic_info.industry'),
-        "company": getUnique('basic_info.company'),
-        "country": getUnique('basic_info.country'),
-        "application": getUnique('basic_info.applications')
-    })
-    return response, 200
-
-
 @main.route('/api/main/use-cases')
 def use_cases():
+    print('PARAMS', list(request.args.items()))
 
-    country = request.args.get('country')
-    applications = request.args.get('application')
-    industry = request.args.get('industry')
-    company = request.args.get('company')
+    def lowerCase(array):
+        return [value.lower() for value in array]
 
-    cases = UseCase.objects
+    # get available filters to be displayed in frontend
+    def getAvailableFilters(field_name, use_cases):
+        unique_values = use_cases.distinct(field_name)
+        unique_values = list(filter(None, unique_values))
+        return unique_values
+
+    # ref to all active use cases on current page
+    cases = UseCase.objects(status='active')
+
+    cases_count = cases.count()
+    max_page_results = 20
+    pages_count = ceil(cases_count / max_page_results)
+    current_page = int(request.args.get('page_num'))
+
+    cases = cases[max_page_results *
+                  (current_page - 1): max_page_results*current_page]
+
+    # filter use cases
+    country = lowerCase(request.args.getlist('country'))
+    applications = lowerCase(request.args.getlist('application'))
+    industry = lowerCase(request.args.getlist('industry'))
+    provider = lowerCase(request.args.getlist('provider'))
+    customer = lowerCase(request.args.getlist('customer'))
 
     if country:
-        country = country.split(",")
         cases = cases.filter(basic_info__country__in=country)
     if applications:
-        applications = applications.split(",")
         cases = cases.filter(basic_info__applications__in=applications)
     if industry:
-        industry = industry.split(",")
         cases = cases.filter(basic_info__industry__in=industry)
-    if company:
-        company = company.split(",")
-        cases = cases.filter(basic_info__company__in=company)
+    if customer:
+        cases = cases.filter(basic_info__customer__in=customer)
+    if provider:
+        cases = cases.filter(provider__in=provider)
 
-    schema = UseCaseSchema(many=True)
+    schema = UseCaseSchema(many=True, only=(
+        'id', 'provider', 'basic_info', 'main_thumbnail', 'main_image'))
+    # cases = cases.exclude('images', 'content')
+    # schema = UseCaseSchema(many=True)
     result = schema.dump(cases)
+    response = jsonify({
+        'use_cases': result,
+        'available_filters': {
+            "industry": getAvailableFilters('basic_info.industry', cases),
+            "customer": getAvailableFilters('basic_info.customer', cases),
+            "country": getAvailableFilters('basic_info.country', cases),
+            "application": getAvailableFilters('basic_info.applications', cases),
+            "provider": getAvailableFilters('provider', cases)
 
-    return jsonify(result)
+        },
+        'pages_count': pages_count
+    })
+
+    return response, 200
 
 
 @main.route('/api/use-case/<caseId>', methods=['GET'])

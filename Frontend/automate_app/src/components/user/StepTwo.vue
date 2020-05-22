@@ -25,15 +25,6 @@
           <ArticleSections></ArticleSections>
           <!-- ARTICLE BULLET POINT SECTIONS -->
           <BPSections></BPSections>
-          <v-btn class="save-button my-3" outlined color="green lighten-1"
-            >Save</v-btn
-          >
-          <v-btn
-            class="reset-button my-3 ml-3"
-            outlined
-            color="orange lighten-1"
-            >Reset</v-btn
-          >
         </v-col>
       </v-row>
     </v-container>

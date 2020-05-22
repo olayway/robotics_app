@@ -2,19 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import vuetify from './plugins/vuetify'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import VueCookies from 'vue-cookies'
 
-// import './assets/css/main.css'
-Vue.prototype.$axios = axios
+import VueCookies from 'vue-cookies'
+import vuetify from './plugins/vuetify'
+
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://localhost:5000'
-axios.defaults.withCredentials = true
-
-Vue.use(VueAxios, axios, VueCookies)
+Vue.use(VueCookies)
 
 Vue.directive('click-outside', {
   bind: function(el, binding, vnode) {

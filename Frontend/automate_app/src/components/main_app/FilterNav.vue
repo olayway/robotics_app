@@ -2,13 +2,13 @@
   <v-toolbar id="filterNav" height="auto" color="#515E8A">
     <!-- cache-items? -->
     <v-container pa-0>
-      <v-row align="center">
+      <v-row align="center" justify="center" class="d-flex flex-row">
         <v-col
           v-for="(value, key) in filters"
           :key="key"
-          class="pa-0"
-          cols="6"
-          sm="3"
+          class="pa-0 flex-grow-1"
+          cols="4"
+          sm="2"
         >
           <v-select
             v-model="selections[key]"
@@ -27,47 +27,38 @@
           >
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0" class="select">{{
-                item | truncate
+                item | truncate(strLength)
               }}</span>
-              <span v-if="index === 1" class="select-count grey--text">
-                (+{{ selections[key].length - 1 }} others)</span
+              <span v-if="index === 1" class="select-count grey--text"
+                >(+{{ selections[key].length - 1 }} others)</span
               >
             </template>
-          </v-select></v-col
-        >
+          </v-select>
+        </v-col>
       </v-row>
     </v-container>
   </v-toolbar>
 </template>
 
 <script>
-import { getFilters } from '../../api'
 export default {
   name: 'FilterNav',
   filters: {
     capitalize: value => {
       return value.charAt(0).toUpperCase() + value.slice(1)
     },
-    truncate: str => {
-      console.log(this.axios)
-      let len
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-        case 'sm':
-          len = 6
-          break
-        case 'md':
-        case 'lg':
-        case 'xl':
-          len = 12
-          break
-      }
+    truncate: (str, len) => {
       return str.length > len ? str.slice(0, len) + '...' : str
+    }
+  },
+  props: {
+    filters: {
+      type: Object,
+      required: true
     }
   },
   data() {
     return {
-      filters: null,
       selections: {
         country: null,
         industry: null,
@@ -86,6 +77,23 @@ export default {
       // filterResultsPosition: null
     }
   },
+  computed: {
+    strLength() {
+      let len
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+        case 'md':
+          len = 6
+          break
+        case 'lg':
+        case 'xl':
+          len = 12
+          break
+      }
+      return len
+    }
+  },
   watch: {
     filterResultsPosition: function(value) {
       let navHeight = document
@@ -100,11 +108,6 @@ export default {
   },
   created() {
     window.addEventListener('scroll', this.handleScroll)
-    getFilters(this.selections)
-      .then(response => {
-        this.filters = response.data
-      })
-      .catch(error => console.log(error))
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
