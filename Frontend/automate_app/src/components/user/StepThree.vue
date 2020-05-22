@@ -54,8 +54,8 @@ export default {
   methods: {
     ...mapActions(['uploadMainImage', 'uploadImage']),
     save() {
-      const useCaseData = this.$store.state.useCaseData
-      const companyName = this.$store.state.userData.companyName
+      const useCaseData = this.$store.state.case.useCaseData
+      const companyName = this.$store.state.user.userData.companyName
       const csrfAccess = window.$cookies.get('csrf_access_token')
       saveUseCase({ ...useCaseData, provider: companyName }, csrfAccess).then(
         response => {
@@ -63,6 +63,7 @@ export default {
           this.$router.push('/user-panel')
         }
       )
+      this.$store.commit('resetUseCase')
     }
   }
 }

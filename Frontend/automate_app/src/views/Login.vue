@@ -106,6 +106,7 @@ export default {
       this.$store
         .dispatch('login', { username, password })
         .then(() => this.$router.push('/user-panel'))
+        .catch(error => console.log(error))
     }
   }
 }
