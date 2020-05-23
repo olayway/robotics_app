@@ -24,12 +24,9 @@ def use_cases():
         unique_values = list(filter(None, unique_values))
         return unique_values
 
-    # ref to all active use cases on current page
+    # ref to all active use cases
     cases = UseCase.objects(status='active')
-
-    cases_count = cases.count()
     max_page_results = 20
-    pages_count = ceil(cases_count / max_page_results)
     current_page = int(request.args.get('page_num'))
 
     cases = cases[max_page_results *
@@ -55,8 +52,10 @@ def use_cases():
 
     schema = UseCaseSchema(many=True, only=(
         'id', 'provider', 'basic_info', 'main_thumbnail', 'main_image'))
-    # cases = cases.exclude('images', 'content')
-    # schema = UseCaseSchema(many=True)
+
+    cases_count = cases.count()
+    pages_count = ceil(cases_count / max_page_results)
+
     result = schema.dump(cases)
     response = jsonify({
         'use_cases': result,

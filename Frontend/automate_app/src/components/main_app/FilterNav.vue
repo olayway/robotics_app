@@ -2,13 +2,13 @@
   <v-toolbar id="filterNav" height="auto" color="#515E8A">
     <!-- cache-items? -->
     <v-container pa-0>
-      <v-row align="center" justify="center" class="d-flex flex-row">
+      <v-row align="stretch" justify="center">
         <v-col
           v-for="(value, key) in filters"
           :key="key"
-          class="pa-0 flex-grow-1"
+          class="pa-0"
           cols="4"
-          sm="2"
+          lg="2"
         >
           <v-select
             v-model="selections[key]"
@@ -26,7 +26,7 @@
             @change="$emit('filter-results', selections)"
           >
             <template v-slot:selection="{ item, index }">
-              <span v-if="index === 0" class="select">{{
+              <span v-if="index === 0" class="select mr-7 mb-0">{{
                 item | truncate(strLength)
               }}</span>
               <span v-if="index === 1" class="select-count grey--text"
@@ -59,12 +59,7 @@ export default {
   },
   data() {
     return {
-      selections: {
-        country: null,
-        industry: null,
-        application: null,
-        company: null
-      }
+      selections: {}
       // filterNavStyle: {
       //   position: 'fixed',
       //   top: '0',
@@ -82,58 +77,64 @@ export default {
       let len
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
+          len = 5
+          break
         case 'sm':
+          len = 10
+          break
         case 'md':
-          len = 6
+          len = 15
           break
         case 'lg':
+          len = 10
+          break
         case 'xl':
-          len = 12
+          len = 15
           break
       }
       return len
     }
-  },
-  watch: {
-    filterResultsPosition: function(value) {
-      let navHeight = document
-        .querySelector('#filterNav')
-        .getBoundingClientRect().height
-      if (value < navHeight) {
-        this.fixedFilterNav = true
-      } else {
-        this.fixedFilterNav = false
-      }
-    }
-  },
-  created() {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  destroyed() {
-    window.removeEventListener('scroll', this.handleScroll)
-  },
-  methods: {
-    handleScroll() {
-      this.filterNavPosition = document
-        .querySelector('#filterNav')
-        .getBoundingClientRect().top
-      this.filterResultsPosition = document
-        .querySelector('#filterResults')
-        .getBoundingClientRect().top
-      // console.log('FILTER', this.filterNavPosition)
-      // console.log('RESULTS', this.filterResultsPosition)
-      // console.log(
-      //   'FILTERHEIGHT',
-      //   document.querySelector('#filterNav').getBoundingClientRect().height
-      // )
-    }
   }
+  // watch: {
+  //   filterResultsPosition: function(value) {
+  //     let navHeight = document
+  //       .querySelector('#filterNav')
+  //       .getBoundingClientRect().height
+  //     if (value < navHeight) {
+  //       this.fixedFilterNav = true
+  //     } else {
+  //       this.fixedFilterNav = false
+  //     }
+  //   }
+  // },
+  // created() {
+  //   window.addEventListener('scroll', this.handleScroll)
+  // },
+  // destroyed() {
+  //   window.removeEventListener('scroll', this.handleScroll)
+  // },
+  // methods: {
+  //   handleScroll() {
+  //     this.filterNavPosition = document
+  //       .querySelector('#filterNav')
+  //       .getBoundingClientRect().top
+  //     this.filterResultsPosition = document
+  //       .querySelector('#filterResults')
+  //       .getBoundingClientRect().top
+  // console.log('FILTER', this.filterNavPosition)
+  // console.log('RESULTS', this.filterResultsPosition)
+  // console.log(
+  //   'FILTERHEIGHT',
+  //   document.querySelector('#filterNav').getBoundingClientRect().height
+  // )
+  // }
+  // }
 }
 </script>
 
 <style scoped>
 .select {
-  margin-right: 7px;
+  font-size: 12px;
 }
 
 .select-count {

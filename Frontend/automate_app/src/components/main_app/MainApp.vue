@@ -1,17 +1,38 @@
 <template>
-  <div class="main-app">
+  <div>
     <FilterNav
       :filters="availableFilters"
       @filter-results="updateFilters"
     ></FilterNav>
-    <v-container id="filterResults">
-      <v-row>
-        <v-col v-for="(item, index) in useCases" :key="index" cols="12" md="6">
-          <FilterCard :use-case="item"></FilterCard>
-        </v-col>
-      </v-row>
-    </v-container>
-    <PageNum :total="pagesCount" @page-change="updatePageNum"></PageNum>
+    <v-card tile flat class="main-app" min-height="15rem">
+      <v-container>
+        <v-row justify="start">
+          <v-col
+            v-for="(item, index) in useCases"
+            :key="index"
+            class="d-flex"
+            cols="12"
+            sm="6"
+            height="100px"
+          >
+            <FilterCard :use-case="item"></FilterCard>
+          </v-col>
+        </v-row>
+        <v-row>
+          <PageNum
+            v-if="pagesCount"
+            :total="pagesCount"
+            @page-change="updatePageNum"
+          ></PageNum>
+        </v-row>
+      </v-container>
+
+      <v-fade-transition>
+        <v-overlay v-if="overlay" absolute color="#1d263d">
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+        </v-overlay>
+      </v-fade-transition>
+    </v-card>
   </div>
 </template>
 
@@ -26,11 +47,19 @@ export default {
   data() {
     return {
       useCases: null,
+      overlay: true,
       timeout: null,
-      pagesCount: 1,
+      casesCount: 1,
+      pagesCount: null,
       currentPage: 1,
       appliedFilters: null,
-      availableFilters: {}
+      availableFilters: {
+        application: [],
+        country: [],
+        customer: [],
+        industry: [],
+        provider: []
+      }
     }
   },
   watch: {
@@ -43,13 +72,12 @@ export default {
     }
   },
   created() {
-    console.log('GET ALL')
     getUseCases()
       .then(response => {
-        console.log(response.data)
         this.useCases = response.data.use_cases
         this.pagesCount = response.data.pages_count
         this.availableFilters = response.data.available_filters
+        this.overlay = false
       })
       .catch(error => console.log('ERROR', error))
   },
@@ -61,14 +89,15 @@ export default {
       this.appliedFilters = selections
     },
     filterResults() {
-      console.log('filtereerer', this.appliedFilters)
+      this.overlay = true
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
         getUseCases(this.appliedFilters, this.currentPage)
           .then(response => {
-            console.log(response.data)
             this.useCases = response.data.use_cases
             this.pagesCount = response.data.pages_count
+            this.availableFilters = response.data.available_filters
+            this.overlay = false
           })
           .catch(error => console.log(error))
       }, 1000)

@@ -1,4 +1,5 @@
 import Vue from 'vue'
 // import axios from 'axios'
 
-export const EventBus = new Vue()
+const EventBus = new Vue()
+export default EventBus

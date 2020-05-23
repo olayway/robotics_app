@@ -30,7 +30,7 @@ export default {
 <style scoped>
 .sign-in-up * {
   color: #4a4a4a;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   text-decoration: none;
 }
@@ -40,6 +40,7 @@ export default {
 }
 
 .register-button a {
+  font-size: 14px;
   color: white;
 }
 </style>

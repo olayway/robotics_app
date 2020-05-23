@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex justify-end pa-0" @click.stop="setDrawerState">
+  <v-container class="d-flex justify-end pa-0" @click.stop="openDrawer">
     <v-app-bar-nav-icon
       class="mx-2"
       fab
@@ -11,14 +11,16 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import Bus from '../../utils/index'
 export default {
   name: 'DrawerButton',
   data() {
     return {}
   },
   methods: {
-    ...mapActions(['setDrawerState'])
+    openDrawer() {
+      Bus.$emit('open-drawer')
+    }
   }
 }
 </script>

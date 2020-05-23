@@ -4,8 +4,8 @@
     :length="total"
     circle
     color="#F1D302"
-    :total-visible="3"
-    class="mb-6"
+    :total-visible="5"
+    class="my-3"
   ></v-pagination>
 </template>
 

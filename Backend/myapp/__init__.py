@@ -63,22 +63,22 @@ def create_app(test_config=None):
     #clicommands end#
 
     # add custom data claims to tokens
-    @jwt.user_claims_loader
-    def add_claims_to_access_token(user):
-        use_cases = user['use_cases']
-        use_cases_data = []
+    # @jwt.user_claims_loader
+    # def add_claims_to_access_token(user):
+    #     use_cases = user['use_cases']
+    #     use_cases_data = []
 
-        for case in use_cases:
-            use_case = case.basic_info.to_mongo().to_dict()
-            use_case['id'] = str(case.id)
-            use_case['title'] = case.content.article_title
-            use_case['status'] = case.status
-            use_cases_data.append(use_case)
+    #     for case in use_cases:
+    #         use_case = case.basic_info.to_mongo().to_dict()
+    #         use_case['id'] = str(case.id)
+    #         use_case['title'] = case.content.article_title
+    #         use_case['status'] = case.status
+    #         use_cases_data.append(use_case)
 
-        custom_claims = {
-            'use_cases': use_cases_data
-        }
-        return custom_claims
+    #     custom_claims = {
+    #         'use_cases': use_cases_data
+    #     }
+    #     return custom_claims
 
     @jwt.user_identity_loader
     def user_identity_lookup(user):

@@ -12,7 +12,9 @@
         :key="index"
       >
         <template v-slot:header>
-          <p class="title mt-6">{{ article.title | capitalize }}</p>
+          <p class="title mt-6">
+            {{ article.title.toLowerCase() | capitalize }}
+          </p>
         </template>
         <template v-slot:content>
           <div class="content" v-html="article.content.join('')"></div>
@@ -43,9 +45,7 @@ export default {
     }
   },
   watch: {
-    $route() {
-      this.getCaseData()
-    }
+    $route: 'getUseCaseData'
   },
   created() {
     this.getCaseData()

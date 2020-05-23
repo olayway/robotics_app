@@ -100,10 +100,20 @@ def fresh_login():
 @jwt_required
 def user_use_cases():
     if request.method == 'GET':
-        claims = get_jwt_claims()
-        use_cases = claims['use_cases']
+        # claims = get_jwt_claims()
+        # use_cases = claims['use_cases']
+        use_cases = current_user['use_cases']
+        use_cases_data = []
+
+        for case in use_cases:
+            use_case = case.basic_info.to_mongo().to_dict()
+            use_case['id'] = str(case.id)
+            use_case['title'] = case.content.article_title
+            use_case['status'] = case.status
+            use_cases_data.append(use_case)
+
         response = jsonify({
-            'your_use_cases': use_cases
+            'your_use_cases': use_cases_data
         })
 
     if request.method == 'PUT':

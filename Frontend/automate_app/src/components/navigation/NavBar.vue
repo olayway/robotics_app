@@ -5,7 +5,7 @@
         <!-- Logo -->
         <v-col md="3">
           <router-link to="/">
-            <AutoMateLogo font-size="30px"></AutoMateLogo>
+            <AutoMateLogo font-size="25px"></AutoMateLogo>
           </router-link>
         </v-col>
 
@@ -63,14 +63,6 @@ export default {
 <style scoped>
 * {
   font-family: 'Maven Pro';
-}
-
-.v-application a {
-  color: #4a4a4a;
-  text-align: center;
-  font-weight: 500;
-  font-size: 16px;
-  /* border: 1px solid red; */
 }
 
 .tile {

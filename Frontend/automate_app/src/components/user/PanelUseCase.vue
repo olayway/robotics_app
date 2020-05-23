@@ -1,5 +1,10 @@
 <template>
-  <v-card :class="[index % 2 !== 0 ? 'grey lighten-4' : '']" flat tile>
+  <v-card
+    :class="[index % 2 !== 0 ? 'grey lighten-4' : '']"
+    flat
+    tile
+    @click="$router.push({ name: 'UseCase', params: { id: useCase.id } })"
+  >
     <v-container pa-2 ma-0>
       <v-row no-gutters>
         <v-col align-self="start">

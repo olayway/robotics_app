@@ -1,19 +1,17 @@
 <template>
   <div>
     <v-container>
-      <v-row justify="center">
-        <div class="main-icon-title">
-          <img src="@/assets/images/main_icon.svg" />
-          <p class="main-title">Find your Auto-Mate!</p>
-        </div>
+      <v-row justify="center" align="center">
+        <img src="@/assets/images/main_icon.svg" />
+        <p class="mb-0">Find your Auto-Mate!</p>
       </v-row>
       <v-row justify="center">
-        <v-col md="8">
+        <v-col cols="10">
           <h1>Adapt a proven solution to your business</h1>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col md="8">
+        <v-col cols="10">
           <p class="main-text top">
             Vitae eget placerat lorem aliquam consectetur ut enim cursus. Turpis
             tortor et, vel nisi faucibus nibh sollicitudin suspendisse. Aliquam
@@ -29,7 +27,7 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col sm="8" md="4">
+        <v-col cols="8" md="6" class="my-4">
           <SearchField></SearchField>
         </v-col>
       </v-row>
@@ -49,7 +47,7 @@ export default {
 
 <style scoped>
 div * {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   font-family: Maven Pro;
   font-style: normal;
   font-weight: normal;
@@ -58,7 +56,7 @@ div * {
 }
 
 h1 {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   font-size: 40px;
   color: #3e5292;
   text-align: center;
@@ -66,15 +64,6 @@ h1 {
 
 img {
   width: 81px;
-}
-
-.main-title {
-  margin: 0 0 0 0;
-}
-
-.main-icon-title {
-  display: flex;
-  align-items: center;
 }
 
 .main-text {
