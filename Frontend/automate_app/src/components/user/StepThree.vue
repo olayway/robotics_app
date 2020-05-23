@@ -54,6 +54,7 @@ export default {
   methods: {
     ...mapActions(['uploadMainImage', 'uploadImage']),
     save() {
+      this.$emit('toggle-overlay')
       const useCaseData = this.$store.state.case.useCaseData
       const companyName = this.$store.state.user.userData.companyName
       const csrfAccess = window.$cookies.get('csrf_access_token')

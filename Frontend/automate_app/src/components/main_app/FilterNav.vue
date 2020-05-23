@@ -133,6 +133,14 @@ export default {
 </script>
 
 <style scoped>
+.disabled {
+  pointer-events: none;
+  color: #bfcbd9;
+  cursor: not-allowed;
+  background-image: none;
+  background-color: #eef1f6;
+  border-color: #d1dbe5;
+}
 .select {
   font-size: 12px;
 }

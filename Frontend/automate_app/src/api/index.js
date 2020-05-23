@@ -69,6 +69,7 @@ export function fetchUseCase(useCaseId) {
 export function getUseCases(appliedFilters, currentPage = 1) {
   console.log('API: fetching filtered use-cases')
   console.log('CURRENT PAGE', currentPage)
+  console.log('APPLIED FILTERS', appliedFilters)
   var params = new URLSearchParams()
   params.append('page_num', currentPage)
   if (appliedFilters) {
@@ -79,4 +80,22 @@ export function getUseCases(appliedFilters, currentPage = 1) {
     }
   }
   return $axios.get('/api/main/use-cases', { params: params })
+}
+
+export function changeCaseStatus(case_id, status, csrf_access_token) {
+  console.log('API: changing use case status')
+  return $axios.post(
+    `/api/profile/use-cases/${case_id}`,
+    { status_update: status },
+    {
+      headers: {
+        'X-CSRF-TOKEN': csrf_access_token
+      }
+    }
+  )
+}
+
+export function getUserUseCase(useCaseId) {
+  console.log('API: fetching USER use case data from DB')
+  return $axios.get(`/api/profile/use-cases/${useCaseId}`)
 }

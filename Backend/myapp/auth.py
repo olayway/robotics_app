@@ -165,7 +165,30 @@ def user_use_cases():
     return response, 200
 
 
-# endpoint for revoking access token
+@auth.route('/api/profile/use-cases/<caseId>', methods=['GET', 'POST'])
+@jwt_required
+def use_case(caseId):
+    # TODO check if current user is an owner of the usecaseId
+    if request.method == 'POST':
+        print('status', request.get_json()['status_update'])
+        print('caseID', caseId)
+        status = request.get_json()['status_update']
+        UseCase.objects(id=caseId).update(status=status)
+
+    response = jsonify({
+        'msg': "Status changed to {}".format(status)
+    })
+
+    # TODO !!!!! change this !!!
+    if request.method == 'GET':
+        case = UseCase.objects.get(id=caseId)
+        schema = UseCaseSchema()
+        result = schema.dump(case)
+        response = result
+
+    return response, 200
+
+
 @auth.route('/api/profile/logout', methods=['GET'])
 @jwt_required
 def logout():

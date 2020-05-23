@@ -12,10 +12,8 @@
                       <p>New to AutoMate?</p>
                     </v-row>
                     <v-row justify="center">
-                      <router-link to="/register">
-                        <OutlinedButton class="register-button"
-                          >Register</OutlinedButton
-                        >
+                      <router-link to="/register" class="register-button">
+                        <OutlinedButton>Register</OutlinedButton>
                       </router-link>
                     </v-row>
                   </v-col>
@@ -76,7 +74,6 @@
 </template>
 
 <script>
-import { EventBus } from '@/utils'
 import OutlinedButton from '@/components/base/OutlinedButton.vue'
 // import FilledButton from '@/components/base/FilledButton.vue'
 import AutoMateLogo from '@/components/base/AutoMateLogo.vue'
@@ -91,14 +88,6 @@ export default {
       errorMsg: '',
       showPassword: false
     }
-  },
-  mounted() {
-    EventBus.$on('failedAuthentication', msg => {
-      this.errorMsg = msg
-    })
-  },
-  beforeDestroy() {
-    EventBus.$off('failedAuthentication')
   },
   methods: {
     login() {
@@ -147,7 +136,7 @@ form >>> label {
   margin: 10px 0;
 }
 
-/* span.v-btn__content {
+.register-button {
   text-decoration: none;
-} */
+}
 </style>

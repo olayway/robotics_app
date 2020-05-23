@@ -40,21 +40,32 @@
               </v-row>
             </v-container>
           </v-toolbar>
-          <PanelUseCase
-            v-for="(item, index) in getUserUseCases"
-            :key="index"
-            :use-case="item"
-            :index="index"
-          ></PanelUseCase>
+          <v-card flat tile>
+            <PanelUseCase
+              v-for="(item, index) in useCases"
+              :key="index"
+              :use-case="item"
+              :index="index + 1 + (currentPage - 1) * viewCases"
+              @reload-usecases="realoadUseCases"
+            ></PanelUseCase>
+            <v-fade-transition>
+              <v-overlay v-if="overlay" absolute color="#575c63">
+                <v-progress-circular
+                  indeterminate
+                  size="40"
+                ></v-progress-circular>
+              </v-overlay>
+            </v-fade-transition>
+          </v-card>
         </v-card>
       </v-col>
     </v-row>
     <v-row class="px-3 px-md-6" no-gutters>
       <v-col align="start">
         <v-pagination
-          v-model="page"
+          v-model="currentPage"
           class="page-num"
-          :length="3"
+          :length="pages"
           color="indigo darken-4"
           circle
         ></v-pagination>
@@ -63,8 +74,8 @@
         <v-btn
           class="delete-button elevation-2"
           rounded
-          color="red lighten-1"
-          dark
+          color="red lighten-1 white--text"
+          :disabled="bulk"
           >Delete</v-btn
         >
       </v-col>
@@ -82,11 +93,39 @@ export default {
   data() {
     return {
       selected: [],
-      page: 1
+      currentPage: 1,
+      viewCases: 5,
+      overlay: false,
+      bulk: false
     }
   },
   computed: {
-    ...mapGetters(['getUserUseCases'])
+    ...mapGetters(['getUserUseCases']),
+    casesCount() {
+      return this.getUserUseCases().length
+    },
+    pages() {
+      return Math.ceil(this.casesCount / this.viewCases)
+    },
+    useCases() {
+      const max_index = this.currentPage * this.viewCases
+      const min_index = max_index - this.viewCases
+      if (max_index < this.casesCount) {
+        return this.getUserUseCases(min_index, max_index)
+      } else {
+        return this.getUserUseCases(min_index)
+      }
+    }
+  },
+  methods: {
+    realoadUseCases() {
+      this.overlay = true
+      const that = this
+      this.$store
+        .dispatch('setUserUseCases')
+        .then(() => (that.overlay = false))
+        .catch(error => console.log(error))
+    }
   }
 }
 </script>

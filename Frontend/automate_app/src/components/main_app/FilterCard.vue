@@ -11,8 +11,9 @@
           <v-row no-gutters>
             <v-col cols="12" md="6" class="d-flex flex-column">
               <v-img
+                eager
                 :src="'data:image/jpg;base64,' + useCase.main_image"
-                :lazy="'data:image/jpg;base64,' + useCase.main_thumbnail"
+                :lazy-src="'data:image/jpg;base64,' + useCase.main_thumbnail"
                 ><template v-slot:placeholder>
                   <v-row
                     class="fill-height ma-0"
@@ -70,11 +71,13 @@ export default {
   name: 'FilterCard',
   filters: {
     capitalize: value => {
-      const array = value.split(' ')
-      const arrayUpper = array.map(
-        item => item.charAt(0).toUpperCase() + item.slice(1)
-      )
-      return arrayUpper.join(' ')
+      if (value) {
+        const array = value.split(' ')
+        const arrayUpper = array.map(
+          item => item.charAt(0).toUpperCase() + item.slice(1)
+        )
+        return arrayUpper.join(' ')
+      }
     }
   },
   props: {
@@ -84,7 +87,10 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      imgSrc: 'data:image/jpg;base64,' + this.useCase.main_image,
+      lazySrc: 'data:image/jpg;base64,' + this.useCase.main_thumbnail
+    }
   },
   computed: {}
 }

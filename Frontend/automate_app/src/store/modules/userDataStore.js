@@ -12,7 +12,7 @@ export default {
       return state.userData
     },
     getUserUseCases(state) {
-      return state.userUseCases
+      return (...indexes) => state.userUseCases.slice(...indexes)
     },
     getIsAuthenticated(state) {
       const exp = new Date(state.accessTokenExp * 1000)

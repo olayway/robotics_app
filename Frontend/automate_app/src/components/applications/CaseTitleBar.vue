@@ -1,5 +1,6 @@
 <template>
   <v-img
+    eager
     :src="imgSrc"
     :lazy-src="lazySrc"
     height="450"

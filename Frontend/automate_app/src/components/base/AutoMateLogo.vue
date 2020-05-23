@@ -1,5 +1,9 @@
 <template>
-  <div id="logo" :style="{ fontSize: fontSize }"><span>auto</span>mate</div>
+  <div>
+    <router-link to="/" class="logo" :style="{ fontSize: fontSize }">
+      <span>auto</span>mate
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -18,12 +22,13 @@ export default {
 </script>
 
 <style scoped>
-#logo {
+.logo {
   color: #f1d302;
   display: inline-block;
+  text-decoration: none;
 }
 
-#logo span {
+.logo span {
   font-weight: bold;
 }
 </style>

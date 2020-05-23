@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="8" class="pa-0">
       <v-card flat>
-        <v-dialog v-model="dialog" width="80%" hide-overlay>
+        <v-dialog v-model="dialog" width="80%">
           <v-img
             :src="'data:image/jpg;base64,' + selectedImage"
             @click.stop="dialog = false"
@@ -21,7 +21,7 @@
               <v-card flat tile class="d-flex">
                 <v-img
                   :src="'data:image/jpg;base64,' + image"
-                  class="grey lighten-2"
+                  class="grey lighten-2 image"
                   @click.stop="zoomImage($event, image)"
                 >
                   <template v-slot:placeholder>
@@ -70,4 +70,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.image {
+  cursor: pointer;
+}
+</style>

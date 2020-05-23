@@ -49,7 +49,6 @@ export default {
       useCases: null,
       overlay: true,
       timeout: null,
-      casesCount: 1,
       pagesCount: null,
       currentPage: 1,
       appliedFilters: null,
@@ -86,6 +85,7 @@ export default {
       this.currentPage = pageNum
     },
     updateFilters(selections) {
+      this.currentPage = 1
       this.appliedFilters = selections
     },
     filterResults() {

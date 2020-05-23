@@ -12,7 +12,7 @@
                       <p>Already have an account?</p>
                     </v-row>
                     <v-row justify="center">
-                      <router-link to="/login">
+                      <router-link to="/login" class="login-button">
                         <OutlinedButton>Sign In</OutlinedButton>
                       </router-link>
                     </v-row>
@@ -163,5 +163,9 @@ form >>> label {
   font-size: 16px;
   letter-spacing: 0;
   margin: 10px 0;
-}</style
->>
+}
+
+.login-button {
+  text-decoration: none;
+}
+</style>

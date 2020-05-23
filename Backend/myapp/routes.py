@@ -75,7 +75,6 @@ def use_cases():
 
 @main.route('/api/use-case/<caseId>', methods=['GET'])
 def fetch_use_case(caseId):
-    # TODO fetch if is active
     case = UseCase.objects.get(id=caseId)
     schema = UseCaseSchema()
     result = schema.dump(case)

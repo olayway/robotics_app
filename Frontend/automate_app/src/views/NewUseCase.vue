@@ -20,12 +20,17 @@
             </v-tab-item>
             <!-- STEP 3 -->
             <v-tab-item>
-              <StepThree></StepThree>
+              <StepThree @toggle-overlay="overlay = true"></StepThree>
             </v-tab-item>
           </v-tabs>
         </v-card>
       </v-col>
     </v-row>
+    <v-fade-transition>
+      <v-overlay v-if="overlay" color="#575c63">
+        <v-progress-circular indeterminate size="40"></v-progress-circular>
+      </v-overlay>
+    </v-fade-transition>
   </v-container>
 </template>
 
@@ -37,7 +42,9 @@ export default {
   name: 'UserPanel',
   components: { StepOne, StepTwo, StepThree },
   data() {
-    return {}
+    return {
+      overlay: false
+    }
   }
 }
 </script>
