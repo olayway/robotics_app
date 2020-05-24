@@ -8,7 +8,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 # from flask_security import MongoEngineUserDatastore
 
 from .auth import auth
-from .routes import main
+from .routes import setup
 from .extensions import db, toolbar, jwt  # , security
 from .models import User  # , Role
 from .commands import add_usecase
@@ -54,7 +54,7 @@ def create_app(test_config=None):
         return jti in blacklist
 
     #blueprint#
-    app.register_blueprint(main)
+    app.register_blueprint(setup)
     app.register_blueprint(auth)
     #end blueprint#
 

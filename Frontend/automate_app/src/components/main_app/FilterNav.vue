@@ -22,8 +22,8 @@
             dark
             background-color="#6976A4"
             :label="key | capitalize"
-            :items="value.map(item => item.toUpperCase())"
-            @change="$emit('filter-results', selections)"
+            :items="value"
+            @blur.prevent="filter"
           >
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0" class="select mr-7 mb-0">{{
@@ -94,6 +94,12 @@ export default {
       }
       return len
     }
+  },
+  methods: {
+    filter() {
+      console.log('emiting')
+      this.$emit('filter-results', this.selections)
+    }
   }
   // watch: {
   //   filterResultsPosition: function(value) {
@@ -114,19 +120,19 @@ export default {
   //   window.removeEventListener('scroll', this.handleScroll)
   // },
   // methods: {
-  //   handleScroll() {
-  //     this.filterNavPosition = document
-  //       .querySelector('#filterNav')
-  //       .getBoundingClientRect().top
-  //     this.filterResultsPosition = document
-  //       .querySelector('#filterResults')
-  //       .getBoundingClientRect().top
-  // console.log('FILTER', this.filterNavPosition)
-  // console.log('RESULTS', this.filterResultsPosition)
-  // console.log(
-  //   'FILTERHEIGHT',
-  //   document.querySelector('#filterNav').getBoundingClientRect().height
-  // )
+  // handleScroll() {
+  //   this.filterNavPosition = document
+  //     .querySelector('#filterNav')
+  //     .getBoundingClientRect().top
+  //   this.filterResultsPosition = document
+  //     .querySelector('#filterResults')
+  //     .getBoundingClientRect().top
+  //   console.log('FILTER', this.filterNavPosition)
+  //   console.log('RESULTS', this.filterResultsPosition)
+  //   console.log(
+  //     'FILTERHEIGHT',
+  //     document.querySelector('#filterNav').getBoundingClientRect().height
+  //   )
   // }
   // }
 }

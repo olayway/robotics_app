@@ -85,6 +85,7 @@ export default {
       this.currentPage = pageNum
     },
     updateFilters(selections) {
+      console.log('updateFilters')
       this.currentPage = 1
       this.appliedFilters = selections
     },

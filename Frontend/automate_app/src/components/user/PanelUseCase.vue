@@ -1,10 +1,5 @@
 <template>
-  <v-card
-    :class="[index % 2 !== 0 ? 'grey lighten-4' : '']"
-    flat
-    tile
-    @click="$router.push({ name: 'UseCase', params: { id: useCase.id } })"
-  >
+  <v-card :class="[index % 2 !== 0 ? 'grey lighten-4' : '']" flat tile>
     <v-container pa-2 ma-0>
       <v-row no-gutters>
         <v-col align-self="start">
@@ -38,33 +33,43 @@
         <v-col>{{ useCase.status }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
-          <v-btn fab x-small icon color="red lighten-3" @click.stop="remove">
+          <v-btn
+            :ripple="false"
+            fab
+            x-small
+            icon
+            color="red lighten-3"
+            @click="remove"
+          >
             <v-icon>mdi-file-remove</v-icon>
           </v-btn>
 
           <v-btn
+            :ripple="false"
             fab
             x-small
             icon
             color="grey lighten-1"
             depressed
             dark
-            @click.stop="changeStatus($event, 'inactive')"
+            @click="changeStatus($event, 'inactive')"
           >
             <v-icon>mdi-file-cancel</v-icon>
           </v-btn>
           <v-btn
+            :ripple="false"
             fab
             x-small
             icon
             color="green lighten-2"
             depressed
             dark
-            @click.stop="changeStatus($event, 'active')"
+            @click="changeStatus($event, 'active')"
           >
             <v-icon>mdi-file-check</v-icon>
           </v-btn>
           <v-btn
+            :ripple="false"
             fab
             x-small
             icon
@@ -75,6 +80,20 @@
           >
             <v-icon>mdi-file-edit</v-icon>
           </v-btn>
+          <v-btn
+            :ripple="false"
+            fab
+            x-small
+            icon
+            color="orange lighten-3"
+            depressed
+            dark
+            @click="
+              $router.push({ name: 'UseCase', params: { id: useCase.id } })
+            "
+          >
+            <v-icon>mdi-file-eye</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -83,7 +102,7 @@
 
 <script>
 // import ConfirmDialog from './ConfirmDialog.vue'
-import { deleteUseCase, changeCaseStatus, getUserUseCase } from '../../api'
+import { deleteUseCase, changeCaseStatus } from '../../api'
 export default {
   name: 'PanelUseCase',
   // components: { ConfirmDialog },
@@ -123,10 +142,8 @@ export default {
         .catch(error => console.log('Error changing status', error))
     },
     edit() {
-      console.log('editing use case')
       const caseId = this.useCase.id
-      // const that = this
-      getUserUseCase(caseId).then(response => console.log(response))
+      this.$store.dispatch('fetchForUpdate', caseId)
     }
   }
 }

@@ -8,28 +8,95 @@ info:
     name: Aleksandra Rubaj
     email: ola@yway.pl
 
+  # host:
+  # basePath:
+  # schemes:
+  #   - http
+
 #servers:
 
 paths:
-  /use-cases:
+  /register:
+    post:
+      tags: [User panel]
+      summary: Registers new user.
+      operationId: registerNewUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewUser"
+      responses:
+        "201":
+          description: Succesfully created a new use-case.
+        "400":
+          description: User account already exists.
+
+  /login:
+    post:
+      tags: [User panel]
+      summary: Login
+      operationId: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAuth"
+      responses:
+        "200":
+          description: Succesful user authentication. Refresh token and fresh access token returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logged_in_as:
+                    type: string
+                    description: Username
+                  company_name:
+                    type: string
+                    description: User's company
+                  access_token_exp:
+                    type: number
+                    description: Access token expiry.
+        "401":
+          description: Invalid credentials.
+
+  /fresh-login:
+    post:
+      tags: [User panel]
+      summary: Fresh login.
+      operationId: freshLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAuth"
+      responses:
+        "200":
+          description: Succesful user authentication. Fresh access token returned.
+          content:
+            application/json:
+              schema:
+                access_token_exp:
+                  type: number
+                  description: Access token expiry.
+        "401":
+          description: Invalid credentials.
+
+  /main/use-cases:
     get:
       tags: [Use cases]
       summary: Returns a list of use-cases.
       operationId: getUseCases
       # query parameters
       parameters:
-        - name: bodyLimit
-          in: query
-          description: The amount of use-cases returned.
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 15
-            default: 10
-            example: 10
         - name: industries
           in: query
-          description: Robotics implementations from specified industry branches.
+          description: Get robotics implementations from specified industry branches.
           schema:
             type: array
             items:
@@ -118,6 +185,28 @@ paths:
 
 components:
   schemas:
+    NewUser:
+      description: User's account registration database.
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        company_name:
+          type: string
+        email:
+          type: string
+
+    UserAuth:
+      description: User's credentials
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
     UseCases:
       description: Array of use-cases
       type: array
@@ -179,8 +268,8 @@ components:
 #security
 
 tags:
+  - name: User panel
+    description: User profile and use-cases management
   - name: Use cases
     description: Applications of robotics solutions
-  - name: Knowledge
-    description: Robotics tutorials, courses and articles
 #externalDocs

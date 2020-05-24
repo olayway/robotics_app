@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router'
 import cloneDeep from 'lodash/cloneDeep'
 
 // import { EventBus } from '@/utils'
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     resetUseCase(state) {
       console.log('reseting use case data')
       state['case'] = initialStoreModules.case.state
+      router.push('/user-panel')
     }
   }
 })

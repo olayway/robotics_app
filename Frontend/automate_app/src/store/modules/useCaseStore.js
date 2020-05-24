@@ -1,5 +1,9 @@
+import { getUserUseCase } from '../../api'
+import router from '../../router'
+
 export default {
   state: {
+    useCaseId: null,
     useCaseData: {
       basic_info: {
         customer: '',
@@ -13,7 +17,7 @@ export default {
         article_sections: [{ title: '', content: '' }],
         bullet_points: [{ title: '', content: ['', '', ''] }]
       },
-      mainImage: '',
+      main_image: '',
       images: [],
       status: 'draft'
     }
@@ -24,6 +28,12 @@ export default {
     },
     getContent(state) {
       return state.useCaseData.content
+    },
+    getMainImage(state) {
+      return state.useCaseData.main_image
+    },
+    getImages(state) {
+      return state.useCaseData.images
     }
   },
   mutations: {
@@ -83,10 +93,14 @@ export default {
       }
     },
     uploadMainImage(state, file) {
-      state.useCaseData.mainImage = file
+      state.useCaseData.main_image = file
     },
     uploadImage(state, files) {
       state.useCaseData.images = [...files]
+    },
+    fetchForUpdate(state, { caseData, caseId }) {
+      state.useCaseData = caseData
+      state.useCaseId = caseId
     }
   },
   actions: {
@@ -125,6 +139,18 @@ export default {
     },
     uploadImage({ commit }, payload) {
       commit('uploadImage', payload)
+    },
+    fetchForUpdate({ commit }, caseId) {
+      getUserUseCase(caseId)
+        .then(response => {
+          console.log(response.data)
+          commit('fetchForUpdate', {
+            caseData: response.data,
+            caseId: caseId
+          })
+        })
+        .then(router.push('/new-case'))
+        .catch(error => console.log(error))
     }
   }
 }

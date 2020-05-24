@@ -26,7 +26,7 @@ class UniversalSpider(scrapy.Spider):
         for case in cases:
 
             applications = case.xpath('./p[2]/text()').get().split(",")
-            applications = [value.lower() for value in applications]
+            applications = list(map(lambda value: value.strip(), applications))
             url_relative = case.xpath('./@href').get()
             url = urljoin(response.url, url_relative)
 
@@ -48,7 +48,7 @@ class UniversalSpider(scrapy.Spider):
         for item in basic_info:
             key, value = item.xpath('./span/text()').getall()
             key = key.strip().replace(" ", "_").lower()
-            value = value.strip().lower()
+            value = value.strip()
             if key == 'company':
                 key = 'customer'
             case['basic_info'].update({key: value})
@@ -68,6 +68,7 @@ class UniversalSpider(scrapy.Spider):
             # content = s.xpath('./following-sibling::*//text()[normalize-space() != ""]').getall()
             content = s.xpath('./following-sibling::*').getall()
             content = [sanitizer.sanitize(value) for value in content]
+            content = "".join(content)
             article_sections.append({'title': title, 'content': content})
             # article_sections[title] = list(
             #     map(lambda x: sanitizer.sanitize(x), content))

@@ -35,6 +35,7 @@
             class="reset-button my-3 ml-3"
             outlined
             color="orange lighten-1"
+            @click="discard"
             >Discard</v-btn
           >
         </v-col>
@@ -46,10 +47,15 @@
 <script>
 import { saveUseCase } from '../../api'
 import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'StepThree',
+  components: {},
   data() {
     return {}
+  },
+  computed: {
+    ...mapGetters(['getMainImage', 'getImages'])
   },
   methods: {
     ...mapActions(['uploadMainImage', 'uploadImage']),
@@ -57,13 +63,19 @@ export default {
       this.$emit('toggle-overlay')
       const useCaseData = this.$store.state.case.useCaseData
       const companyName = this.$store.state.user.userData.companyName
+      const useCaseId = this.$store.state.case.useCaseId
       const csrfAccess = window.$cookies.get('csrf_access_token')
-      saveUseCase({ ...useCaseData, provider: companyName }, csrfAccess).then(
-        response => {
-          console.log(response)
-          this.$router.push('/user-panel')
-        }
-      )
+      saveUseCase(
+        { ...useCaseData, provider: companyName },
+        useCaseId,
+        csrfAccess
+      ).then(response => {
+        console.log(response)
+        this.$store.commit('resetUseCase')
+      })
+    },
+    discard() {
+      this.$emit('toggle-overlay')
       this.$store.commit('resetUseCase')
     }
   }

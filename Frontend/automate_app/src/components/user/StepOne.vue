@@ -17,7 +17,7 @@
               background-color="white"
               outlined
               dense
-              counter="15"
+              counter="30"
               :rules="[rules.counter, rules.required]"
               :value="getBasicInfo.customer"
               @input="setBasicInfo({ customer: $event })"
@@ -81,6 +81,12 @@
 </template>
 
 <script>
+import {
+  companySizes,
+  countryList,
+  applications,
+  industries
+} from '../../assets/inputOptions'
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 export default {
@@ -88,23 +94,13 @@ export default {
   data() {
     return {
       inputOptions: {
-        company_size: ['< 1k', '1-5k', '5-20k', '20-50k', '50-100k', '> 100k'],
-        country: ['Poland', 'Germany', 'Sweden', 'USA'],
-        industry: [
-          'Automotive',
-          'Food & Beverages',
-          'Agriculture',
-          'Manufacturing'
-        ],
-        applications: [
-          'Welding',
-          'Packaging',
-          'Machine Tending',
-          'Pick & Place'
-        ]
+        company_size: companySizes,
+        country: countryList,
+        industry: industries,
+        applications: applications
       },
       rules: {
-        counter: value => value.length <= 15 || 'Max 15 characters',
+        counter: value => value.length <= 40 || 'Max 40 characters',
         required: value => !!value || 'This field is required'
       }
     }

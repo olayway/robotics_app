@@ -17,10 +17,19 @@
           </p>
         </template>
         <template v-slot:content>
-          <div class="content" v-html="article.content.join('')"></div>
+          <div
+            v-if="caseData.provider === 'Universal Robots'"
+            class="content"
+            v-html="article.content"
+          ></div>
+          <p v-else class="content">{{ article.content }}</p>
         </template>
       </ArticleSection>
-      <PhotoGallery :images="caseData.images"></PhotoGallery>
+      <v-row justify="center">
+        <v-col cols="8" class="pa-0">
+          <PhotoGallery :images="caseData.images"></PhotoGallery>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
