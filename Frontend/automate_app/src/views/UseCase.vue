@@ -1,8 +1,8 @@
 <template>
   <div>
     <CaseTitleBar
-      :image="caseData.images[0]"
-      :thumbnail="caseData.thumbnail"
+      :image="caseData.main_image"
+      :thumbnail="caseData.main_thumbnail"
       :provider="caseData.provider"
       :basic-info="caseData.basic_info"
     ></CaseTitleBar>
@@ -27,7 +27,9 @@
       </ArticleSection>
       <v-row justify="center">
         <v-col cols="8" class="pa-0">
-          <PhotoGallery :images="caseData.images"></PhotoGallery>
+          <PhotoGallery
+            :images="[caseData.main_image, ...caseData.images]"
+          ></PhotoGallery>
         </v-col>
       </v-row>
     </div>

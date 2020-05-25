@@ -15,7 +15,7 @@
                 </v-col>
                 <v-divider vertical class="mx-2"></v-divider>
                 <v-col>
-                  <span>Title</span>
+                  <span>Country</span>
                 </v-col>
                 <v-divider vertical class="mx-2"></v-divider>
                 <v-col>
@@ -46,16 +46,7 @@
               :key="index"
               :use-case="item"
               :index="index + 1 + (currentPage - 1) * viewCases"
-              @reload-usecases="realoadUseCases"
             ></PanelUseCase>
-            <v-fade-transition>
-              <v-overlay v-if="overlay" absolute color="#575c63">
-                <v-progress-circular
-                  indeterminate
-                  size="40"
-                ></v-progress-circular>
-              </v-overlay>
-            </v-fade-transition>
           </v-card>
         </v-card>
       </v-col>
@@ -80,10 +71,16 @@
         >
       </v-col>
     </v-row>
+    <v-fade-transition>
+      <v-overlay v-if="overlay" absolute color="#575c63">
+        <v-progress-circular indeterminate size="40"></v-progress-circular>
+      </v-overlay>
+    </v-fade-transition>
   </v-container>
 </template>
 
 <script>
+// import Bus from '../utils'
 import PanelUseCase from '../components/user/PanelUseCase.vue'
 import { mapGetters } from 'vuex'
 
@@ -117,16 +114,15 @@ export default {
       }
     }
   },
-  methods: {
-    realoadUseCases() {
-      this.overlay = true
-      const that = this
-      this.$store
-        .dispatch('setUserUseCases')
-        .then(() => (that.overlay = false))
-        .catch(error => console.log(error))
-    }
-  }
+  // created() {
+  //   Bus.$on('overlay-on', function() {
+  //     this.overlay = true
+  //   })
+  //   Bus.$on('overlay-off', function() {
+  //     this.overlay = false
+  //   })
+  // },
+  methods: {}
 }
 </script>
 

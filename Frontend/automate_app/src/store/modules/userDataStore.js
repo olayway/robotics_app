@@ -1,4 +1,5 @@
 import { login, register, refreshToken, logout, getUserUseCases } from '@/api'
+// import Bus from '../../utils'
 
 export default {
   state: {
@@ -101,7 +102,7 @@ export default {
     setUserUseCases({ commit }) {
       getUserUseCases()
         .then(response => {
-          commit('setUserUseCases', response.data.your_use_cases)
+          commit('setUserUseCases', response.data)
         })
         .catch(error => console.log("Error fetching user's use cases:", error))
     }

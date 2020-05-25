@@ -16,15 +16,15 @@
           </v-row>
         </v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{ useCase.title }}</v-col>
+        <v-col>{{ useCase.basic_info.country }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{ useCase.industry }}</v-col>
+        <v-col>{{ useCase.basic_info.industry }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{ useCase.customer }}</v-col>
+        <v-col>{{ useCase.basic_info.customer }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>
           <ul>
-            <li v-for="(item, i) in useCase.applications" :key="i">
+            <li v-for="(item, i) in useCase.basic_info.applications" :key="i">
               {{ item }}
             </li>
           </ul>
@@ -128,7 +128,7 @@ export default {
       const csrfAccess = window.$cookies.get('csrf_access_token')
       deleteUseCase(this.useCase.id, csrfAccess)
         .then(response => console.log(response.data))
-        .then(() => that.$emit('reload-usecases'))
+        .then(() => that.$store.dispatch('setUserUseCases'))
         .catch(error => console.log('Error deleting use case', error))
     },
     changeStatus(e, status) {
@@ -138,7 +138,7 @@ export default {
       const csrfAccess = window.$cookies.get('csrf_access_token')
       changeCaseStatus(caseId, status, csrfAccess)
         .then(response => console.log(response))
-        .then(() => that.$emit('reload-usecases'))
+        .then(() => that.$store.dispatch('setUserUseCases'))
         .catch(error => console.log('Error changing status', error))
     },
     edit() {

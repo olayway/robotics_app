@@ -32,15 +32,18 @@
               </v-row>
               <v-row no-gutters justify="center">
                 <v-col cols="10" md="6">
-                  <v-form ref="form" class="d-flex flex-column" lazy-validation>
+                  <v-form ref="form" v-model="valid" class="d-flex flex-column">
                     <v-text-field
                       v-model="username"
+                      :counter="10"
+                      :rules="[rules.name_char, rules.name_len]"
                       label="Username"
                       required
                     ></v-text-field>
 
                     <v-text-field
                       v-model="email"
+                      :rules="[rules.email]"
                       label="E-mail"
                       required
                     ></v-text-field>
@@ -51,6 +54,7 @@
                     ></v-text-field>
                     <v-text-field
                       v-model="password"
+                      :rules="[rules.password_char, rules.password_len]"
                       label="Password"
                       required
                       :type="showPassword ? 'text' : 'password'"
@@ -58,8 +62,8 @@
                       @click:append="showPassword = !showPassword"
                     ></v-text-field>
                     <v-text-field
-                      v-model="password_confirm"
                       label="Confirm password"
+                      :rules="[v => v === password] || 'Passwords must match'"
                       required
                       :type="showConfirm ? 'text' : 'password'"
                       :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
@@ -99,23 +103,36 @@ import OutlinedButton from '@/components/base/OutlinedButton.vue'
 // import FilledButton from '@/components/base/FilledButton.vue'
 import AutoMateLogo from '@/components/base/AutoMateLogo.vue'
 export default {
-  name: 'Regsiter',
+  name: 'Register',
   components: { OutlinedButton, AutoMateLogo },
   data() {
     return {
+      valid: false,
       username: '',
       email: '',
       company_name: '',
       password: '',
-      password_confirm: '',
       agree: false,
       showPassword: false,
-      showConfirm: false
+      showConfirm: false,
+      rules: {
+        name_char: v =>
+          /^.*(?=.*\d)(?=.*[a-zA-Z]).*$/.test(v) ||
+          'Username must contain at least one letter and one digit',
+        name_len: v =>
+          v.length <= 10 || 'Username must be less than 10 characters',
+        email: v => /.+@.+\..+/.test(v) || 'Invalid email',
+        password_char: v =>
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(v) ||
+          'Password must contain at least 1 lowercase letter, 1 uppercase letter and a special character',
+        password_len: v =>
+          /(?=.{8,})/.test(v) || 'Password must be at least 8 characters.'
+      }
     }
   },
   methods: {
     register() {
-      if (this.password === this.password_confirm && this.agree == true) {
+      if (this.valid) {
         this.$store
           .dispatch('register', {
             username: this.username,

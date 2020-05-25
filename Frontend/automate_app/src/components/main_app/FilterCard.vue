@@ -10,10 +10,7 @@
         <v-container pa-0>
           <v-row no-gutters>
             <v-col cols="12" md="6" class="d-flex flex-column">
-              <v-img
-                eager
-                :src="'data:image/jpg;base64,' + useCase.main_image"
-                :lazy-src="'data:image/jpg;base64,' + useCase.main_thumbnail"
+              <v-img :src="'data:image/jpg;base64,' + useCase.main_thumbnail"
                 ><template v-slot:placeholder>
                   <v-row
                     class="fill-height ma-0"
