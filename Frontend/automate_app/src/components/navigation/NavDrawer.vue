@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import Bus from '../../utils/index'
+import { EventBus } from '../../utils/index'
 // import { mapGetters } from 'vuex'
 
 export default {
@@ -68,7 +68,7 @@ export default {
   },
   mounted() {
     const that = this
-    Bus.$on('open-drawer', () => (that.drawer = true))
+    EventBus.$on('open-drawer', () => (that.drawer = true))
   },
   methods: {
     collapseList() {

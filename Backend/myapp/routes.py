@@ -1,5 +1,6 @@
 import json
 from base64 import b64encode
+from bson.binary import Binary
 from io import BytesIO
 from math import ceil
 from PIL import Image
@@ -30,7 +31,8 @@ def use_cases(pageNum):
     provider = request.args.getlist('provider')
     customer = request.args.getlist('customer')
 
-    cases = UseCase.objects(status='active')
+    cases = UseCase.objects(status='active').exclude(
+        'images', 'main_image', 'content')
 
     print('active')
 
@@ -63,15 +65,10 @@ def use_cases(pageNum):
     print('cases paginated')
 
     # results
-    schema = UseCaseSchema(many=True, only=(
-        'id', 'provider', 'basic_info', 'main_thumbnail', 'main_image'))
-
-    # looooong
+    schema = UseCaseSchema(many=True)
     result = schema.dump(cases)
 
     print('schema')
-
-    
 
     response = jsonify({
         'use_cases': result,
@@ -107,19 +104,12 @@ def user_use_cases():
     if request.method == 'GET':
         # claims = get_jwt_claims()
         # use_cases = claims['use_cases']
-        use_cases = current_user['use_cases']
-        use_cases_data = []
-
-        for case in use_cases:
-            use_case = case.basic_info.to_mongo().to_dict()
-            use_case['id'] = str(case.id)
-            use_case['title'] = case.content.article_title
-            use_case['status'] = case.status
-            use_cases_data.append(use_case)
-
-        response = jsonify({
-            'your_use_cases': use_cases_data
-        })
+        use_cases = current_user.use_cases
+        ids = [str(case['id']) for case in use_cases]
+        use_cases = UseCase.objects.only(
+            'id', 'basic_info', 'status').filter(id__in=ids)
+        schema = UseCaseSchema(many=True, only=('id', 'basic_info', 'status'))
+        response = jsonify(schema.dump(use_cases))
 
     if request.method == 'PUT':
 
@@ -137,18 +127,22 @@ def user_use_cases():
 
         for (name, image) in files_dict.items():
             image_byte = image.read()
-            image_base64 = b64encode(image_byte)
-            images.append(image_base64)
+            image_bin = Binary(image_byte)
+            # image_base64 = b64encode(image_byte)
             if name == 'main_image':
-                main_image = image_base64
+                # main_image = image_base64
+                main_image = image_bin
                 # create main image thumbnail
                 img = Image.open(image, mode='r')
-                size = 100, 100
+                size = 500, 500
                 img.thumbnail(size)
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG')
                 thumbnail_byte = buffer.getvalue()
-                main_thumbnail = b64encode(thumbnail_byte)
+                # main_thumbnail = b64encode(thumbnail_byte)
+                main_thumbnail = Binary(thumbnail_byte)
+            else:
+                images.append(image_bin)
 
         # add to db
         new_use_case = UseCase(
@@ -175,18 +169,22 @@ def user_use_cases():
 
         for (name, image) in files_dict.items():
             image_byte = image.read()
-            image_base64 = b64encode(image_byte)
-            images.append(image_base64)
+            image_bin = Binary(image_byte)
+            # image_base64 = b64encode(image_byte)
             if name == 'main_image':
-                main_image = image_base64
+                # main_image = image_base64
+                main_image = image_bin
                 # create main image thumbnail
                 img = Image.open(image, mode='r')
-                size = 100, 100
+                size = 500, 500
                 img.thumbnail(size)
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG')
                 thumbnail_byte = buffer.getvalue()
-                main_thumbnail = b64encode(thumbnail_byte)
+                # main_thumbnail = b64encode(thumbnail_byte)
+                main_thumbnail = Binary(thumbnail_byte)
+            else:
+                images.append(image_bin)
 
         # add new use case to db
         new_use_case = UseCase(

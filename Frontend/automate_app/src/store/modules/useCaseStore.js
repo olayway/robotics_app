@@ -1,5 +1,6 @@
 import { getUserUseCase } from '../../api'
 import router from '../../router'
+import { b64toBlob } from '../../utils'
 
 export default {
   state: {
@@ -99,7 +100,17 @@ export default {
       state.useCaseData.images = [...files]
     },
     fetchForUpdate(state, { caseData, caseId }) {
-      state.useCaseData = caseData
+      const mainImage = new File(
+        [b64toBlob(caseData['main_image'])],
+        'main_image'
+      )
+      const images = caseData['images'].map(
+        (item, index) => new File([b64toBlob(item)], `image${index}`)
+      )
+      state.useCaseData = Object.assign(caseData, {
+        main_image: mainImage,
+        images: images
+      })
       state.useCaseId = caseId
     }
   },

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Bus from '../../utils/index'
+import { EventBus } from '../../utils/index'
 export default {
   name: 'DrawerButton',
   data() {
@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     openDrawer() {
-      Bus.$emit('open-drawer')
+      EventBus.$emit('open-drawer')
     }
   }
 }

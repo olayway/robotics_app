@@ -8,7 +8,6 @@
 import pymongo
 import logging
 from bson.binary import Binary
-from base64 import b64encode
 from PIL import Image
 from io import BytesIO
 
@@ -45,26 +44,24 @@ class MongoPipeline(object):
         def encoded(image_path):
             with open('./ur_images/{}'.format(image_path), 'rb') as image_file:
                 byte_content = image_file.read()
-            base64_bytes = b64encode(byte_content)
-            return Binary(base64_bytes)
+            return Binary(byte_content)
 
         if item['images']:
             # thumbnail
             main_path = './ur_images/{}'.format(item['images'][0]['path'])
             img = Image.open(main_path, mode='r')
-            size = 100, 100
+            size = 500, 500
             img.thumbnail(size)
             buffer = BytesIO()
             img.save(buffer, format='JPEG')
             thumbnail_byte = buffer.getvalue()
-            thumbnail_base64 = b64encode(thumbnail_byte)
-            item['main_thumbnail'] = Binary(thumbnail_base64)
+            item['main_thumbnail'] = Binary(thumbnail_byte)
 
             # all images
             item['images'] = list(
                 map(lambda x: encoded(x['path']), item['images']))
 
-            item['main_image'] = item['images'][0]
+            item['main_image'] = item['images'].pop(0)
 
         del item['image_urls']
 
