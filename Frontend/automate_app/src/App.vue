@@ -12,7 +12,9 @@
       <router-view></router-view>
     </v-content>
     <SubsCard
-      v-if="[...userViews, ...loginViews].indexOf($route.name) == -1"
+      v-if="
+        [...userViews, ...loginViews, 'NotFound'].indexOf($route.name) == -1
+      "
     ></SubsCard>
     <PageFooter></PageFooter>
   </v-app>

@@ -16,7 +16,7 @@
           sm="6"
           lg="4"
         >
-          <v-card flat tile class="d-flex">
+          <v-card flat class="d-flex">
             <v-img
               :src="'data:image/jpg;base64,' + image"
               class="grey lighten-2 image"

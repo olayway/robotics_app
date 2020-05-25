@@ -6,33 +6,60 @@
       :provider="caseData.provider"
       :basic-info="caseData.basic_info"
     ></CaseTitleBar>
-    <div class="py-12">
-      <ArticleSection
-        v-for="(article, index) of caseData.content.article_sections"
-        :key="index"
-      >
-        <template v-slot:header>
-          <p class="title mt-6">
-            {{ article.title.toLowerCase() | capitalize }}
-          </p>
-        </template>
-        <template v-slot:content>
-          <div
-            v-if="caseData.provider === 'Universal Robots'"
-            class="content"
-            v-html="article.content"
-          ></div>
-          <p v-else class="content">{{ article.content }}</p>
-        </template>
-      </ArticleSection>
-      <v-row justify="center">
-        <v-col cols="8" class="pa-0">
-          <PhotoGallery
-            :images="[caseData.main_image, ...caseData.images]"
-          ></PhotoGallery>
+    <v-container>
+      <v-row justify="space-between">
+        <v-col cols="8" class="pr-6">
+          <ArticleSection
+            v-for="(article, index) of caseData.content.article_sections"
+            :key="index"
+          >
+            <template v-slot:header>
+              <p class="title mt-6">
+                {{ article.title.toLowerCase() | capitalize }}
+              </p>
+            </template>
+            <template v-slot:content>
+              <div
+                v-if="caseData.provider === 'Universal Robots'"
+                class="content"
+                v-html="article.content"
+              ></div>
+              <p v-else class="content">{{ article.content }}</p>
+            </template>
+          </ArticleSection>
+          <v-row justify="center">
+            <v-col cols="8" class="pa-0">
+              <PhotoGallery
+                :images="[caseData.main_image, ...caseData.images]"
+              ></PhotoGallery>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="4" class="pt-8 pl-8">
+          <v-row>
+            <v-col
+              v-for="(item, index) in caseData.content.bullet_points"
+              :key="index"
+              cols="12"
+              class="tile_contain"
+            >
+              <v-card class="pa-5 tile" flat tile>
+                <p class="title_bp">{{ item.title }}</p>
+                <div
+                  v-if="caseData.provider === 'Universal Robots'"
+                  v-html="item.content"
+                ></div>
+                <ul v-else>
+                  <li v-for="(point, i) of item.content" :key="i">
+                    {{ point }}
+                  </li>
+                </ul>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
-    </div>
+    </v-container>
   </div>
 </template>
 
@@ -76,13 +103,27 @@ export default {
 <style scoped>
 * {
   font-family: Maven Pro;
-  font-size: 16px;
+  font-size: 1rem;
   color: #4a4a4a;
 }
 
 .title {
   color: #3e5292;
   font-family: Maven Pro;
-  font-size: 30px !important;
+  font-size: 1.5rem !important;
+}
+
+.tile_contain {
+  border-left: 1px solid rgb(216, 216, 216);
+}
+
+.tile * {
+  font-size: 0.8rem;
+}
+
+.title_bp {
+  color: #3e5292;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 </style>

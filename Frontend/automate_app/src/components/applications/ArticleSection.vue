@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center">
-    <v-col cols="8" class="py-0">
+    <v-col class="py-0">
       <slot name="header"></slot>
       <slot name="content"></slot>
     </v-col>

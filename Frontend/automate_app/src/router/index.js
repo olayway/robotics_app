@@ -77,7 +77,14 @@ const routes = [
     name: 'Settings',
     component: () =>
       import(/* webpackChunkName: "settings" */ '../views/Settings.vue')
-  }
+  },
+  {
+    path: '/page-not-found',
+    name: 'NotFound',
+    component: () =>
+      import(/* webpackChunkName: "not-found" */ '../views/NotFound.vue')
+  },
+  { path: '*', redirect: '/page-not-found' }
 ]
 
 export default new VueRouter({
