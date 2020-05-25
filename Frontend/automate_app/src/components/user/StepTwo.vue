@@ -1,14 +1,10 @@
 <template>
-  <v-card flat color="grey lighten-5">
+  <v-card flat tile color="grey lighten-5">
     <v-container class="pa-4">
       <v-row>
-        <v-col>
-          <p class="tab-title">Article Content</p>
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-      <v-row>
         <v-col lg="8">
+          <p class="tab-title">Article Content</p>
+          <v-divider class="my-5"></v-divider>
           <label for="article_title">Article title</label>
           <v-text-field
             id="article_title"
@@ -19,8 +15,7 @@
             :value="getContent.article_title"
             @input="setArticleTitle"
           ></v-text-field>
-          <v-divider class="my-5"></v-divider>
-
+          <v-divider class="mt-2 mb-6"></v-divider>
           <!-- ARTICLE SECTIONS -->
           <ArticleSections></ArticleSections>
           <!-- ARTICLE BULLET POINT SECTIONS -->

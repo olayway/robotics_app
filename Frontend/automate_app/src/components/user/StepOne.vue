@@ -1,14 +1,10 @@
 <template>
-  <v-card flat color="grey lighten-5">
+  <v-card flat tile color="grey lighten-5">
     <v-container class="pa-4">
       <v-row>
         <v-col lg="8">
           <p class="tab-title">Basic Information</p>
-          <v-divider></v-divider>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col lg="8">
+          <v-divider class="my-4"></v-divider>
           <v-form ref="form" class="step1-form">
             <label for="company_name">Company name</label>
             <v-text-field

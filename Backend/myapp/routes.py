@@ -170,18 +170,14 @@ def user_use_cases():
         for (name, image) in files_dict.items():
             image_byte = image.read()
             image_bin = Binary(image_byte)
-            # image_base64 = b64encode(image_byte)
             if name == 'main_image':
-                # main_image = image_base64
                 main_image = image_bin
-                # create main image thumbnail
                 img = Image.open(image, mode='r')
                 size = 500, 500
                 img.thumbnail(size)
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG')
                 thumbnail_byte = buffer.getvalue()
-                # main_thumbnail = b64encode(thumbnail_byte)
                 main_thumbnail = Binary(thumbnail_byte)
             else:
                 images.append(image_bin)
@@ -235,18 +231,21 @@ def use_case(caseId):
 
             for (name, image) in files_dict.items():
                 image_byte = image.read()
-                image_base64 = b64encode(image_byte)
-                images.append(image_base64)
+                image_bin = Binary(image_byte)
                 if name == 'main_image':
-                    main_image = image_base64
-                    # create main image thumbnail
+                    main_image = image_bin
                     img = Image.open(image, mode='r')
-                    size = 100, 100
+                    img = img.convert("RGB")
+                    size = 500, 500
                     img.thumbnail(size)
                     buffer = BytesIO()
+                    print('asdf')
                     img.save(buffer, format='JPEG')
+                    print('aaaaaaaaa')
                     thumbnail_byte = buffer.getvalue()
-                    main_thumbnail = b64encode(thumbnail_byte)
+                    main_thumbnail = Binary(thumbnail_byte)
+                else:
+                    images.append(image_bin)
 
             # edit use case in db
             UseCase.objects(id=caseId).update(
