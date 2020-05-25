@@ -5,25 +5,29 @@
         <v-col lg="6">
           <p class="tab-title">Upload Images</p>
           <v-divider></v-divider>
-          <label for="main_photo">Main photo:</label>
-          <v-file-input
-            accept="image/*"
-            show-size
-            counter
-            chips
-            clearable
-            @change="uploadMainImage"
-          ></v-file-input>
-          <label for="other_photos">Other photos:</label>
-          <v-file-input
-            accept="image/*"
-            multiple
-            show-size
-            counter
-            chips
-            clearable
-            @change="uploadImage"
-          ></v-file-input>
+          <v-form v-model="valid">
+            <label for="main_photo">Main photo:</label>
+            <v-file-input
+              :rules="[rules.required, rules.size]"
+              accept="image/*"
+              show-size
+              counter
+              chips
+              clearable
+              @change="uploadMainImage"
+            ></v-file-input>
+            <label for="other_photos">Other photos:</label>
+            <v-file-input
+              :rules="[rules.arraySize, rules.arrayLimit]"
+              accept="image/*"
+              multiple
+              show-size
+              counter
+              chips
+              clearable
+              @change="uploadImage"
+            ></v-file-input>
+          </v-form>
           <v-btn
             class="save-button my-3"
             outlined
@@ -52,7 +56,19 @@ export default {
   name: 'StepThree',
   components: {},
   data() {
-    return {}
+    return {
+      valid: false,
+      rules: {
+        size: value =>
+          (!!value && value.size < 150000) ||
+          'Image size should be less than 150 kB!',
+        arraySize: array =>
+          (!!array && array.every(value => value.size < 150000)) ||
+          'Image size should be less than 150 kB!',
+        arrayLimit: array => (!!array && array.length <= 5) || 'Max 5 images',
+        required: value => !!value || 'Main article image is required'
+      }
+    }
   },
   computed: {
     ...mapGetters(['getMainImage', 'getImages'])
