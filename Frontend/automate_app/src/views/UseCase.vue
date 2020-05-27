@@ -9,6 +9,9 @@
     <v-container pa-10>
       <v-row justify="space-between">
         <v-col cols="8" class="pr-6">
+          <h1 v-if="caseData.content.article_title" class="article_title mb-2">
+            {{ caseData.content.article_title }}
+          </h1>
           <ArticleSection
             v-for="(article, index) of caseData.content.article_sections"
             :key="index"
@@ -37,9 +40,9 @@
               v-for="(item, index) in caseData.content.bullet_points"
               :key="index"
               cols="12"
-              class="tile_contain"
+              class="tile_contain pl-4"
             >
-              <v-card class="pa-5 tile" flat tile>
+              <v-card class="pb-5 pl-5 tile" flat tile>
                 <p class="title_bp">
                   {{ item.title.toLowerCase() | capitalize }}
                 </p>
@@ -106,6 +109,7 @@ export default {
   font-family: Maven Pro;
   font-size: 1rem;
   color: #4a4a4a;
+  text-align: justify;
 }
 
 .title {
@@ -120,11 +124,19 @@ export default {
 
 .tile * {
   font-size: 0.8rem;
+  text-align: initial;
 }
 
 .title_bp {
   color: #3e5292;
   font-size: 1.2rem;
   font-weight: 500;
+}
+
+.article_title {
+  text-align: initial;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #3e5292;
 }
 </style>

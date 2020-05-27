@@ -5,37 +5,31 @@
         <p class="panel-title">Your use-cases</p>
         <v-card flat>
           <v-toolbar dark height="auto" dense flat class="panel-toolbar">
-            <v-container pa-2 ma-0>
+            <v-container pa-2 ma-0 fluid>
               <v-row no-gutters>
-                <v-col>
+                <v-col cols="1">
                   <v-row no-gutters>
                     <v-checkbox hide-details dense></v-checkbox>
                     <span>Id</span>
                   </v-row>
                 </v-col>
-                <v-divider vertical class="mx-2"></v-divider>
-                <v-col>
-                  <span>Title</span>
+                <v-col cols="3">
+                  <span class="column">Title</span>
                 </v-col>
-                <v-divider vertical class="mx-2"></v-divider>
                 <v-col>
-                  <span>Industry</span>
+                  <span class="column" cols="2">Industry</span>
                 </v-col>
-                <v-divider vertical class="mx-2"></v-divider>
-                <v-col>
-                  <span>Company</span>
+                <v-col cols="2">
+                  <span class="column">Company</span>
                 </v-col>
-                <v-divider vertical class="mx-2"></v-divider>
-                <v-col>
-                  <span>Applications</span>
+                <v-col cols="2">
+                  <span class="column">Applications</span>
                 </v-col>
-                <v-divider vertical class="mx-2"></v-divider>
-                <v-col>
-                  <span>Status</span>
+                <v-col cols="1">
+                  <span class="column">Status</span>
                 </v-col>
-                <v-divider vertical class="mx-2"></v-divider>
-                <v-col>
-                  <span>Options</span>
+                <v-col cols="1">
+                  <span class="column">Options</span>
                 </v-col>
               </v-row>
             </v-container>
@@ -143,5 +137,10 @@ export default {
 
 ul.page-num {
   justify-content: start;
+}
+
+.column {
+  border-left: 1px solid rgb(114, 114, 114);
+  padding: 0 14px;
 }
 </style>

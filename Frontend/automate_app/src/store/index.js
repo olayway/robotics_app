@@ -34,7 +34,8 @@ export default new Vuex.Store({
     },
     resetUseCase(state) {
       console.log('reseting use case data')
-      state['case'] = initialStoreModules.case.state
+      console.log(initialStoreModules.case.state)
+      state.case = initialStoreModules.case.state
     }
   }
 })

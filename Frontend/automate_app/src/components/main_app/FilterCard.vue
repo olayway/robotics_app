@@ -7,7 +7,7 @@
         color="#293453"
         @click="$router.push({ name: 'UseCase', params: { id: useCase.id } })"
       >
-        <v-container pa-0>
+        <v-container pa-0 class="align-stretch">
           <v-row no-gutters>
             <v-col cols="12" md="6" class="d-flex flex-column">
               <v-img :src="imgSrc" @error="loadFailed"

@@ -24,6 +24,8 @@
             :items="value"
             background-color="#6976A4"
             @blur="$emit('filter-results', selections)"
+            @change.prevent.stop
+            @click.prevent.stop
           >
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0" class="select mr-7 mb-0">{{

@@ -21,7 +21,7 @@
             <v-card class="my-4" min-height="10rem">
               <v-container>
                 <v-row>
-                  <v-col cols="3" lg="2">
+                  <v-col cols="3">
                     <v-img
                       v-if="mainPreview"
                       contain
@@ -52,7 +52,6 @@
                     v-for="(url, index) of otherPreview"
                     :key="index"
                     cols="3"
-                    lg="2"
                   >
                     <v-img contain :src="url" height="8rem"></v-img>
                   </v-col>
