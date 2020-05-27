@@ -42,6 +42,7 @@
 
 <script>
 import OutlinedButton from '@/components/base/OutlinedButton.vue'
+import { mapActions } from 'vuex'
 export default {
   name: 'UserNavBar',
   components: { OutlinedButton },
@@ -49,9 +50,7 @@ export default {
     return {}
   },
   methods: {
-    logout() {
-      this.$store.dispatch('logout').then(() => this.$router.push('/login'))
-    }
+    ...mapActions(['logout'])
   }
 }
 </script>

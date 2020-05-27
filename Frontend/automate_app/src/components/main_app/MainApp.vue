@@ -26,7 +26,6 @@
           ></PageNum>
         </v-row>
       </v-container>
-
       <v-fade-transition>
         <v-overlay v-if="overlay" absolute color="#1d263d">
           <v-progress-circular indeterminate size="64"></v-progress-circular>
@@ -90,6 +89,7 @@ export default {
       this.appliedFilters = selections
     },
     filterResults() {
+      console.log('asdfasdf')
       this.overlay = true
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {

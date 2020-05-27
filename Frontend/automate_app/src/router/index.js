@@ -18,12 +18,6 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/learn',
-    name: 'Learn',
-    component: () =>
-      import(/* webpackChunkName: "learn" */ '../views/Learn.vue')
-  },
-  {
     path: '/use-case/:id',
     name: 'UseCase',
     component: () =>
@@ -47,10 +41,12 @@ const routes = [
     beforeEnter(to, from, next) {
       if (!store.getters.getIsAuthenticated) {
         console.log('not authenticated')
+        store.commit('resetState')
         next('/login')
       } else {
-        console.log('redir to user panel')
-        store.dispatch('setUserUseCases')
+        if (from.name === 'Login') {
+          store.dispatch('setUserUseCases')
+        }
         next()
       }
     },
@@ -65,19 +61,18 @@ const routes = [
         console.log('not authenticated')
         next('/login')
       } else {
-        console.log('redir to user panel')
         next()
       }
     },
     component: () =>
       import(/* webpackChunkName: "new-use-case" */ '../views/NewUseCase.vue')
   },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: () =>
-      import(/* webpackChunkName: "settings" */ '../views/Settings.vue')
-  },
+  // {
+  //   path: '/settings',
+  //   name: 'Settings',
+  //   component: () =>
+  //     import(/* webpackChunkName: "settings" */ '../views/Settings.vue')
+  // },
   {
     path: '/page-not-found',
     name: 'NotFound',
@@ -90,5 +85,12 @@ const routes = [
 export default new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
   routes
 })

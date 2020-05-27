@@ -4,8 +4,8 @@
       <v-row>
         <v-col lg="8">
           <p class="tab-title">Basic Information</p>
-          <v-divider class="my-4"></v-divider>
-          <v-form ref="form" class="step1-form">
+          <v-divider class=""></v-divider>
+          <v-form ref="form" v-model="valid" class="step1-form">
             <label for="company_name">Company name</label>
             <v-text-field
               id="company"
@@ -65,7 +65,7 @@
               dense
               persistent-hint
               :items="inputOptions.applications"
-              :rules="[rules.required]"
+              :rules="[rules.requiredArray]"
               :value="getBasicInfo.applications"
               @input="setBasicInfo({ applications: $event })"
             ></v-select>
@@ -85,10 +85,12 @@ import {
 } from '../../assets/inputOptions'
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
+import { EventBus } from '@/utils'
 export default {
   name: 'StepOne',
   data() {
     return {
+      valid: false,
       inputOptions: {
         company_size: companySizes,
         country: countryList,
@@ -96,13 +98,21 @@ export default {
         applications: applications
       },
       rules: {
-        counter: value => value.length <= 40 || 'Max 40 characters',
-        required: value => !!value || 'This field is required'
+        counter: value =>
+          (!!value && value.length <= 40) || 'Max 40 characters',
+        required: value => !!value || 'This field is required',
+        requiredArray: array => array.length !== 0 || 'This field is required'
       }
     }
   },
   computed: {
     ...mapGetters(['getBasicInfo'])
+  },
+  created() {
+    const that = this
+    EventBus.$on('validate', () =>
+      EventBus.$emit('valid-check', that.$refs.form.validate())
+    )
   },
   methods: {
     ...mapActions(['setBasicInfo'])

@@ -1,24 +1,25 @@
-import { getUserUseCase } from '../../api'
-import router from '../../router'
-import { b64toBlob } from '../../utils'
+import { getUserUseCase } from '@/api'
+import router from '@/router'
+import { b64toBlob } from '@/utils'
+import { EventBus } from '@/utils'
 
 export default {
   state: {
     useCaseId: null,
     useCaseData: {
       basic_info: {
-        customer: '',
+        customer: null,
         applications: [],
-        industry: '',
-        country: '',
-        company_size: ''
+        industry: null,
+        country: null,
+        company_size: null
       },
       content: {
-        article_title: '',
+        article_title: null,
         article_sections: [{ title: '', content: '' }],
         bullet_points: [{ title: '', content: ['', '', ''] }]
       },
-      main_image: '',
+      main_image: null,
       images: [],
       status: 'draft'
     }
@@ -152,15 +153,17 @@ export default {
       commit('uploadImage', payload)
     },
     fetchForUpdate({ commit }, caseId) {
-      getUserUseCase(caseId)
+      EventBus.$emit('toggle-overlay', true)
+      return getUserUseCase(caseId)
         .then(response => {
           console.log(response.data)
           commit('fetchForUpdate', {
             caseData: response.data,
             caseId: caseId
           })
+          router.push('/new-case')
+          EventBus.$emit('toggle-overlay', false)
         })
-        .then(router.push('/new-case'))
         .catch(error => console.log(error))
     }
   }

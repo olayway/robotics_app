@@ -9,7 +9,7 @@
             <p>Main image:</p>
             <v-file-input
               ref="mainImage"
-              :rules="[rules.required, rules.size]"
+              :rules="[rules.size]"
               accept="image/*"
               show-size
               counter
@@ -66,7 +66,10 @@
         class="save-button my-3"
         outlined
         color="green lighten-1"
-        @click="save"
+        @click="
+          validateSteps()
+          save()
+        "
         >Save</v-btn
       >
       <v-btn
@@ -84,23 +87,25 @@
 import { saveUseCase } from '../../api'
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
+import { EventBus } from '@/utils'
 export default {
   name: 'StepThree',
   components: {},
   data() {
     return {
+      allValid: false,
       valid: false,
       mainUrl: null,
       otherUrls: null,
       rules: {
         size: value =>
-          (!!value && value.size < 150000) ||
+          !value ||
+          value.size < 150000 ||
           'Image size should be less than 150 kB!',
         arraySize: array =>
-          (!!array && array.every(value => value.size < 150000)) ||
+          array.every(value => value.size < 150000) ||
           'Image size should be less than 150 kB!',
-        arrayLimit: array => (!!array && array.length <= 5) || 'Max 5 images',
-        required: value => !!value || 'Main article image is required'
+        arrayLimit: array => array.length <= 5 || 'Max 5 images'
       }
     }
   },
@@ -114,26 +119,43 @@ export default {
       return images ? images.map(file => URL.createObjectURL(file)) : []
     }
   },
+  created() {
+    const that = this
+    EventBus.$on('valid-check', value => (that.allValid = value))
+  },
   methods: {
     ...mapActions(['uploadMainImage', 'uploadImage']),
+    validateSteps() {
+      EventBus.$emit('validate')
+    },
     save() {
-      this.$emit('toggle-overlay')
-      const useCaseData = this.$store.state.case.useCaseData
-      const companyName = this.$store.state.user.userData.companyName
-      const useCaseId = this.$store.state.case.useCaseId
-      const csrfAccess = window.$cookies.get('csrf_access_token')
-      saveUseCase(
-        { ...useCaseData, provider: companyName },
-        useCaseId,
-        csrfAccess
-      ).then(response => {
-        console.log(response)
-        this.$store.commit('resetUseCase')
-      })
+      console.log('asdfasdfdf')
+      if (this.allValid) {
+        EventBus.$emit('toggle-overlay', true)
+        const useCaseData = this.$store.state.case.useCaseData
+        const companyName = this.$store.state.user.userData.companyName
+        const useCaseId = this.$store.state.case.useCaseId
+        const csrfAccess = window.$cookies.get('csrf_access_token')
+        saveUseCase(
+          { ...useCaseData, provider: companyName },
+          useCaseId,
+          csrfAccess
+        )
+          .then(response => {
+            console.log(response)
+            EventBus.$emit('toggle-overlay', false)
+            this.$store.commit('resetUseCase')
+            this.$store.dispatch('setUserUseCases')
+            this.$router.push('/user-panel')
+          })
+          .catch(error => console.log(error))
+      } else {
+        console.log('invalid')
+      }
     },
     discard() {
-      this.$emit('toggle-overlay')
       this.$store.commit('resetUseCase')
+      this.$router.push('/user-panel')
     }
   }
 }

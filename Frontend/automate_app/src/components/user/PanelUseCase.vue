@@ -102,7 +102,7 @@
 
 <script>
 // import ConfirmDialog from './ConfirmDialog.vue'
-import { deleteUseCase, changeCaseStatus } from '../../api'
+import { deleteUseCase, changeCaseStatus } from '@/api'
 export default {
   name: 'PanelUseCase',
   // components: { ConfirmDialog },
@@ -123,21 +123,17 @@ export default {
   },
   methods: {
     remove() {
-      console.log('deleetiiiiing')
       const that = this
       const csrfAccess = window.$cookies.get('csrf_access_token')
       deleteUseCase(this.useCase.id, csrfAccess)
-        .then(response => console.log(response.data))
         .then(() => that.$store.dispatch('setUserUseCases'))
         .catch(error => console.log('Error deleting use case', error))
     },
     changeStatus(e, status) {
-      console.log('changing status to:', status)
       const caseId = this.useCase.id
       const that = this
       const csrfAccess = window.$cookies.get('csrf_access_token')
       changeCaseStatus(caseId, status, csrfAccess)
-        .then(response => console.log(response))
         .then(() => that.$store.dispatch('setUserUseCases'))
         .catch(error => console.log('Error changing status', error))
     },

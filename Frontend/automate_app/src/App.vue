@@ -9,7 +9,11 @@
     ></NavDrawer>
     <UserDrawer v-else-if="userViews.indexOf($route.name) !== -1"></UserDrawer>
     <v-content>
-      <router-view></router-view>
+      <v-card class="content" min-height="600px" flat tile>
+        <keep-alive>
+          <router-view :key="$route.fullPath"></router-view>
+        </keep-alive>
+      </v-card>
     </v-content>
     <SubsCard
       v-if="
@@ -17,6 +21,11 @@
       "
     ></SubsCard>
     <PageFooter></PageFooter>
+    <v-fade-transition>
+      <v-overlay v-if="overlay" absolute color="#c4c4c4">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
+    </v-fade-transition>
   </v-app>
 </template>
 
@@ -27,6 +36,7 @@ import NavDrawer from '@/components/navigation/NavDrawer.vue'
 import UserDrawer from '@/components/user/UserDrawer.vue'
 import SubsCard from '@/components/base/SubsCard.vue'
 import PageFooter from '@/components/base/PageFooter.vue'
+import { EventBus } from '@/utils'
 
 export default {
   name: 'App',
@@ -43,8 +53,14 @@ export default {
   data() {
     return {
       userViews: ['UserPanel', 'NewUseCase', 'Settings'],
-      loginViews: ['Login', 'Register']
+      loginViews: ['Login', 'Register'],
+      overlay: false
     }
+  },
+  created() {
+    const that = this
+    EventBus.$on('toggle-overlay', value => (that.overlay = value))
+    this.$store.dispatch('retrieveInterval')
   },
   methods: {}
 }

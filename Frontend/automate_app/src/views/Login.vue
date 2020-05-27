@@ -1,76 +1,87 @@
 <template>
-  <div class="registration-panel">
-    <v-container class="pa-12">
-      <v-card tile class="mx-12">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <v-img height="100%" src="@/assets/images/subscribe_2_alpha.jpg">
-              <v-container fill-height pa-7>
-                <v-row no-gutters justify-content="center">
-                  <v-col>
-                    <v-row justify="center">
-                      <p>New to AutoMate?</p>
+  <v-card min-height="800px" class="registration-panel py-6" flat tile>
+    <v-container fluid fill-height class="pa-12">
+      <v-row justify="center">
+        <v-col cols="12" md="8">
+          <v-card tile class="mx-12">
+            <v-row no-gutters>
+              <v-col cols="4">
+                <v-img
+                  height="100%"
+                  src="@/assets/images/subscribe_2_alpha.jpg"
+                >
+                  <v-container fill-height pa-7>
+                    <v-row no-gutters justify-content="center">
+                      <v-col>
+                        <v-row justify="center">
+                          <p>New to AutoMate?</p>
+                        </v-row>
+                        <v-row justify="center">
+                          <router-link to="/register" class="register-button">
+                            <OutlinedButton>Register</OutlinedButton>
+                          </router-link>
+                        </v-row>
+                      </v-col>
                     </v-row>
-                    <v-row justify="center">
-                      <router-link to="/register" class="register-button">
-                        <OutlinedButton>Register</OutlinedButton>
-                      </router-link>
-                    </v-row>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-img>
-          </v-col>
+                  </v-container>
+                </v-img>
+              </v-col>
 
-          <v-col cols="8">
-            <v-container class="pb-12">
-              <v-row no-gutters justify="end">
-                <AutoMateLogo font-size="18px"></AutoMateLogo>
-              </v-row>
-              <v-row no-gutters class="my-6" justify="center">
-                <p class="form-title">Welcome back !</p>
-              </v-row>
-              <v-row no-gutters justify="center">
-                <v-col cols="10" md="6">
-                  <v-form
-                    ref="form"
-                    v-model="form_valid"
-                    class="d-flex flex-column"
-                    lazy-validation
-                  >
-                    <v-text-field
-                      v-model="username"
-                      label="Username"
-                      required
-                    ></v-text-field>
+              <v-col cols="8">
+                <v-container class="pb-12">
+                  <v-row no-gutters justify="end">
+                    <AutoMateLogo font-size="18px"></AutoMateLogo>
+                  </v-row>
+                  <v-row no-gutters class="my-6" justify="center">
+                    <p class="form-title">Welcome back !</p>
+                  </v-row>
+                  <v-row no-gutters justify="center">
+                    <v-col cols="10" md="6">
+                      <v-form
+                        ref="form"
+                        v-model="form_valid"
+                        class="d-flex flex-column"
+                        lazy-validation
+                      >
+                        <v-text-field
+                          v-model="username"
+                          label="Username"
+                          required
+                          @keydown.enter="login"
+                        ></v-text-field>
 
-                    <v-text-field
-                      v-model="password"
-                      label="Password"
-                      required
-                      :type="showPassword ? 'text' : 'password'"
-                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                      @click:append="showPassword = !showPassword"
-                    ></v-text-field>
-                    <v-btn
-                      class="btn align-self-center"
-                      depressed
-                      color="rgba(20, 18, 40, 0.98)"
-                      dark
-                      rounded
-                      @click="login"
-                      >Let's Go!</v-btn
-                    >
-                    <!-- <FilledButton class="align-self-center" @click="authenticate"></FilledButton> -->
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-col>
-        </v-row>
-      </v-card>
+                        <v-text-field
+                          v-model="password"
+                          label="Password"
+                          required
+                          :type="showPassword ? 'text' : 'password'"
+                          :append-icon="
+                            showPassword ? 'mdi-eye' : 'mdi-eye-off'
+                          "
+                          @click:append="showPassword = !showPassword"
+                          @keydown.enter="login"
+                        ></v-text-field>
+                        <v-btn
+                          class="btn align-self-center"
+                          depressed
+                          color="rgba(20, 18, 40, 0.98)"
+                          dark
+                          rounded
+                          @click="login"
+                          >Let's Go!</v-btn
+                        >
+                        <!-- <FilledButton class="align-self-center" @click="authenticate"></FilledButton> -->
+                      </v-form>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -105,7 +116,6 @@ export default {
 .registration-panel {
   background: rgba(20, 18, 40, 0.98);
   font-family: Maven Pro;
-  height: 750px;
 }
 
 .registration-panel p {

@@ -1,101 +1,116 @@
 <template>
-  <div class="registration-panel">
+  <v-card min-height="800px" class="registration-panel" flat tile>
     <v-container class="pa-12">
-      <v-card tile class="mx-12">
-        <v-row no-gutters>
-          <v-col cols="4">
-            <v-img height="100%" src="@/assets/images/subscribe_2_alpha.jpg">
-              <v-container fill-height pa-7>
-                <v-row no-gutters justify-content="center">
-                  <v-col>
-                    <v-row justify="center">
-                      <p>Already have an account?</p>
+      <v-row justify="center">
+        <v-col cols="12" md="10">
+          <v-card tile class="mx-12">
+            <v-row no-gutters>
+              <v-col cols="4">
+                <v-img
+                  height="100%"
+                  src="@/assets/images/subscribe_2_alpha.jpg"
+                >
+                  <v-container fill-height pa-7>
+                    <v-row no-gutters justify-content="center">
+                      <v-col>
+                        <v-row justify="center">
+                          <p>Already have an account?</p>
+                        </v-row>
+                        <v-row justify="center">
+                          <router-link to="/login" class="login-button">
+                            <OutlinedButton>Sign In</OutlinedButton>
+                          </router-link>
+                        </v-row>
+                      </v-col>
                     </v-row>
-                    <v-row justify="center">
-                      <router-link to="/login" class="login-button">
-                        <OutlinedButton>Sign In</OutlinedButton>
-                      </router-link>
-                    </v-row>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-img>
-          </v-col>
+                  </v-container>
+                </v-img>
+              </v-col>
 
-          <v-col cols="8">
-            <v-container class="pb-12">
-              <v-row no-gutters justify="end">
-                <AutoMateLogo font-size="18px"></AutoMateLogo>
-              </v-row>
-              <v-row no-gutters class="my-6" justify="center">
-                <p class="form-title">Create an account</p>
-              </v-row>
-              <v-row no-gutters justify="center">
-                <v-col cols="10" md="6">
-                  <v-form ref="form" v-model="valid" class="d-flex flex-column">
-                    <v-text-field
-                      v-model="username"
-                      :counter="10"
-                      :rules="[rules.name_char, rules.name_len]"
-                      label="Username"
-                      required
-                    ></v-text-field>
+              <v-col cols="8">
+                <v-container class="pb-12">
+                  <v-row no-gutters justify="end">
+                    <AutoMateLogo font-size="18px"></AutoMateLogo>
+                  </v-row>
+                  <v-row no-gutters class="my-6" justify="center">
+                    <p class="form-title">Create an account</p>
+                  </v-row>
+                  <v-row no-gutters justify="center">
+                    <v-col cols="10" md="6">
+                      <v-form
+                        ref="form"
+                        v-model="valid"
+                        class="d-flex flex-column"
+                      >
+                        <v-text-field
+                          v-model="username"
+                          :counter="10"
+                          :rules="[rules.name_char, rules.name_len]"
+                          label="Username"
+                          required
+                        ></v-text-field>
 
-                    <v-text-field
-                      v-model="email"
-                      :rules="[rules.email]"
-                      label="E-mail"
-                      required
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="company_name"
-                      label="Company name"
-                      required
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="password"
-                      :rules="[rules.password_char, rules.password_len]"
-                      label="Password"
-                      required
-                      :type="showPassword ? 'text' : 'password'"
-                      :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                      @click:append="showPassword = !showPassword"
-                    ></v-text-field>
-                    <v-text-field
-                      label="Confirm password"
-                      :rules="[v => v === password] || 'Passwords must match'"
-                      required
-                      :type="showConfirm ? 'text' : 'password'"
-                      :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
-                      @click:append="showConfirm = !showConfirm"
-                    ></v-text-field>
+                        <v-text-field
+                          v-model="email"
+                          :rules="[rules.email]"
+                          label="E-mail"
+                          required
+                        ></v-text-field>
+                        <v-text-field
+                          v-model="company_name"
+                          label="Company name"
+                          required
+                        ></v-text-field>
+                        <v-text-field
+                          v-model="password"
+                          :rules="[rules.password_char, rules.password_len]"
+                          label="Password"
+                          required
+                          :type="showPassword ? 'text' : 'password'"
+                          :append-icon="
+                            showPassword ? 'mdi-eye' : 'mdi-eye-off'
+                          "
+                          @click:append="showPassword = !showPassword"
+                        ></v-text-field>
+                        <v-text-field
+                          label="Confirm password"
+                          :rules="
+                            [v => v === password] || 'Passwords must match'
+                          "
+                          required
+                          :type="showConfirm ? 'text' : 'password'"
+                          :append-icon="showConfirm ? 'mdi-eye' : 'mdi-eye-off'"
+                          @click:append="showConfirm = !showConfirm"
+                        ></v-text-field>
 
-                    <v-checkbox
-                      v-model="agree"
-                      :rules="[v => !!v || 'You must agree to continue!']"
-                      label="I agree to the collection and processing of personal data by AutoMate."
-                      required
-                      class="checkbox"
-                    ></v-checkbox>
-                    <v-btn
-                      class="btn align-self-center"
-                      depressed
-                      color="rgba(20, 18, 40, 0.98)"
-                      dark
-                      rounded
-                      @click="register"
-                      >Let's Go!</v-btn
-                    >
-                    <!-- <FilledButton class="align-self-center"></FilledButton> -->
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-col>
-        </v-row>
-      </v-card>
+                        <v-checkbox
+                          v-model="agree"
+                          :rules="[v => !!v || 'You must agree to continue!']"
+                          label="I agree to the collection and processing of personal data by AutoMate."
+                          required
+                          class="checkbox"
+                        ></v-checkbox>
+                        <v-btn
+                          class="btn align-self-center"
+                          depressed
+                          color="rgba(20, 18, 40, 0.98)"
+                          dark
+                          rounded
+                          @click="register"
+                          >Let's Go!</v-btn
+                        >
+                        <!-- <FilledButton class="align-self-center"></FilledButton> -->
+                      </v-form>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
-  </div>
+  </v-card>
 </template>
 
 <script>

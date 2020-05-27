@@ -6,7 +6,7 @@
         @click.stop="dialog = false"
       ></v-img>
     </v-dialog>
-    <v-container fluid>
+    <v-container fluid px-0 py-6>
       <v-row>
         <v-col
           v-for="(image, index) of images"

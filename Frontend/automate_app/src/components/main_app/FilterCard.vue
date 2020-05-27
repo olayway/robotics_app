@@ -10,7 +10,7 @@
         <v-container pa-0>
           <v-row no-gutters>
             <v-col cols="12" md="6" class="d-flex flex-column">
-              <v-img :src="'data:image/jpg;base64,' + useCase.main_thumbnail"
+              <v-img :src="imgSrc" @error="imgSrc = altSrc"
                 ><template v-slot:placeholder>
                   <v-row
                     class="fill-height ma-0"
@@ -85,8 +85,8 @@ export default {
   },
   data() {
     return {
-      imgSrc: 'data:image/jpg;base64,' + this.useCase.main_image,
-      lazySrc: 'data:image/jpg;base64,' + this.useCase.main_thumbnail
+      imgSrc: 'data:image/jpg;base64,' + this.useCase.main_thumbnail,
+      altSrc: require('@/assets/images/alt_image_2.png')
     }
   },
   computed: {}

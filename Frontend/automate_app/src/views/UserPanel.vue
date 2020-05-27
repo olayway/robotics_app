@@ -71,11 +71,6 @@
         >
       </v-col>
     </v-row>
-    <v-fade-transition>
-      <v-overlay v-if="overlay" absolute color="#575c63">
-        <v-progress-circular indeterminate size="40"></v-progress-circular>
-      </v-overlay>
-    </v-fade-transition>
   </v-container>
 </template>
 
@@ -91,8 +86,7 @@ export default {
     return {
       selected: [],
       currentPage: 1,
-      viewCases: 5,
-      overlay: false,
+      viewCases: 10,
       bulk: false
     }
   },
@@ -113,16 +107,7 @@ export default {
         return this.getUserUseCases(min_index)
       }
     }
-  },
-  // created() {
-  //   Bus.$on('overlay-on', function() {
-  //     this.overlay = true
-  //   })
-  //   Bus.$on('overlay-off', function() {
-  //     this.overlay = false
-  //   })
-  // },
-  methods: {}
+  }
 }
 </script>
 

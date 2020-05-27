@@ -6,7 +6,7 @@
       :provider="caseData.provider"
       :basic-info="caseData.basic_info"
     ></CaseTitleBar>
-    <v-container>
+    <v-container pa-10>
       <v-row justify="space-between">
         <v-col cols="8" class="pr-6">
           <ArticleSection
@@ -27,15 +27,11 @@
               <p v-else class="content">{{ article.content }}</p>
             </template>
           </ArticleSection>
-          <v-row justify="center">
-            <v-col cols="8" class="pa-0">
-              <PhotoGallery
-                :images="[caseData.main_image, ...caseData.images]"
-              ></PhotoGallery>
-            </v-col>
-          </v-row>
+          <PhotoGallery
+            :images="[caseData.main_image, ...caseData.images]"
+          ></PhotoGallery>
         </v-col>
-        <v-col cols="4" class="pt-8 pl-8">
+        <v-col cols="4" class="pl-8">
           <v-row>
             <v-col
               v-for="(item, index) in caseData.content.bullet_points"
@@ -44,7 +40,9 @@
               class="tile_contain"
             >
               <v-card class="pa-5 tile" flat tile>
-                <p class="title_bp">{{ item.title }}</p>
+                <p class="title_bp">
+                  {{ item.title.toLowerCase() | capitalize }}
+                </p>
                 <div
                   v-if="caseData.provider === 'Universal Robots'"
                   v-html="item.content"
@@ -64,6 +62,7 @@
 </template>
 
 <script>
+import { EventBus } from '@/utils'
 import { fetchUseCase } from '../api'
 import CaseTitleBar from '@/components/applications/CaseTitleBar'
 import ArticleSection from '@/components/applications/ArticleSection'
@@ -82,10 +81,11 @@ export default {
       caseData: null
     }
   },
-  watch: {
-    $route: 'getUseCaseData'
-  },
+  // watch: {
+  //   $route: 'getUseCaseData'
+  // },
   created() {
+    EventBus.$emit('toggle-overlay', true)
     this.getCaseData()
   },
   methods: {
@@ -93,6 +93,7 @@ export default {
       fetchUseCase(this.$route.params.id)
         .then(response => {
           this.caseData = response.data
+          this.$nextTick(() => EventBus.$emit('toggle-overlay', false))
         })
         .catch(error => console.log('Error fetching use-case data', error))
     }

@@ -1,16 +1,16 @@
 <template>
   <v-parallax src="@/assets/images/subscribe_2_alpha.jpg" style="height: auto">
     <v-container class="subscribe-form py-10">
-      <v-row class="justify-space-around px-10">
-        <v-col cols="10" md="5" class="d-flex flex-column">
+      <v-row class="px-10">
+        <v-col cols="12" md="6">
           <p class="subs-title">Subscribe now for new use cases</p>
-          <div class="divider"></div>
+          <div class="divider my-5"></div>
           <p class="subs-text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean urna
             at nibh nisi volutpat tincidunt viverra.
           </p>
         </v-col>
-        <v-col cols="10" md="5" class="d-flex flex-column align-center">
+        <v-col cols="12" md="6" class="d-flex flex-column align-center">
           <v-text-field
             hide-details
             rounded

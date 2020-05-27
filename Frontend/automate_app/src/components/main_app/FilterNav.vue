@@ -20,10 +20,10 @@
             item-color="#515E8A"
             multiple
             dark
-            background-color="#6976A4"
             :label="key | capitalize"
             :items="value"
-            @blur.prevent="filter"
+            background-color="#6976A4"
+            @blur="$emit('filter-results', selections)"
           >
             <template v-slot:selection="{ item, index }">
               <span v-if="index === 0" class="select mr-7 mb-0">{{
@@ -95,12 +95,7 @@ export default {
       return len
     }
   },
-  methods: {
-    filter() {
-      console.log('emiting')
-      this.$emit('filter-results', this.selections)
-    }
-  }
+  methods: {}
   // watch: {
   //   filterResultsPosition: function(value) {
   //     let navHeight = document

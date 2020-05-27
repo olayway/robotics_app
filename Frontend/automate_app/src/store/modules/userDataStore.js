@@ -1,5 +1,6 @@
 import { login, register, refreshToken, logout, getUserUseCases } from '@/api'
-// import Bus from '../../utils'
+import { EventBus } from '@/utils'
+import router from '@/router'
 
 export default {
   state: {
@@ -80,31 +81,49 @@ export default {
           // }
         })
         .catch(error => {
-          dispatch('logout', error)
+          dispatch('logout')
           console.log('Error refreshing token:', error)
           // EventBus.$emit('failedTokenRefresh', error)
         })
     },
     logout({ commit }) {
       console.log('LOGGING OUT')
+      commit('clearInterval')
+      commit('resetState')
+      router.push('/login')
       return logout()
         .then(response => {
           console.log('RESPONSE DATA MSG', response.data.msg)
-          // commit('setUserData', {})
-          // commit('setAccessTokenExp', null)
-          commit('clearInterval')
-          commit('resetState')
         })
         .catch(error => {
           console.log('Error Logging out ???', error)
         })
     },
     setUserUseCases({ commit }) {
-      getUserUseCases()
+      EventBus.$emit('toggle-overlay', true)
+      return getUserUseCases()
         .then(response => {
           commit('setUserUseCases', response.data)
+          EventBus.$emit('toggle-overlay', false)
         })
         .catch(error => console.log("Error fetching user's use cases:", error))
+    },
+    retrieveInterval({ dispatch, commit }) {
+      console.log('RELOAD', this.state.user.intervalID)
+      if (this.state.user.intervalID) {
+        console.log('retrieving token refresh')
+        return dispatch('refreshToken').then(() => {
+          const now = new Date()
+          const exp = new Date(this.state.user.accessTokenExp * 1000)
+          const interval = exp - now - 30000
+          const intervalID = setInterval(() => {
+            dispatch('refreshToken')
+          }, interval)
+          commit('setIntervalID', intervalID)
+        })
+      } else {
+        return
+      }
     }
   }
 }
