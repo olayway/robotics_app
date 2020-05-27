@@ -15,7 +15,7 @@
                 </v-col>
                 <v-divider vertical class="mx-2"></v-divider>
                 <v-col>
-                  <span>Country</span>
+                  <span>Title</span>
                 </v-col>
                 <v-divider vertical class="mx-2"></v-divider>
                 <v-col>

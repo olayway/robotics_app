@@ -107,8 +107,9 @@ def user_use_cases():
         use_cases = current_user.use_cases
         ids = [str(case['id']) for case in use_cases]
         use_cases = UseCase.objects.only(
-            'id', 'basic_info', 'status').filter(id__in=ids)
-        schema = UseCaseSchema(many=True, only=('id', 'basic_info', 'status'))
+            'id', 'basic_info', 'status', 'content.article_title').filter(id__in=ids)
+        schema = UseCaseSchema(many=True, only=(
+            'id', 'basic_info', 'status', 'content'))
         response = jsonify(schema.dump(use_cases))
 
     if request.method == 'PUT':

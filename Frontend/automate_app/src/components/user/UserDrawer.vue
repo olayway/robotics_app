@@ -7,10 +7,32 @@
       permanent
     >
       <v-list dense>
-        <v-list-item v-for="(nav, index) in navs" :key="index" link>
-          <router-link :to="nav.link" class="router-icon">
-            <v-icon color="grey lighten-1">{{ nav.icon }}</v-icon>
-          </router-link>
+        <v-list-item>
+          <v-icon
+            class="router-icon"
+            color="grey lighten-1"
+            @click="$router.push('/user-panel').catch(err => {})"
+            >{{ 'mdi-view-dashboard' }}</v-icon
+          >
+        </v-list-item>
+        <v-list-item>
+          <v-icon
+            class="router-icon"
+            color="grey lighten-1"
+            @click="
+              $store.commit('resetUseCase')
+              $router.push('/new-case').catch(err => {})
+            "
+            >{{ 'mdi-note-plus' }}</v-icon
+          >
+        </v-list-item>
+        <v-list-item>
+          <v-icon
+            class="router-icon"
+            color="grey lighten-1"
+            @click="$router.push('/settings').catch(err => {})"
+            >{{ 'mdi-settings' }}</v-icon
+          >
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -22,17 +44,7 @@ export default {
   name: 'UserDrawer',
   components: {},
   data() {
-    return {
-      navs: [
-        {
-          title: 'All use-cases',
-          icon: 'mdi-view-dashboard',
-          link: '/user-panel'
-        },
-        { title: 'New use-case', icon: 'mdi-note-plus', link: '/new-case' },
-        { title: 'Settings', icon: 'mdi-settings', link: '/settings' }
-      ]
-    }
+    return {}
   }
 }
 </script>

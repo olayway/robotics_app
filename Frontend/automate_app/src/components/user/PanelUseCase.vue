@@ -16,7 +16,7 @@
           </v-row>
         </v-col>
         <v-divider vertical class="mx-2"></v-divider>
-        <v-col>{{ useCase.basic_info.country }}</v-col>
+        <v-col>{{ useCase.content.article_title }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>
         <v-col>{{ useCase.basic_info.industry }}</v-col>
         <v-divider vertical class="mx-2"></v-divider>

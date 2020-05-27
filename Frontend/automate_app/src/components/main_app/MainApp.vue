@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getUseCases } from '../../api'
+import { getUseCases } from '@/api'
 import FilterNav from '../main_app/FilterNav'
 import FilterCard from '../main_app/FilterCard'
 import PageNum from '../base/PageNum'
