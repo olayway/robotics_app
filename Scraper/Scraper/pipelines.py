@@ -50,6 +50,19 @@ class MongoPipeline(object):
             # thumbnail
             main_path = './ur_images/{}'.format(item['images'][0]['path'])
             img = Image.open(main_path, mode='r')
+            ideal_ratio = 1.7778
+            width = img.size[0]
+            height = img.size[1]
+            ratio = width/height
+            if ratio > ideal_ratio:
+                new_width = int(ideal_ratio*height)
+                offset = (width - new_width) / 2
+                resize = (offset, 0, width - offset, height)
+            else:
+                new_height = int(width / ideal_ratio)
+                offset = (height - new_height) / 2
+                resize = (0, offset, width, height - offset)
+            img = img.crop(resize)
             size = 500, 500
             img.thumbnail(size)
             buffer = BytesIO()

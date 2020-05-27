@@ -47,7 +47,7 @@ export default {
     return {
       useCases: null,
       overlay: true,
-      timeout: null,
+      // timeout: null,
       pagesCount: null,
       currentPage: 1,
       appliedFilters: null,
@@ -91,17 +91,17 @@ export default {
     filterResults() {
       console.log('asdfasdf')
       this.overlay = true
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        getUseCases(this.appliedFilters, this.currentPage)
-          .then(response => {
-            this.useCases = response.data.use_cases
-            this.pagesCount = response.data.pages_count
-            this.availableFilters = response.data.available_filters
-            this.overlay = false
-          })
-          .catch(error => console.log(error))
-      }, 1000)
+      // clearTimeout(this.timeout)
+      // this.timeout = setTimeout(() => {
+      getUseCases(this.appliedFilters, this.currentPage)
+        .then(response => {
+          this.useCases = response.data.use_cases
+          this.pagesCount = response.data.pages_count
+          this.availableFilters = response.data.available_filters
+          this.overlay = false
+        })
+        .catch(error => console.log(error))
+      // }, 1000)
     }
   }
 }

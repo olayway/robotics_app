@@ -98,7 +98,7 @@ def fetch_use_case(caseId):
 
 
 # endpoint for fetching user's use cases
-@setup.route('/profile/use-cases', methods=['GET', 'PUT', 'DELETE', 'POST'])
+@setup.route('/profile/use-cases', methods=['GET', 'PUT', 'DELETE'])
 @jwt_required
 def user_use_cases():
     if request.method == 'GET':
@@ -135,6 +135,20 @@ def user_use_cases():
                 main_image = image_bin
                 # create main image thumbnail
                 img = Image.open(image, mode='r')
+                ideal_ratio = 1.7778
+                width = img.size[0]
+                height = img.size[1]
+                ratio = width/height
+                if ratio > ideal_ratio:
+                    new_width = int(ideal_ratio*height)
+                    offset = (width - new_width) / 2
+                    resize = (offset, 0, width - offset, height)
+                else:
+                    new_height = int(width / ideal_ratio)
+                    offset = (height - new_height) / 2
+                    resize = (0, offset, width, height - offset)
+                img = img.convert("RGB")
+                img = img.crop(resize)
                 size = 500, 500
                 img.thumbnail(size)
                 buffer = BytesIO()
@@ -146,44 +160,6 @@ def user_use_cases():
                 images.append(image_bin)
 
         # add to db
-        new_use_case = UseCase(
-            **form_data, images=images, main_image=main_image, main_thumbnail=main_thumbnail)
-        new_use_case.save()
-        current_user.update(use_cases=[*current_user.use_cases, new_use_case])
-        response = jsonify({
-            'msg': 'Your use-case have been saved successfully'
-        })
-
-    if request.method == 'POST':
-
-        # text data
-        form_data_dict = request.form.to_dict()
-        # converting nested json values to dictionaries
-        form_data = {key: json.loads(value)
-                     for (key, value) in form_data_dict.items()}
-
-        # images
-        files_dict = request.files.to_dict()
-        images = []
-        main_image = None
-        main_thumbnail = None
-
-        for (name, image) in files_dict.items():
-            image_byte = image.read()
-            image_bin = Binary(image_byte)
-            if name == 'main_image':
-                main_image = image_bin
-                img = Image.open(image, mode='r')
-                size = 500, 500
-                img.thumbnail(size)
-                buffer = BytesIO()
-                img.save(buffer, format='JPEG')
-                thumbnail_byte = buffer.getvalue()
-                main_thumbnail = Binary(thumbnail_byte)
-            else:
-                images.append(image_bin)
-
-        # add new use case to db
         new_use_case = UseCase(
             **form_data, images=images, main_image=main_image, main_thumbnail=main_thumbnail)
         new_use_case.save()
@@ -236,6 +212,19 @@ def use_case(caseId):
                 if name == 'main_image':
                     main_image = image_bin
                     img = Image.open(image, mode='r')
+                    ideal_ratio = 1.7778
+                    width = img.size[0]
+                    height = img.size[1]
+                    ratio = width/height
+                    if ratio > ideal_ratio:
+                        new_width = int(ideal_ratio*height)
+                        offset = (width - new_width) / 2
+                        resize = (offset, 0, width - offset, height)
+                    else:
+                        new_height = int(width / ideal_ratio)
+                        offset = (height - new_height) / 2
+                        resize = (0, offset, width, height - offset)
+                    img = img.crop(resize)
                     img = img.convert("RGB")
                     size = 500, 500
                     img.thumbnail(size)
