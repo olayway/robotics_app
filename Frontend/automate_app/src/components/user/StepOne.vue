@@ -108,6 +108,11 @@ export default {
   computed: {
     ...mapGetters(['getBasicInfo'])
   },
+  watch: {
+    valid: function(value) {
+      EventBus.$emit('valid-check', value)
+    }
+  },
   created() {
     const that = this
     EventBus.$on('validate', () =>

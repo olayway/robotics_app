@@ -9,8 +9,8 @@
     ></NavDrawer>
     <UserDrawer v-else-if="userViews.indexOf($route.name) !== -1"></UserDrawer>
     <v-content>
-      <v-card class="content" min-height="600px" flat tile>
-        <keep-alive>
+      <v-card class="content" min-height="500px" flat tile>
+        <keep-alive :exclude="['NewUseCase']">
           <router-view :key="$route.fullPath"></router-view>
         </keep-alive>
       </v-card>

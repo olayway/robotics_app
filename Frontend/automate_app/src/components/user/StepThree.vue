@@ -60,25 +60,28 @@
               </v-container>
             </v-card>
           </v-form>
+          <p v-if="warn" class="red--text">
+            Not all required fields are correctly filled in.
+          </p>
+          <v-btn
+            class="save-button my-3"
+            outlined
+            color="green lighten-1"
+            @click="
+              validateSteps()
+              save()
+            "
+            >Save</v-btn
+          >
+          <v-btn
+            class="reset-button my-3 ml-3"
+            outlined
+            color="orange lighten-1"
+            @click="discard"
+            >Discard</v-btn
+          >
         </v-col>
       </v-row>
-      <v-btn
-        class="save-button my-3"
-        outlined
-        color="green lighten-1"
-        @click="
-          validateSteps()
-          save()
-        "
-        >Save</v-btn
-      >
-      <v-btn
-        class="reset-button my-3 ml-3"
-        outlined
-        color="orange lighten-1"
-        @click="discard"
-        >Discard</v-btn
-      >
     </v-container>
   </v-card>
 </template>
@@ -93,6 +96,7 @@ export default {
   components: {},
   data() {
     return {
+      warn: false,
       allValid: false,
       valid: false,
       mainUrl: null,
@@ -121,7 +125,10 @@ export default {
   },
   created() {
     const that = this
-    EventBus.$on('valid-check', value => (that.allValid = value))
+    EventBus.$on('valid-check', value => {
+      that.allValid = value
+      that.warn = !value
+    })
   },
   methods: {
     ...mapActions(['uploadMainImage', 'uploadImage']),

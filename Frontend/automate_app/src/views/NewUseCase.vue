@@ -34,7 +34,7 @@ import StepOne from '../components/user/StepOne.vue'
 import StepTwo from '../components/user/StepTwo.vue'
 import StepThree from '../components/user/StepThree.vue'
 export default {
-  name: 'UserPanel',
+  name: 'NewUseCase',
   components: { StepOne, StepTwo, StepThree },
   data() {
     return {}
